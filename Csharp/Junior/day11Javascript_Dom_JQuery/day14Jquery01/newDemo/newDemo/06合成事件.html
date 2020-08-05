@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.5.1.min.js"></script>
+    <script>
+        $(function () {
+            //合成指向、移开事件
+            //$('#btnShow').hover(function() {//指向
+            //    this.style.color = 'red';
+            //}, function() {//移开
+            //    this.style.color = 'black';
+            //});
+
+            //合成点击事件,指定在n个函数间切换，点击次数为m
+            //$('#btnShow').toggle(function() {//第m%n==1次点击时执行此函数
+            //    alert(1);
+            //}, function() {//第m%n==2次点击执行此函数
+            //    alert(2);
+            //}, function() {//第m%n==0次点击执行此函数
+            //    alert(3);
+            //});
+
+            //合成事件：只将绑定的事件执行一次
+            //$('#btnShow').one('click', function() {
+            //    alert(1);
+            //});
+        });
+
+    </script>
+</head>
+<body>
+    <input id="btn" type="button" value="button" />
+</body>
+</html>

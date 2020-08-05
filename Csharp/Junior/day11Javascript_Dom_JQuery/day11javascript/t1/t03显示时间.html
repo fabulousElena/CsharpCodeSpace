@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    <script>
+        //创建时间对象
+        //var date = new Date();
+        ////获取世界时间，会提示当前时区
+        //alert(date.toString());
+        ////获取当前时区的当前时间
+        //alert(date.toLocaleString());
+        
+        //代码分离：一般不将html与js混合写
+        //定义函数，用于获取时间对象并显示当前时间
+        function showTime() {
+            var date = new Date();
+            alert(date.toLocaleString());
+            return false;//可以让a的跳转不执行
+        }
+    </script>
+    
+    <input type="button" value="显示当前时间" onclick="showTime();"/>
+    <hr/>
+    点击超链接，执行js脚本，而不进行url跳转
+    <br/>
+    方式一：让js函数返回false,在onclick中也返回false;
+        <a href="http://www.itcast.cn" onclick="return showTime();">显示当前时间</a>
+
+    <br/>
+    方式二：将href指定成一段脚本
+    <a href="javascript:showTime();">点击显示时间</a>
+    <br/>
+</body>
+</html>

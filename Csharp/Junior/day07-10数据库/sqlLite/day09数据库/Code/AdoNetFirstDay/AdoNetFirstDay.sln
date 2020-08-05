@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01SqlConnectionDemo", "01SqlConnectionDemo\01SqlConnectionDemo.csproj", "{CB7B43F1-D4FE-4EE2-B550-733F92FDC90B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02ConnectionPoolDemoTest", "02ConnectionPoolDemoTest\02ConnectionPoolDemoTest.csproj", "{E4AB9FB5-2529-4352-8B76-4E6875A34F9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03SqlConnectionStringBuilderDemo", "03SqlConnectionStringBuilderDemo\03SqlConnectionStringBuilderDemo.csproj", "{C89E19CA-DE52-43A4-B269-27973C49C530}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04UserDemo", "04UserDemo\04UserDemo.csproj", "{BBC6FC79-61D4-4F4D-9EFD-CB7FE677D278}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05ConfigDemo", "05ConfigDemo\05ConfigDemo.csproj", "{388DCAA7-591F-4EF1-BFD3-E7D30B42FDAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06DataImport", "06DataImport\06DataImport.csproj", "{8988F2D8-9CDB-46A3-9820-18D15E1BD99E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07SqlDataReader", "07SqlDataReader\07SqlDataReader.csproj", "{E0DF9C46-E9F3-4917-A6F8-FC36390C0FCE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB7B43F1-D4FE-4EE2-B550-733F92FDC90B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB7B43F1-D4FE-4EE2-B550-733F92FDC90B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB7B43F1-D4FE-4EE2-B550-733F92FDC90B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB7B43F1-D4FE-4EE2-B550-733F92FDC90B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4AB9FB5-2529-4352-8B76-4E6875A34F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4AB9FB5-2529-4352-8B76-4E6875A34F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4AB9FB5-2529-4352-8B76-4E6875A34F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4AB9FB5-2529-4352-8B76-4E6875A34F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C89E19CA-DE52-43A4-B269-27973C49C530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C89E19CA-DE52-43A4-B269-27973C49C530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C89E19CA-DE52-43A4-B269-27973C49C530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C89E19CA-DE52-43A4-B269-27973C49C530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBC6FC79-61D4-4F4D-9EFD-CB7FE677D278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBC6FC79-61D4-4F4D-9EFD-CB7FE677D278}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBC6FC79-61D4-4F4D-9EFD-CB7FE677D278}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBC6FC79-61D4-4F4D-9EFD-CB7FE677D278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{388DCAA7-591F-4EF1-BFD3-E7D30B42FDAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{388DCAA7-591F-4EF1-BFD3-E7D30B42FDAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{388DCAA7-591F-4EF1-BFD3-E7D30B42FDAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{388DCAA7-591F-4EF1-BFD3-E7D30B42FDAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8988F2D8-9CDB-46A3-9820-18D15E1BD99E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8988F2D8-9CDB-46A3-9820-18D15E1BD99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8988F2D8-9CDB-46A3-9820-18D15E1BD99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8988F2D8-9CDB-46A3-9820-18D15E1BD99E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0DF9C46-E9F3-4917-A6F8-FC36390C0FCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0DF9C46-E9F3-4917-A6F8-FC36390C0FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0DF9C46-E9F3-4917-A6F8-FC36390C0FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0DF9C46-E9F3-4917-A6F8-FC36390C0FCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

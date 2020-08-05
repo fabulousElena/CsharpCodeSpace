@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Books>
+	<book>
+		<name>小红书</name>
+		<price>1025</price>
+	</book>
+</Books>

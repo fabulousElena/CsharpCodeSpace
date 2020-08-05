@@ -1,0 +1,52 @@
+MessageBox.Show()的各种用法  
+
+
+【函数】 <整型> MessageBox（<字符串> Text, <字符串> Title, <整型> nType，MessageBoxIcon）;
+
+【函数说明】 弹出一个消息框。
+
+【语法】
+
+参数：
+
+Text <字符串>，消息框的正文；
+
+Title <字符串>，消息框的标题；
+
+nType <整型>，消息框的类型。
+
+返回值：<整型>，用户在消息框上点击关闭时的选择的按钮。 MessageBoxIcon：对话框上显示的图标样式。
+
+【说明】
+
+MessageBox("消息内容", "返回值 确定1",MessageBoxButtons.OK,MessageBoxIcon.Question);
+
+MessageBox("消息内容",, "返回值 确定1 取消2",MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+
+MessageBox("消息内容", "返回值 终止3 重试4 忽略5",MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+
+MessageBox("消息内容", "返回值 是6 否7 取消2",MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+
+MessageBox("消息内容", "返回值 是6 否7",MessageBoxButtons.YesNo, MessageBoxIcon.Hand);
+
+MessageBox("消息内容", "返回值 重试4 取消2",MessageBoxButtons.RetryCancel, MessageBoxIcon.Information);
+
+MessageBoxIcon: 所有图标样式
+
+MessageBoxIcon.Question
+
+MessageBoxIcon.Asterisk
+
+MessageBoxIcon.Information
+
+MessageBoxIcon.Error
+
+MessageBoxIcon.Stop
+
+MessageBoxIcon.Hand
+
+MessageBoxIcon.Exclamation
+
+MessageBoxIcon.Warning
+
+MessageBoxIcon.None

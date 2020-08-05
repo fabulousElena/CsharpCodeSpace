@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    
+</head>
+<body>
+    <input type="button" name="btnShow" id="btnShow" value="显示" />
+    <br />  
+    <a href="http://xiaodaizhi.com">content</a>
+    <hr />  
+    <input type="button" name="btnShow" id="btnShow1" value="显示" />
+    <input type="button" name="btnShow" id="btnShow2" value="显示" />
+    <input type="button" name="btnShow" id="btnShow3" value="显示" />
+    <script>
+        //根据id获取元素，因为id是唯一的，所以只返回一个dom对象
+        var temp1 = document.getElementById('btnShow');
+        //name是可以重复的，所以返回一个dom对象数组
+        var temp2 = document.getElementsByName('btnShow');
+
+        //访问属性
+        temp1.value = '显示当前时间';
+        for (var item in temp2) {
+            item.value = '我是猪';
+        }
+        
+    </script>
+
+</body>
+</html>

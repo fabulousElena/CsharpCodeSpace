@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script>
+        $(function () {
+            //为按钮绑定点击事件
+            $('#btnAdd').click(function () {
+                //获取文本框中的值，并转换成整数
+                var num1 = parseInt($('#txtNum1').val());
+                var num2 = parseInt($('#txtNum2').val());
+                //运算
+                var result = num1 + num2;
+                //显示
+                $('#txtResult').val(result);
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="txtNum1"/>+
+    <input type="text" id="txtNum2"/>
+    <input type="button" id="btnAdd" value="="/>
+    <input type="text" id="txtResult"/>
+</body>
+</html>

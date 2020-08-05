@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style type="text/css">
+        div {
+            height: 300px;
+            width: 300px;
+        }
+
+            div.div1 {
+                background-color: red;
+                top: 100px;
+                left: 100px;
+                position: absolute; /*绝对定位，定到哪就是哪*/
+                z-index:3;
+            }
+
+            div.div2 {
+                background-color: yellow;
+                top: 130px;
+                left: 130px;
+                position: absolute; /*绝对定位，定到哪就是哪*/
+                z-index:2;
+            }
+
+            div.div3 {
+                background-color: green;
+                top: 160px;
+                left: 160px;
+                position: absolute; /*绝对定位，定到哪就是哪*/
+                z-index:1;
+            }
+    </style>
+</head>
+<body>
+    <div class="div1"></div>
+    <div class="div2"></div>
+    <div class="div3"></div>
+</body>
+</html>

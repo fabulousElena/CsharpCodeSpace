@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    <script>
+        //var a1;
+        //var a2 = null;
+        
+        //undefined表示没有，null表示没有
+        //if (a1 == a2) {
+        //    alert('ok');
+        //} else {
+        //    alert('no');
+        //}
+        
+        //三个等号先判断类型是否相同，再判断值是否相同
+        //if (a1 === a2) {
+        //    alert('ok');
+        //} else {
+        //    alert('no');
+        //}
+
+        var b1 = 123, b2 = '123';
+        //值都为123所以相等
+        //if (b1 == b2) {
+        //    alert('ok');
+        //} else {
+        //    alert('no');
+        //}
+        //b1是number类型，b2是string类型，所以不等
+        //if (b1 === b2) {
+        //    alert('ok');
+        //} else {
+        //    alert('no');
+        //}
+
+        //null与'null'是不同的
+        //var temp = null;
+        //if (temp == 'null') {
+        //    alert('ok');
+        //} else {
+        //    alert('no');
+        //}
+
+        //判断变量是否可用
+        //判断是否为undefined:typeof (temp) == 'undefined' 
+        //判断是否为null:temp === null
+        //var temp = null;
+        //if (typeof (temp) == 'undefined' || temp === null) {//'null','object'
+        //    alert('不可用');
+        //} else {
+        //    alert('可用');
+        //}
+        ////简写
+        //if (temp == null) {//'null','object'
+        //    alert('不可用');
+        //} else {
+        //    alert('可用');
+        //}
+
+        //var date = new Date();
+        //alert(typeof (date));
+        //alert(typeof (Date));//function
+        //alert(typeof (Date()));//调用Date()方法返回表示当前时间的字符串，类型为string
+        
+        //判断是否不是一个数字
+        //var temp2 = 'abc';//根据字面值判断,‘123’是数字
+        //alert(isNaN(temp2));
+
+
+        //将一段字符串当作js代码执行
+        //应用场景：当从文本框中获取值时，得到的是字符串，如果希望那段字符串当作js执行，则使用eval()方法
+        //eval('alert("abc");');
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+重点
+属性选择器：[属性] = != *= ^= $=  [][][]
+表单选择器：[type=] :text
+	:enabled :disabled :checked :selected
+
+了解
+方法的调用及this
+
+作业：今天的所有练习
+	总结js、dom、jquery

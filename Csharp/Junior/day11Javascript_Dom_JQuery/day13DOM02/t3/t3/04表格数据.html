@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        var bgColor;
+        var list = [
+            { id: '1', country: '中国', capital: '北京' },
+            { id: '2', country: '美国', capital: '华盛顿' },
+            { id: '3', country: '日本', capital: '东京' },
+            { id: '4', country: '韩国', capital: '首尔' }
+        ];
+        onload = function() {
+            var body = document.getElementsByTagName('body')[0];
+            
+            //创建表格
+            var table = document.createElement('table');
+            table.border = 1;
+            body.appendChild(table);
+            
+            //创建标题行
+            var thead = document.createElement('thead');
+            var item0 = list[0];
+            for (var key0 in item0) {
+                //创建标题单元格
+                var th = document.createElement('th');
+                th.innerText = key0;
+                thead.appendChild(th);
+            }
+            table.appendChild(thead);
+
+            for (var i = 0; i < list.length; i++) {
+                //遍历对象
+                var item = list[i];
+                //创建行
+                var tr = document.createElement('tr');
+                table.appendChild(tr);
+                //注册事件
+                tr.onmouseover = function () {//指向行时高亮
+                    //改变颜色前，先获取值，用于恢复
+                    bgColor = this.style.backgroundColor;
+                    this.style.backgroundColor = 'green';
+                };
+                tr.onmouseout = function() {//移开行时恢复原来颜色
+                    this.style.backgroundColor = bgColor;
+                };
+                //设置行的背景色
+                if (i % 2 == 0) {
+                    tr.style.backgroundColor = 'red';
+                } else {
+                    tr.style.backgroundColor = 'blue';
+                }
+                
+                //遍历对象
+                for (var key in item) {
+                    //创建单元格
+                    var td = document.createElement('td');
+                    td.innerText = item[key];
+                    tr.appendChild(td);
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,11 @@
+重点
+操作样式：style.****
+	特例：backgroundColor,cssFloat
+控制层的显示：display,none,block
+form:onsubmit
+模拟事件：onclick->click()
+
+了解
+正则表达式,test,exec,字符串对象的replace
+
+作业：密码级别验证

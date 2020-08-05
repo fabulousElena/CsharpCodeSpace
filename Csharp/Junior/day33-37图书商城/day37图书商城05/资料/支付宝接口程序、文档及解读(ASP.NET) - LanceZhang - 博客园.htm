@@ -1,0 +1,907 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0065)http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/analytics.js"></script>
+
+<title>支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/bundle-SimpleBlue.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/blodfox777/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/blodfox777/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/blodfox777/wlwmanifest.xml">
+<script async="" type="text/javascript" src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/gpt.js"></script><script src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'blodfox777', cb_enable_mathjax=false;</script>
+<script src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/blog-common.js" type="text/javascript"></script>
+<script async="" type="text/javascript" src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/pubads_impl_55.js"></script><script type="text/javascript" src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/osd.js"></script></head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/blodfox777/">LanceZhang's Tech Blog</a></div>
+<div class="subtitle">Dear Friends, welcome to my tech blog. Hope you can find helpful information here.</div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/blodfox777/">首页</a></li>
+<li id="nav_q"><a class="menu" href="http://q.cnblogs.com/">博问</a></li>
+<li id="nav_ing"><a class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+<li id="nav_newpost"><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/LanceZhang">联系</a></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/blodfox777/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/blodfox777/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-208&nbsp;
+文章-8&nbsp;
+评论-1406&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园.htm">支付宝接口程序、文档及解读(ASP.NET)</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>最近需要为网站加入支付宝的充值接口，而目前关于支付宝接口开发的资料比较杂乱，这里就我此次开发所用到的资料进行汇总整理，希望能够帮助需要的朋友。</p>
+<h1>开发步骤：</h1>
+<h2>1. 确定签约类型</h2>
+<p>支付宝的接口有多种类型，所以首先你要确定签约的合同类型，确定使用的是哪个接口，不至于走错了道道。</p>
+<p>此步骤中，可以参考文档：<a href="http://www.112club.cn/attachment.php?aid=71&k=8e608032e8a418eca71c19b52c34e142&t=1245898246&fid=23&sid=cb9eYGM2eZm%2BSwkfh0NMVjlM29BdI9HNEF5XCBOQh0t864Q" target="_blank">支付宝接口操作教程 </a></p>
+<h2>2. 下载开发文档</h2>
+<p>如果是即时到账的开发，请先下载并仔细阅读：<a href="http://www.112club.cn/attachment.php?aid=9&k=32b76fc4b77ab1a02fceba8654e6be49&t=1245647419&fid=3&sid=5f0dJDBzW%2BeBRRRGz6nofMPoeJOLpYQckdLRRLBhq27kZOI" target="_blank">标准快速付款接口文档</a></p>
+<p>文档中比较详细的介绍了逻辑流程，时序图以及枚举定义等，最好在看示例代码之前通读之</p>
+<h2>3. 获取签约账号的支付宝安全校验码（key）和合作id：partner</h2>
+<p>支付宝示例程序的调试需要商户号和相应的密钥，否则无法进行程序的调试，具体获取方法请查看官方帮助，不再赘述</p>
+<h2>4. 下载支付宝示例程序</h2>
+<blockquote style="margin-right: 0px" dir="ltr">
+<p align="left"><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">asp 即时到账接口代码实例：<a style="color: rgb(51,51,51); text-decoration: underline" href="http://union.alipay.com/alipay/zhichi/jishi/asp.rar" target="_blank"><span style="color: blue; font-size: 10pt">点此下载</span></a><span class="Apple-converted-space">&nbsp;</span></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">(31.62 KB)<span class="Apple-converted-space">&nbsp;</span><br><br></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">php_GBK 即时到账接口代码实例：<a style="color: rgb(51,51,51); text-decoration: underline" href="http://union.alipay.com/alipay/zhichi/jishi/php.rar" target="_blank"><span style="color: blue; font-size: 10pt">点此下载</span></a><span class="Apple-converted-space">&nbsp;</span></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">(22.02 KB)<span class="Apple-converted-space">&nbsp;</span><br><br></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">php_UTF-8 即时到账接口代码实例：<a style="color: rgb(51,51,51); text-decoration: underline" href="http://union.alipay.com/alipay/zhichi/jishi/php-utf-8.rar" target="_blank"><span style="color: blue; font-size: 10pt">点此下载</span></a><span class="Apple-converted-space">&nbsp;</span></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">(22.02 KB)<span class="Apple-converted-space">&nbsp;</span><br><br></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">net_05_GBK(post方式) 即时到账接口代码实例:<a style="color: rgb(51,51,51); text-decoration: underline" href="http://union.alipay.com/alipay/zhichi/jishi/net05_gbk_post.rar" target="_blank"><span style="color: blue; font-size: 10pt">点此下载</span></a><span class="Apple-converted-space">&nbsp;</span></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">(12.03 KB)<span class="Apple-converted-space">&nbsp;</span><br><br></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">net_05_UTF-8(post方式) 即时到账接口代码实例:<span class="Apple-converted-space">&nbsp;</span><a style="color: rgb(51,51,51); text-decoration: underline" href="http://union.alipay.com/alipay/zhichi/jishi/net05_utf-8(aspx).rar" target="_blank"><span style="color: blue; font-size: 10pt">点此下载</span></a><span class="Apple-converted-space">&nbsp;</span></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">(10.72 KB)<span class="Apple-converted-space">&nbsp;</span><br><br></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">java_GBK(get方式) 即时到账接口代码实例:<a style="color: rgb(51,51,51); text-decoration: underline" href="http://union.alipay.com/alipay/zhichi/jishi/jsp_direct_gbk.rar" target="_blank"><span style="color: blue; font-size: 10pt">点此下载</span></a><span class="Apple-converted-space">&nbsp;</span></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">(136.54 KB)<span class="Apple-converted-space">&nbsp;</span><br><br></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">java_UTF-8 (get方式)即时到账接口代码实例:<a style="color: rgb(51,51,51); text-decoration: underline" href="http://union.alipay.com/alipay/zhichi/jishi/jsp_direct_utf.rar" target="_blank"><span style="color: blue; font-size: 10pt">点此下载</span></a><span class="Apple-converted-space">&nbsp;</span></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt" class="Apple-style-span">(112.67 KB)<span class="Apple-converted-space">&nbsp;</span></span></span></p></blockquote>
+<h2>&nbsp;5. 支付宝示例程序的解读</h2>
+<p>&nbsp;下面内容转自<a href="http://dev.alipay.com/devclub/mvnforum/viewthread_thread,161_offset,0" target="_blank">http://dev.alipay.com/devclub/mvnforum/viewthread_thread,161_offset,0</a></p>
+<blockquote style="margin-right: 0px" dir="ltr">
+<p><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span">大家想必都有这种困惑——拿到支付宝的接口代码后，尽管里面的程序有注释，接口代码包中也附有开发说明，但还是不知道该如何入手。这不难想象是什么原因，因为自己并不了解这个接口的工作原理是什么？<br>那么这篇文章就是要向大家全面展示关于支付宝接口的所有东西，以便大家能快速上手把接口接入自己的项目中，也能帮助那些已经对支付宝接口有所了解的程序开发者们更了解支付宝的一些通用规则、特殊用途等。<br><br>正题开始——<br><br><span style="color: red"><font size="4"><strong>一、 结构</strong></font><span class="Apple-converted-space">&nbsp;</span></span><br><span style="color: blue">a) 一般由两部分组成，接入部分与通知返回部分。接入部分即为传递参数等信息组合成超级链接，并用该链接来进行跳转。通知返回部分则是支付宝服务器对该笔订单处理完毕后，通知与返回该笔订单的详细信息到商户服务器，商<br></span>户服务器接收到后，并对其进行数据处理。<span class="Apple-converted-space">&nbsp;</span><br>b) 以实物标准双接口ASP代码中的程序为例。<span class="Apple-converted-space">&nbsp;</span><br></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span">i. 接入部分的页面文件包含：配置页alipay_Config.asp、方法详细页alipay/Alipay_Payto.asp、程序入口页index.asp以及MD5加密方法类页alipayto/Alipay_md5.asp。<br></span><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span">ii. 通知返回部分的页面文件包含：方法详细页alipay/Alipay_Payto.asp、MD5加密方法类页alipayto/Alipay_md5.asp、支付完成后（支付宝处理完毕后）自动跳转回的自定义页面return_Alipay_Notify.asp、两方服务器间相互交互（肉眼无法见到的）通知页Alipay_Notif<br></span>y.as<span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span">p。<br>这里大家可以一目了然，MD5加密方法类与方法详细页不论是哪部分都有被调用，因此这两个文件可视为核心代码部分，若想理解接口的工作原理则要从该部分入手。&nbsp;<br>c) 以实物标准双接口的ASP.NET C#语言代码程序为例：<br>i. 接入部分的页面文件包含：无需更改的ALIPAY的类文件App_Code/AliPay.cs及入口页面文件Default.aspx<br>ii. 通知返回部分的页面文件包含：两方服务器间相互交互（肉眼无法见到的）通知页Alipay_Notify.aspx、支付完成后（支付宝处理完毕后）自动跳转回的自定义页面Alipay_Return.aspx、<br>无需更改的ALIPAY的类文件App_Code/AliPay.cs<br>这个架构是否更容易理解了？没错，核心部分的运算过程就在AliPay.cs这个文件中。</span></span></p>
+<p><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span"><span style="color: rgb(220,20,60)"></span></span></span>&nbsp;</p>
+<p><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span"><span style="color: red"><font size="4"><strong>二、 工作原理</strong></font></span><br>大家对结构部分已经有所了解，那么我们就开始分析具体的这个接口是如何运作的。<br><span style="color: blue"><font size="3">a) 接入部分原理</font></span><br><span style="color: rgb(160,82,45)">i. 第一步——选定参数信息：</span><span class="Apple-converted-space">&nbsp;</span><br>结合技术文档以及接口代码DEMO，选定传递给支付宝服务器的参数，以实物标准双接口为例。如必传项service、partner、seller_email、sign、sign_type、out_trade<br>_no、price、subject、quantity、payment_type以及最少一组的物流信息参数三个logistics_type、logistics_fee、logistics_payment<br>等，选填项body、discount、show_url等。<br>以ASP.NET C#语言代码程序为例：<br></span></span></p>
+<div style="border-bottom: rgb(136,136,136) 1px solid; border-left: rgb(136,136,136) 1px solid; padding-bottom: 2px; padding-left: 2px; padding-right: 2px; border-top: rgb(136,136,136) 1px solid; border-right: rgb(136,136,136) 1px solid; padding-top: 2px" class="divcode"><code class="prettyprint"><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>service<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"trade_create_by_buyer"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>seller_email<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"aaaa@126.com"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>sign_type<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"MD5"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>key<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"********************************"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>partner<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"2088************"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>_input_charset<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"utf-8"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>show_url<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"</span><a style="color: rgb(51,51,51); text-decoration: underline" href="http://www.alipay.com/%22;" target="_blank"><span style="color: rgb(0,136,0)" class="str">http://www.alipay.com/"</span><span style="color: rgb(102,102,0)" class="pun">;</span></a><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>out_trade_no<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">TxtOrderno</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Text</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Trim</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>subject<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">TxtSubject</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Text</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Trim</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>body<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">TxtBody</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Text</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Trim</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>price<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">TxtPrice</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Text</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Trim</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>quantity<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">TxtQua</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Text</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Trim</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>logistics_type<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"POST"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>logistics_fee<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">TxtPost</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Text</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Trim</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>logistics_payment<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"BUYER_PAY"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>notify_url<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"</span><a style="color: rgb(51,51,51); text-decoration: underline" href="http://www.xxx.com/swnet05utf8/Alipay_Notify.aspx%22;" target="_blank"><span style="color: rgb(0,136,0)" class="str">http://www.xxx.com/swnet05utf8/Alipay_Notify.aspx"</span><span style="color: rgb(102,102,0)" class="pun">;</span></a><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>return_url<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"</span><a style="color: rgb(51,51,51); text-decoration: underline" href="http://www.xxx.com/swnet05utf8/Alipay_Return.aspx%22;" target="_blank"><span style="color: rgb(0,136,0)" class="str">http://www.xxx.com/swnet05utf8/Alipay_Return.aspx"</span><span style="color: rgb(102,102,0)" class="pun">;</span></a></code></div>
+<p><br><span style="color: rgb(160,82,45)">ii. 第二步——排序：</span><span class="Apple-converted-space">&nbsp;</span><br>把这些参数的变量名（即技术文档里给出的变量名，以这种方式组合：service=”trade_create_by_buyer”作为一串字符串）按从a到z的顺序依次排序。以ASP.NET C#语言代码程序为例，该功能在ALIPAY.CS类中；以ASP代码中的程序为例，该功能在alipayto/Alipay_Payto.asp文件中。<br><span style="color: rgb(160,82,45)">iii. 第三步——加密：</span><span class="Apple-converted-space">&nbsp;</span><br>目前一般的加密方式是MD5，不论是哪种加密方式，要加密的信息是要传给支付宝的信息，且存在于技术文档中，而非自定义的变量名。对以上排序好的所有参数（不包括网关参数即：string gateway = "<a style="color: rgb(51,51,51); text-decoration: underline" href="https://www.alipay.com/cooperate/gateway.do?%22" target="_blank">https://www.alipay.com/cooperate/gateway.do?"</a><span class="Apple-converted-space">&nbsp;</span>;）以循环的方式，用‘&amp;’字符拼接成一长串字符串（<span style="color: rgb(220,20,60)">这里需要注意，所有的参数都是&amp;字符来拼接的，拼接后直接再拼接安全校验码Key,在程序中大家可看到，这个key是直接加到该字符串后面而没有用&amp;字符</span><span class="Apple-converted-space">&nbsp;</span>），之后进行加密。得出的加密字符串集存储于sign这个参数中。<br><span style="color: rgb(160,82,45)">iv. 第四步——拼接字符串成URL链接</span><span class="Apple-converted-space">&nbsp;</span><br>我们已经拿到了各个参数、参数所属的值以及加密得出的加密字符串，那么手上现在的所有参数信息的格式，应当都是一组一组的service=”trade_create_by_buyer”这种格式的字符串，拼接的话，则依靠循环的方式遍历所有的这种字符串，因为这次的拼接是要成URL链接，所以之前排除在外的网关gaetway和加密类型参数sig<br>n_type也都会被拼接进来，那么，连接的字符则用大家所熟知的字符’&amp;’，就这样得出一个完整的URL链接地址，如：<br></p>
+<div style="border-bottom: rgb(136,136,136) 1px solid; border-left: rgb(136,136,136) 1px solid; padding-bottom: 2px; padding-left: 2px; padding-right: 2px; border-top: rgb(136,136,136) 1px solid; border-right: rgb(136,136,136) 1px solid; padding-top: 2px" class="divcode"><code class="prettyprint"><a style="color: rgb(51,51,51); text-decoration: underline" href="https://www.alipay.com/cooperate/gateway.do?seller_email=test%40126.com&discount=0&logistics_fee=0.01&notify_url=http%3A%2F%2Flocalhost%3A8088%2Fjsp_shi_gbk%2Falipay_notify.jsp&payment_type=1&service=trade_create_by_buyer&partner=2088002123456782&_input_charset=utf-8&logistics_type=EMS&price=0.01&out_trade_no=20081115162330&subject=AAA20081115162330&logistics_payment=SELLER_PAY&quantity=1&body=%E6%94%AF%E4%BB%98%E5%AE%9D%E6%B5%8B%E8%AF%95&return_url=http%3A%2F%2Flocalhost%3A8088%2Fjsp_shi_gbk%2Falipay_return.jsp&sign=a7ffc1c8ba85df972bb472adc3d199ba&sign_type=MD5" target="_blank"><span style="color: rgb(0,0,0)" class="pln">https</span><span style="color: rgb(102,102,0)" class="pun">:</span><span style="color: rgb(136,0,0)" class="com">//www.alipay.com/cooperate/gateway.do?s...3d199ba&amp;sign_type=MD5</span></a></code></div>
+<p><br>该链接来自支付宝官方的技术文档“标准实物双接口技术文档”<br><span style="color: rgb(160,82,45)">v. 第五步——自动跳转</span><span class="Apple-converted-space">&nbsp;</span><br>第四步中已经运算得出的URL链接字符串，我们则要让其活起来，那么活起来的方式就是——用程序调用它，也就是所谓的页面自动跳转。这样就能跳到支付宝的官方收银台页面。<br><span style="color: rgb(220,20,60)">可以说，现在已经成功的把支付宝接口融合进了大家自己的网站中，且能够使用支付宝来进行付款了。</span><span class="Apple-converted-space">&nbsp;</span><br><span style="color: blue"><font size="3">b) 通知返回部分原理</font></span><br><span style="color: purple">i. 专业术语</span><span class="Apple-converted-space">&nbsp;</span><br>通知返回是两个页面，即传递给支付宝时的notify_url参数所对应的页面文件（asp.net的是Alipay_Notify.aspx、asp的是Alipay_Notify.asp）称之为通知页，传递<br>给支付宝时的return_url参数所对应的页面文件（asp.net的是Alipay_Return.aspx、asp的是return_Alipay_Notify.asp）称之为返回页。<br><span style="color: purple">ii. 通知返回原理</span><span class="Apple-converted-space">&nbsp;</span><br><span style="color: rgb(160,82,45)">1. 第一步——验证是否是支付宝服务器发来的请求：</span><span class="Apple-converted-space">&nbsp;</span><br>a) 以asp程序代码为例：<br></p>
+<div style="border-bottom: rgb(136,136,136) 1px solid; border-left: rgb(136,136,136) 1px solid; padding-bottom: 2px; padding-left: 2px; padding-right: 2px; border-top: rgb(136,136,136) 1px solid; border-right: rgb(136,136,136) 1px solid; padding-top: 2px" class="divcode"><code class="prettyprint"><span style="color: rgb(0,0,0)" class="pln">alipayNotifyURL<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"</span><a style="color: rgb(51,51,51); text-decoration: underline" href="http://notify.alipay.com/trade/notify_query.do?%22" target="_blank"><span style="color: rgb(0,136,0)" class="str">http://notify.alipay.com/trade/notify_query.do?"</span></a><span style="color: rgb(0,0,0)" class="pln"><br>alipayNotifyURL<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>alipayNotifyURL<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">&amp;</span><span style="color: rgb(0,136,0)" class="str">"partner="</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">&amp;</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>partner<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">&amp;</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"&amp;notify_id="</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">&amp;</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>request</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,136,0)" class="str">"notify_id"</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Set</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Retrieval</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Server</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">CreateObject</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,136,0)" class="str">"Msxml2.ServerXMLHTTP.3.0"</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Retrieval</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(0,0,0)" class="pln">setOption<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,102,102)" class="lit">2</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,102,102)" class="lit">13056</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span><br>&nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Retrieval</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(0,0,0)" class="pln">open<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"GET"</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>alipayNotifyURL</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">False</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">""</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">""</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span><br>&nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Retrieval</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(0,0,0)" class="pln">send</span><span style="color: rgb(102,102,0)" class="pun">()</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">ResponseTxt</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Retrieval</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">ResponseText</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Set</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Retrieval</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>Nothing</span></code></div>
+<p><br>得到的便是ResponseTxt的值，这是下面的步骤要用到的。<br>b) 以asp.net C#程序代码为例：<br></p>
+<div style="border-bottom: rgb(136,136,136) 1px solid; border-left: rgb(136,136,136) 1px solid; padding-bottom: 2px; padding-left: 2px; padding-right: 2px; border-top: rgb(136,136,136) 1px solid; border-right: rgb(136,136,136) 1px solid; padding-top: 2px" class="divcode"><code class="prettyprint"><span style="color: rgb(0,0,0)" class="pln">&nbsp; &nbsp;</span><span style="color: rgb(136,0,0)" class="com">//获取远程服务器ATN结果，验证是否是支付宝服务器发来的请求</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">public</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">String</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>Get_Http</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(102,0,102)" class="typ">String</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>a_strUrl</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">int</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>timeout</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strResult</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">try</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">HttpWebRequest</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>myReq<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(102,0,102)" class="typ">HttpWebRequest</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(102,0,102)" class="typ">HttpWebRequest</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Create</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,0,0)" class="pln">a_strUrl</span><span style="color: rgb(102,102,0)" class="pun">);</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; myReq</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Timeout</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>timeout</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">HttpWebResponse</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">HttpWResp</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(102,0,102)" class="typ">HttpWebResponse</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(0,0,0)" class="pln">myReq</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">GetResponse</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Stream</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>myStream<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">HttpWResp</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">GetResponseStream</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">StreamReader</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>sr<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">new</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">StreamReader</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,0,0)" class="pln">myStream</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Encoding</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Default</span><span style="color: rgb(102,102,0)" class="pun">);</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">StringBuilder</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strBuilder<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">new</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">StringBuilder</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">while</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(-</span><span style="color: rgb(0,102,102)" class="lit">1</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">!=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>sr</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Peek</span><span style="color: rgb(102,102,0)" class="pun">())</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; strBuilder</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Append</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,0,0)" class="pln">sr</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">ReadLine</span><span style="color: rgb(102,102,0)" class="pun">());</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span><span style="color: rgb(0,0,0)" class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; strResult<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strBuilder</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">ToString</span><span style="color: rgb(102,102,0)" class="pun">();</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">catch</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(102,0,102)" class="typ">Exception</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>exp</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; strResult<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"错误："</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">+</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>exp</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Message</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span><span style="color: rgb(0,0,0)" class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">return</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strResult</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br></span><span style="color: rgb(102,102,0)" class="pun">}</span></code></div>
+<p><br>调用部分：<br></p>
+<div style="border-bottom: rgb(136,136,136) 1px solid; border-left: rgb(136,136,136) 1px solid; padding-bottom: 2px; padding-left: 2px; padding-right: 2px; border-top: rgb(136,136,136) 1px solid; border-right: rgb(136,136,136) 1px solid; padding-top: 2px" class="divcode"><code class="prettyprint"><span style="color: rgb(0,0,0)" class="pln">&nbsp; &nbsp; &nbsp; &nbsp;</span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>alipayNotifyURL<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"</span><a style="color: rgb(51,51,51); text-decoration: underline" href="https://www.alipay.com/cooperate/gateway.do?service=notify_verify%22;" target="_blank"><span style="color: rgb(0,136,0)" class="str">https://www.alipay.com/cooperate/gateway.do?service=notify_verify"</span><span style="color: rgb(102,102,0)" class="pun">;</span></a><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>partner<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"2088************"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp; alipayNotifyURL<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>alipayNotifyURL<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">+</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"&amp;partner="</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">+</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>partner<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">+</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"&amp;notify_id="</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">+</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"notify_id"</span><span style="color: rgb(102,102,0)" class="pun">];</span><span style="color: rgb(0,0,0)" class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(136,0,0)" class="com">//获取支付宝ATN返回结果，true是正确的订单信息，false 是无效的</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>responseTxt<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>Get_Http</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,0,0)" class="pln">alipayNotifyURL</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,102,102)" class="lit">120000</span><span style="color: rgb(102,102,0)" class="pun">);</span></code></div>
+<p><br>得到的便是ResponseTxt的值，这是下面的步骤要用到的。<br><span style="color: rgb(160,82,45)">2. 第二步——排序：</span><span class="Apple-converted-space">&nbsp;</span><br>该部分的排序的原理与“接入部分”的原理“排序步骤”一样，<span style="color: rgb(220,20,60)">值得注意的是</span><span class="Apple-converted-space">&nbsp;</span>，这里的参数是支付宝通知返回时，传回来的订单信息的各种参数以及值。<br><span style="color: rgb(160,82,45)">3. 第三步——加密：</span><span class="Apple-converted-space">&nbsp;</span><br>该部分的加密原理与“接入部分”的原理“加密步骤”一样，依然值得注意的部分是加密的参数信息，这些参数信息是来源于上面一步骤排序好后的参数拼接起来的字符串来加密的。<br><span style="color: rgb(160,82,45)">4. 第四步——判断：</span><span class="Apple-converted-space">&nbsp;</span><br>上面我们有得到加密的结果（命名为mysign吧）、检验是否是支付宝发来的消息的正确性ResponseTxt、以及通过POST或GET的方式得到的sign参数的值，那么这个判断的含义便是通知返回里最重要<br>的部分了，因为它是来检验下面的程序是否执行我们的数据处理的。如何判断呢？各语言程序代码中，都是把加密得出的结果mysign与从支付宝那或得到的sign的值进行比较，并且还要让reponseTxt这个的<br>值要等于true，这样才达到验证成功。<span style="color: rgb(220,20,60)">值得注意的是</span><span class="Apple-converted-space">&nbsp;</span>，大家都有遇到过这种事，支付部分即接入部分的确是做好了，但为什么无法与支付宝的交易信息同步，出现的问题就在这个判断上没有成功，下面的第五部分则会详细说明。<br><span style="color: rgb(160,82,45)">5. 第五步——自身网站的数据处理</span><span class="Apple-converted-space">&nbsp;</span><br>终于判断成功了，程序已经执行到了这里。各语言程序代码的这块地方的注释都写着“更新自己数据库的订单语句”或是“这里可以指定你需要显示的内容”。如字面上的意思，这块地方就是要我们大家来对这笔交易信息进行数<br>据处理，即编写程序。这个说法大概专业了点，简单易懂的讲法便是，支付宝的交易成功的信息和其他的一切交易状态，自己的网站也能够对这笔订单同步起来，即支付宝里这笔订单的交易状态是“买家已付款等待卖家发货”，<br>那么自己网站里显示的这笔状态也因如此，那么就应当在这里面写下诸如：<br></p>
+<div style="border-bottom: rgb(136,136,136) 1px solid; border-left: rgb(136,136,136) 1px solid; padding-bottom: 2px; padding-left: 2px; padding-right: 2px; border-top: rgb(136,136,136) 1px solid; border-right: rgb(136,136,136) 1px solid; padding-top: 2px" class="divcode"><code class="prettyprint"><span style="color: rgb(0,0,0)" class="pln">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span style="color: rgb(0,0,136)" class="kwd">if</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"trade_status"</span><span style="color: rgb(102,102,0)" class="pun">]</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">==</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"WAIT_SELLER_SEND_GOODS"</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(136,0,0)" class="com">// &nbsp; 判断支付状态_买家付款成功,等待卖家发货（文档中有枚举表可以参考） &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(136,0,0)" class="com">//更新自己数据库的订单语句，请自己填写一下</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strOrderNO<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"out_trade_no"</span><span style="color: rgb(102,102,0)" class="pun">];</span><span style="color: rgb(136,0,0)" class="com">//订单号</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strPrice<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"price"</span><span style="color: rgb(102,102,0)" class="pun">];</span><span style="color: rgb(136,0,0)" class="com">//金额</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>sql<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"update order_table set order_status = ‘买家已付款，等待卖家发货’ where order_no = "</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">+</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strOrderNO</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Update</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,0,0)" class="pln">sql</span><span style="color: rgb(102,102,0)" class="pun">);</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span></code></div>
+<p><br>等数据库处理代码。<br><span style="color: purple">iii. 存在的区别</span><span class="Apple-converted-space">&nbsp;</span><br>1. 大家仔细阅读代码不难发现，在通知页中程序运行时，获取参数的方法是用POST方式，而返回页中程序运行时，获取参数的方法是用GET方式。由此可知一些基本的信息——返回页传递回来的参数信息是储存在URL链接<br>里的，而通知页的参数信息是不在URL链接里，也能从中推断出二者在功能上的差异。<span class="Apple-converted-space">&nbsp;</span><br>2. 大家可看到通知页面比返回页中多一个环节，那就是Response.Write("success");<br>作用上不同的详细说明，大家可以看下面的第四部分。</p>
+<p>&nbsp;</p>
+<p><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span"><span style="color: red"><font size="4"><strong>三、 参数</strong></font></span><br>首先大家有个疑问，技术文档中的输入参数列表中给出了诸多参数，而手上拿到的代码里只写了一部分参数来进行传递信息，这究竟是为什么？那么我们先带着这个疑问往下看。<br><span style="color: red">以下讨论的参数不涵盖网关gateway、加密参数sign、加密类型sign_type，因为这些都是必须的。</span><br>以实物标准双接口为例，可把参数看做几个功能部分组成<br><span style="color: blue">a) 不可缺少的参数</span><br>i. <span style="color: red">service服务参数</span>，这个是用来区别这个接口是用的什么接口，所以绝对不能修改。<br>ii. <span style="color: red">partner合作身份者ID、key安全校验码或称私钥</span>这一组参数是签约合同生效后才能拿的到，partner是来鉴别是哪个商家与支付宝签约，而这个Key它如同钥匙般相当重要。<br>iii. <span style="color: red">seller_email收款人支付宝账号</span>，支付宝中有手机类型、电子邮件类型的支付宝账号是都可以用这个参数的。<br>iv. <span style="color: red">subject</span>在支付宝的收银台里是直接与商品名称关联在一起的，但是说的更准确些的话，这个参数是这笔交易的名称，因为这笔交易不一定只买一件商品。它的作用不仅是在收银台里可以清晰的显示出来，而且在支付宝的账<br>户的交易明细的列表里，它也是排在第一列，由此可推测出，它有财务对账、作为交易查询的筛选条件等诸多作用。非常重要。<br>v. <span style="color: red">out_trade_no</span>技术文档中给出的是商户交易号（确保在商户系统中唯一），顾名思义这个就是我们大家自己网站的订单系统里的唯一订单号，而非支付宝的。这里需要强调的，这个订单号必须得是唯一的，如何唯一法？自己网站<br>里订单系统的订单号是绝对唯一的吧，支付宝要求的唯一就是这个，为什么非要唯一？支付宝会根据订单号来判定这笔订单对于这个商家的所有交易中是否是唯一的。<br>vi. <span style="color: red">price金额、quantity数量</span>，这里设置有两种方式一种商品的单价金额，多个数量（即大于等于1）。另种是数量为1，金额代表总额，甚至是包含了运费。为什么大部分的客户要这么做？原因很简单，第一，购物车里的东西不一定是单纯的<br>一件或者多件相同的商品，那么为商品设置金额时就有困难了，因此这里用总额是最好的，而数量就默认为1。第二，运费的设置很多客户是与各家快递公司签约、每件物品的快递费用也不尽相同，为了省去麻烦，在程序计算的<br>时候干脆把运费也加进去。因此我们只需要记住一件事，这个price的金额就是所谓的总额了。<br>vii. <span style="color: red">payment_type支付类型</span>，没什么可说的直接写成1，无需改动。<br>viii. <span style="color: red">物流信息logistics_type、logistics_fee、logistics_payment这是一组物流信息</span>，实物标准双接口中必须得至少有一组物流信息，也就是指这三个参数了，最多可有三组，哪三组呢？logistics_type_1、logistics_fee_1、logistics_paymen<br>t_1（第二组）；logistics_type_2、logistics_fee_2、logistics_payment_2（第三组）。后两组为可选项。一般前面有说Price已经是总额了且包含了运费，那<br>么这里物流运费就直接设置成0即可，即logistics_fee=”0”，其他两个的信息可参考技术文档来填写，因为要从技术文档中的枚举列表里来选择，所以绝不可乱填写。<br><span style="color: blue">b) 可增加的有用参数</span><br>i. <span style="color: red">物流信息最多三组</span>，最少一组，这已经在前部分有所提及，这里就不再细说。<br>ii. <span style="color: red">_input_charset</span>，当是UTF-8的编码格式时必须得用到且不允许为空的，即_input_charset=”utf-8”<br>iii. <span style="color: red">notify_url、return_url</span>，return_url代表支付完毕后可以自动从支付宝的官方页面跳转回来，notify_url这个是防止调单的首选最佳工具。<br>iv. <span style="color: red">body</span>，在支付宝收银台中的商品描述里显示，如果subject是订单名称的话，那么这个body则最准确的称之为订单描述，其实个人认为它作为备注之类的更为恰当。很多人都很郁闷支付宝为何不能像其他公司<br>的接口有个自定义的参数来存放客户想要的东西，其实body也具有类似的这种功能，它不仅容纳的信息是所有参数里最大的，而且还是以字符串的形式储存，个人认为它其实也是非常重要的不可缺少的参数之一呢。<br>v. <span style="color: red">discount折扣</span>，顾名思义如果小于0，则是用原金额Price*quantity+(discount)，实际金额便比原总额小了。现在有些商户有支付宝的优惠卷，而优惠卷的用途也是在这个参数中体现，具体做法与前<br>面无异。<br>vi. <span style="color: red">show_url商品展示地址</span>，这个链接的作用是在支付宝收银台的商品链接旁边有个下划线“详情”的链接，而点链接弹出的一个新页面便是这个商品展示地址的页面。<br>vii. <span style="color: red">收货信息receive_name、receive_address、receive_zip、receive_phone、receive_mobile</span>，这些信息若也设置为传递给支付宝的参数之一的话，那么在支付宝收银台点选下一步的时候，本该出现的填写收货信息页面不见踪影，而直接跳到了收货信息页面的下一个页面去了。很多商户在自己的网站的购物<br>流程中都有一个填写收货信息的选项卡，为了省去到支付宝收银台中还要填写一次收货信息的麻烦，那么这些收货信息的参数就派上用场了。值得注意的是，收货人姓名和地址是必填项，不然还是会出现收货信息填写页。<br>viii. <span style="color: red">buyer_email买家支付宝账号</span>，这个设置好后呈现的效果便是，原本是空的支付宝账号的输入框此时已经有个支付宝账号在里面放置。<br><span style="color: blue">c) 剩下的参数无需理会</span><br><br>整个实物标准双接口的参数介绍完毕，那么其他接口的参数还要介绍吗？大家从上面分析得出的东西对比技术文档的参数列表是否看出什么来了？<br><br><span style="color: red"><font size="3"><span style="font-size: 10pt">1、 参数列表的最后一列叫“可空”，N代表不允许为空，Y代表允许为空，结合上面的不可缺少参数与增加的有用参数来进行比较，不难发现，不可缺少的参数全是为N的。</span><br><span style="font-size: 10pt">2、 有些为Y的参数有一组，例如buyer_email、buyer_id，凡是遇到这种的一般都是二可选一也可都不选，或是二必选一。举例说明：二必选一的是seller_email、seller_id，二选一的</span><br><span style="font-size: 10pt">是buyer_email、buyer_id。</span><br><span style="font-size: 10pt">所有的接口的参数如此分析就能判断出哪些是重要参数哪些可不要，结合技术文档与程序接口来研究就能一目了然。</span></font></span></span></span></p>
+<p><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span"><span style="color: red"><font size="3"></font></span></span></span>&nbsp;</p>
+<p><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span"><span style="color: red"><font size="4"><strong>四、 通知返回</strong></font></span><br><span style="color: blue"><font size="3">a) 返回页</font></span><br>传递给支付宝时的return_url参数所对应的页面文件。<br>具备的属性：<br><span style="color: rgb(160,82,45)">1、支付接口中买家的购买流程已经走到支付宝里且支付宝提示支付成功时，页面会自动跳转回自身网站的这个页面里来。<br>2、同步的，无时差<br>3、获得参数的方法是用get方式获取。<br>4、不论跳转回来程序判断是真还是假（if(sign = mysign and responseTxt = true)）只跳转回来一次，不重复。<br>5、这个并不是支付宝服务器调用了该页面，而是通过与组合拼接各参数形成的URL链接原理等同，拼接出来的URL链接，之后程序上做自动跳转。<br>6、基于5的原因，该页面的程序调试可不必在服务器上而是本机上调试、运行。</span><span class="Apple-converted-space">&nbsp;</span><br><span style="color: blue"><font size="3">b) 通知页</font></span><br>传递给支付宝时的notify_url参数所对应的页面文件<br>具备的属性：<br><span style="color: rgb(160,82,45)">1、这个通知页就是被支付宝调用才能启动的。<br>2、服务器间的互动，不像返回页肉眼可以看到，这个是看不到的。<br>3、获得参数的方法是用POST方式获取。<br>4、支付宝中的该笔交易存在，且该笔交易状态发生了变更，就会被调用。<br>5、被调用程序判断（if(sign = mysign and responseTxt = true)），若我们自己在该判断中有做程序编写，成功则不再被调用，不成功则会反复被调用。<br>6、异步的，第一次收到订单信息（以下都称之为“通知”）是与返回页近乎等同或等同的同步时间，在判断不成功的情况下，会收到第二次第三次等次数的通知，时间间隔从最先的一两分钟，到后面的几个小时。失效时间是4<br>8小时。<br>7、基于6的原因，该页面的程序调试必须在服务器上调试、运行。<br>8、程序编写时必须采用程序执行成功，才写页面response.Write(“success”);，不成功则写页面response.Write(“fail”); 支付宝根据success来判定是否要重新再次发送通知。<br>9、该页面的Html页面中必须是空白、无任何Html标签、无任何空格。</span><span class="Apple-converted-space">&nbsp;</span><br><br>以C# ASP.NET实物标准双接口代码为例：<br></span></span></p>
+<div style="border-bottom: rgb(136,136,136) 1px solid; border-left: rgb(136,136,136) 1px solid; padding-bottom: 2px; padding-left: 2px; padding-right: 2px; border-top: rgb(136,136,136) 1px solid; border-right: rgb(136,136,136) 1px solid; padding-top: 2px" class="divcode"><code class="prettyprint"><span style="color: rgb(0,0,0)" class="pln">&nbsp; &nbsp; &nbsp; &nbsp;</span><span style="color: rgb(0,0,136)" class="kwd">if</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,0,0)" class="pln">mysign<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">==</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>sign<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">&amp;&amp;</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>responseTxt<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">==</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"true"</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">if</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"trade_status"</span><span style="color: rgb(102,102,0)" class="pun">]</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">==</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"WAIT_BUYER_PAY"</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(136,0,0)" class="com">// &nbsp; 判断支付状态_等待买家付款（文档中有枚举表可以参考） &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(136,0,0)" class="com">//更新自己数据库的订单语句，请自己填写一下</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">else</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">if</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"trade_status"</span><span style="color: rgb(102,102,0)" class="pun">]</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">==</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"WAIT_SELLER_SEND_GOODS"</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(136,0,0)" class="com">// &nbsp; 判断支付状态_买家付款成功,等待卖家发货（文档中有枚举表可以参考） &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(136,0,0)" class="com">//更新自己数据库的订单语句，请自己填写一下</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strOrderNO<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"out_trade_no"</span><span style="color: rgb(102,102,0)" class="pun">];</span><span style="color: rgb(136,0,0)" class="com">//订单号</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strPrice<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"price"</span><span style="color: rgb(102,102,0)" class="pun">];</span><span style="color: rgb(136,0,0)" class="com">//金额</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>sql<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"update order_table set order_status = '买家已付款，等待卖家发货' where order_no = @out_trade_no"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Update</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,0,0)" class="pln">sql</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln">para</span><span style="color: rgb(102,102,0)" class="pun">);</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">else</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">if</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"trade_status"</span><span style="color: rgb(102,102,0)" class="pun">]</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">==</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"WAIT_BUYER_CONFIRM_GOODS"</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(136,0,0)" class="com">// &nbsp; 判断支付状态_卖家已发货等待买家确认（文档中有枚举表可以参考） &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(136,0,0)" class="com">//更新自己数据库的订单语句，请自己填写一下</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strOrderNO<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"out_trade_no"</span><span style="color: rgb(102,102,0)" class="pun">];</span><span style="color: rgb(136,0,0)" class="com">//订单号</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strPrice<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"price"</span><span style="color: rgb(102,102,0)" class="pun">];</span><span style="color: rgb(136,0,0)" class="com">//金额</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>sql<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"update order_table set order_status = '卖家已发货，等待买家确认收货' where order_no = @out_trade_no"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Update</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,0,0)" class="pln">sql</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>para</span><span style="color: rgb(102,102,0)" class="pun">);</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">else</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">if</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"trade_status"</span><span style="color: rgb(102,102,0)" class="pun">]</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">==</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"TRADE_FINISHED"</span><span style="color: rgb(102,102,0)" class="pun">)</span><span style="color: rgb(136,0,0)" class="com">// &nbsp; 判断支付状态_交易成功结束（文档中有枚举表可以参考） &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(136,0,0)" class="com">//更新自己数据库的订单语句，请自己填写一下</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strOrderNO<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"out_trade_no"</span><span style="color: rgb(102,102,0)" class="pun">];</span><span style="color: rgb(136,0,0)" class="com">//订单号</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>strPrice<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Request</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Form</span><span style="color: rgb(102,102,0)" class="pun">[</span><span style="color: rgb(0,136,0)" class="str">"price"</span><span style="color: rgb(102,102,0)" class="pun">];</span><span style="color: rgb(136,0,0)" class="com">//金额</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">string</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>sql<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">=</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,136,0)" class="str">"update order_table set order_status = '交易成功' where order_no = @out_trade_no"</span><span style="color: rgb(102,102,0)" class="pun">;</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Update</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,0,0)" class="pln">sql</span><span style="color: rgb(102,102,0)" class="pun">,</span><span style="color: rgb(0,0,0)" class="pln"><span class="Apple-converted-space">&nbsp;</span>para</span><span style="color: rgb(102,102,0)" class="pun">);</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">else</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(136,0,0)" class="com">//更新自己数据库的订单语句，请自己填写一下</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span><span style="color: rgb(0,0,0)" class="pln"><br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Response</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Write</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,136,0)" class="str">"success"</span><span style="color: rgb(102,102,0)" class="pun">);</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(0,0,136)" class="kwd">else</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">{</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,0,102)" class="typ">Response</span><span style="color: rgb(102,102,0)" class="pun">.</span><span style="color: rgb(102,0,102)" class="typ">Write</span><span style="color: rgb(102,102,0)" class="pun">(</span><span style="color: rgb(0,136,0)" class="str">"fail"</span><span style="color: rgb(102,102,0)" class="pun">);</span><span style="color: rgb(0,0,0)" class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp;<span class="Apple-converted-space">&nbsp;</span></span><span style="color: rgb(102,102,0)" class="pun">}</span></code></div>
+<p><br>c) 在支付宝的众多接口中，不是所有的接口都拥有通知页与返回页的。<br>有的接口只有返回页；有的接口有通知页且用XML格式的内容显示在当前页面中；有的没有通知页也没有返回页仅仅只以XML格式的内容显示在当前页面中。所以，我们要根据各接口的技术文档与程序实例来做相应的数据处<br>理。<br><span style="color: blue"><font size="3">d) 大家这里存在一个疑问，一般大家的做法都是把数据库更新些在返回页中，但是很多情况下出现了订单不同步即掉单现象。这是为什么？</font></span><br>答：返回页是当前页面自动跳转的，这虽然跳转的反应速度不错，但人的手动关闭该页面操作绝对可以使之在没有跳转回来之前就关掉了该页面，此时原本该数据库更新的程序并没有被启动，这样直接导致了掉单，所以一般大商<br>户，<span style="color: red">尤其是网络游戏行业的即时到帐充值的技术做法是：返回页中有订单处理程序，通知页中也有，当返回页中的订单没做过处理时，通知页中的数据处理程序便启动；这样即可近乎100%解决掉单问题（还有种掉单原因是大家自己的服务器出现问题，比如MS3XML.DLL问题，这个问题至今没有什么可以解决的办法，只能重装或是更换服务器，也有的服务器因为中毒才导致的）。</span></p>
+<p><span style="color: red"></span>&nbsp;</p>
+<p><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span"><span style="color: red"><font size="4"><strong>五、 调试</strong></font></span><br>接入部分做好了，通知返回部分也做好了，那么开始调试吧。<br>调试也分成两大部分来做。<br>a) 部分网站用了框架模式frame，但这个并不适用支付宝的接口程序，因此<span style="color: red">绝对不能把支付宝的接口页面置于整个网站的框架之下</span>。<br>b) 确定好要用POST还是GET方式来传递参数，二者不能混用。由于有些网站中不一定只有一个接口入口，所以整个网站都必须保持一致性，不能这个接口用POST，那个接口用GET，这样直接导致后续出现一系列连查找<br>原因都极其困难的现象。<br>c) <span style="color: red">接入部分的调试工作</span>，则是输入支付宝要求的格式的值，如subject、body的值不允许有非法字符、金额格式必须是小数点后两位数或是正整数且不是金额格式（即$123.00），以及非常重要的一个原则，传递的参数要么不传递这个参数（即传递的众多参数中，这个参数完全不存在），要么这个参数不允许为空。很多人在调试时支付出现一系列“调试错误”有很大的一部分原因就是参<br>数的设置存在问题。<br>d) 编码格式一定要确认再确认，<span style="color: red">在支付时直接出现“调试错误，SIGN不对”只有两种原因，一是C部分已提到的参数的设置问题，另一个便是这个编码格式的问题</span>。编码格式是非常重要的，绝对不能这个地方用GBK，另个地方用utf-8。<br>e) 通过接口走一次真实的操作，若是支付接口，则走一笔真实的交易，金额则是0.01元（支付宝是没有测试环境的，所以请老实的使用自己签约的号去走真实交易），不要觉得很麻烦，也不要把这个工作交个经理或者你的老板<br>来做，因为它直接关系到你后续的操作步骤与调试的顺畅程度。<br>f) 返回部分在本机电脑上就可以调试完毕，之前有提到不要把支付测试工作交给自己以外的其他人，这里就可以得到充分的说明，不论是哪种语言都拥有自己风格的单步监控程序代码的能力，<span style="color: red">返回部分就要一步一步监控程序的执行，确保1、是否执行到了“mysign == sign &amp;&amp; responseTxt == "true"”，这个IF语句的判断；2、是否进入了这个语句里而不是else里；3、数据库更新程序是否执行成功，而不是卡着不动了；4、数据库更新完毕后，程序是否走完。基本出现问题的地方就在第一步，所以不要<br>觉得奇怪为什么掉单？</span><br>g) <span style="color: red">通知页的调试</span>，这个调试就比较麻烦了，首先这个支付宝接口已经完成且放在了服务器上，别人可以通过互联网来进行支付；其次，要把通知页中的“写日志”程序启动起来，日志内容主要记录trade_status、tr<br>ade_no、out_trade_no、price、sign、mysign、responseTxt等。一般出现的原因依旧是“mysign == sign &amp;&amp; responseTxt == "true"”这个判断上不被通过。<br><span style="color: blue">具体检测方式：<br>1、直接用互联网访问<a style="color: rgb(51,51,51); text-decoration: underline" href="http://www.xxx.com/alipay/notify_url.asp" target="_blank">http://www.xxx.com/alipay/notify_url.asp</a><br>访问是否能够访问得到，且显示"fail"的字眼，其他如空白或是其他程序错误提示等内容，均属程序执行出错。<br>2、程序是否执行到，sign=mysgin and responseTxt = "true"这个判断中，如果执行到这个判断时跳到ELSE的判断语句去了，则表示您的接口程序在支付时传递的参数信息或是您的编码格式、合作身份者ID与安全校验码的设置存在问题。<br>3、程序已经执行到sign=mysgin and responseTxt = "true"这个判断中，却没有执行到response.Write("success")这句话，说明您自己编写进去的程序代码执行出错，请检查。</span></span></span></p>
+<p><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span"><font size="4"><span style="color: red"><strong>六、 其他</strong></span><span class="Apple-converted-space">&nbsp;</span></font><br>a) 有些接口，例如支付的接口，是支持POST或者GET方式传递参数的。<br>i. POST传递方式：<br>这里需要注意的地方是：&lt;form action=” aliay_url” …&gt;中action的值是网关+编码格式参数，即<a style="color: rgb(51,51,51); text-decoration: underline" href="https://www.alipay.com/cooperate/gateway.do?_input_charset=utf-8%EF%BC%8CGBK%E7%9A%84%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E5%8F%AF%E4%BB%A5%E4%B8%BA%EF%BC%9Ahttps://www.alipay.com/cooperate/gateway.do?%E3%80%82" target="_blank">https://www.alipay.com/cooperate/gateway.do?_input_charset=utf-8，GBK的编码格式可以为：https://www.alipay.com/cooperate/gateway.do?。</a><br>ii. GET传递方式：<br>是用&amp;字符来连接起来的一长串URL链接字符串，通过自动跳转不是&lt;form action=” aliay_url” …&gt;的方式来存放，而是用Response.Redirect(aliay_url)方式来进行跳转。</span></span></p></blockquote>
+<p>6. FAQ文档</p>
+<p>支付宝还提供了FAQ文档，如果遇到问题，可以先行查阅：</p>
+<blockquote style="margin-right: 0px" dir="ltr">
+<p><span style="widows: 2; text-transform: none; text-indent: 0px; border-collapse: separate; font: medium Simsun; white-space: normal; orphans: 2; letter-spacing: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px" class="Apple-style-span"><span style="line-height: 20px; border-collapse: collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px" class="Apple-style-span"><span style="color: blue">集成常见FAQ</span><span class="Apple-converted-space">&nbsp;</span>(集成错误文档和其他信息)：<span class="Apple-converted-space">&nbsp;</span><a style="color: rgb(51,51,51); text-decoration: underline" href="http://www.112club.cn/attachment.php?aid=10&k=dc54d0ab7575086c09d612fdad6901c5&t=1245647419&fid=3&sid=5f0dJDBzW%2BeBRRRGz6nofMPoeJOLpYQckdLRRLBhq27kZOI" target="_blank">商家工具FAQ.pdf</a><span class="Apple-converted-space">&nbsp;</span>(391.17 KB)</span></span></p></blockquote>
+<p>&nbsp;</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/blodfox777/category/150554.html">07. Resources &amp; Controls</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/blodfox777/tag/ASP.NET/">ASP.NET</a>, <a href="http://www.cnblogs.com/blodfox777/tag/%E6%94%AF%E4%BB%98%E5%AE%9D/">支付宝</a></div>
+<div id="blog_post_info"><div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(1595223,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/LanceZhang" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/blodfox777/" target="_blank"><img src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/u25148.gif" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/blodfox777/">LanceZhang</a><br>
+<a href="http://home.cnblogs.com/u/blodfox777/followees">关注 - 32</a><br>
+<a href="http://home.cnblogs.com/u/blodfox777/followers">粉丝 - 212</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(1595223,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">19</span>
+    </div>
+	<div class="buryit" onclick="votePost(1595223,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">1</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/blodfox777/archive/2009/10/28/1591601.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/blodfox777/archive/2009/10/28/1591601.html" title="发布于2009-10-28 18:06">公司招人：ASP.NET高级开发工程师 (已结束，谢谢大家)</a><br><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/10/1600021.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/10/1600021.html" title="发布于2009-11-10 17:24">部分不能激活Win 7 的问题分析和解决方案</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2009-11-03 14:45</span> <a href="http://www.cnblogs.com/blodfox777/">LanceZhang</a> 阅读(<span id="post_view_count">51127</span>) 评论(<span id="post_comment_count">34</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=1595223" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#" onclick="AddToWz(1595223);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=28707,cb_entryId=1595223,cb_blogApp=currentBlogApp,cb_blogUserGuid='387c3d0b-63cf-dd11-9e4d-001cf0cd104b',cb_entryCreatedDate='2009/11/3 14:45:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+<a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688816" class="layer">#1楼</a><a name="1688816" id="comment_anchor_1688816"></a>  <span class="comment_date">2009-11-03 15:29</span> <a id="a_comment_author_1688816" href="http://www.cnblogs.com/bober/" target="_blank">Care健康</a> <a href="http://msg.cnblogs.com/msg/send/Care%e5%81%a5%e5%ba%b7" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1688816" class="blog_comment_body">你可真高产啊。！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1688816,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1688816,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1688816_avatar" style="display:none;">http://pic.cnitblog.com/face/u20972.jpg?id=30085455</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688846" class="layer">#2楼</a><a name="1688846" id="comment_anchor_1688846"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2009-11-03 16:08</span> <a id="a_comment_author_1688846" href="http://www.cnblogs.com/blodfox777/" target="_blank">LanceZhang</a> <a href="http://msg.cnblogs.com/msg/send/LanceZhang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1688846" class="blog_comment_body"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688816" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1688816);">@</a>大力bober<br>得了吧，哥们儿，自从离开了MS，我都没发过首页贴了，忙死了啊，吼吼~~~</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1688846,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1688846,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1688846_avatar" style="display:none;">http://pic.cnitblog.com/face/u25148.gif</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688902" class="layer">#3楼</a><a name="1688902" id="comment_anchor_1688902"></a>  <span class="comment_date">2009-11-03 17:05</span> <a id="a_comment_author_1688902" href="http://www.cnblogs.com/peaceli/" target="_blank">peace</a> <a href="http://msg.cnblogs.com/msg/send/peace" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1688902" class="blog_comment_body">支持下</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1688902,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1688902,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688932" class="layer">#4楼</a><a name="1688932" id="comment_anchor_1688932"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2009-11-03 17:40</span> <a id="a_comment_author_1688932" href="http://www.cnblogs.com/blodfox777/" target="_blank">LanceZhang</a> <a href="http://msg.cnblogs.com/msg/send/LanceZhang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1688932" class="blog_comment_body"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688902" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1688902);">@</a>peace<br>thanks dude</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1688932,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1688932,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1688932_avatar" style="display:none;">http://pic.cnitblog.com/face/u25148.gif</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688952" class="layer">#5楼</a><a name="1688952" id="comment_anchor_1688952"></a>  <span class="comment_date">2009-11-03 18:07</span> <a id="a_comment_author_1688952" href="http://www.cnblogs.com/BenjaminYao/" target="_blank">超人Mike</a> <a href="http://msg.cnblogs.com/msg/send/%e8%b6%85%e4%ba%baMike" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1688952" class="blog_comment_body">这个开发5天够吗？</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1688952,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1688952,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1688952_avatar" style="display:none;">http://pic.cnitblog.com/face/u95554.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688956" class="layer">#6楼</a><a name="1688956" id="comment_anchor_1688956"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2009-11-03 18:18</span> <a id="a_comment_author_1688956" href="http://www.cnblogs.com/blodfox777/" target="_blank">LanceZhang</a> <a href="http://msg.cnblogs.com/msg/send/LanceZhang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1688956" class="blog_comment_body"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688952" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1688952);">@</a>超人哥哥<br>如果加上调试的话，估计比较累人，要拿钱来测的<br>不过代码——偶已经写了一半啦~~\(≧▽≦)/~~</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1688956,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1688956,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1688956_avatar" style="display:none;">http://pic.cnitblog.com/face/u25148.gif</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1689241" class="layer">#7楼</a><a name="1689241" id="comment_anchor_1689241"></a>  <span class="comment_date">2009-11-04 09:19</span> <a id="a_comment_author_1689241" href="http://www.cnblogs.com/diego0404/" target="_blank">迭_戈</a> <a href="http://msg.cnblogs.com/msg/send/%e8%bf%ad_%e6%88%88" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1689241" class="blog_comment_body">感觉支付宝和JAVA,PHP的例子比较多.</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1689241,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1689241,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1689259" class="layer">#8楼</a><a name="1689259" id="comment_anchor_1689259"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2009-11-04 09:27</span> <a id="a_comment_author_1689259" href="http://www.cnblogs.com/blodfox777/" target="_blank">LanceZhang</a> <a href="http://msg.cnblogs.com/msg/send/LanceZhang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1689259" class="blog_comment_body"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1689241" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1689241);">@</a>迭戈<br>是的，因为很多成熟的商城系统都是JAVA,PHP的，很多开网店的人直接拿来就用了，不专门开发</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1689259,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1689259,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1689259_avatar" style="display:none;">http://pic.cnitblog.com/face/u25148.gif</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1689428" class="layer">#9楼</a><a name="1689428" id="comment_anchor_1689428"></a>  <span class="comment_date">2009-11-04 12:26</span> <a id="a_comment_author_1689428" href="http://www.cnblogs.com/Selfocus/" target="_blank">Selfocus</a> <a href="http://msg.cnblogs.com/msg/send/Selfocus" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1689428" class="blog_comment_body">mark一下，有备无患</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1689428,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1689428,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1689428_avatar" style="display:none;">http://pic.cnitblog.com/face/u36485.png?id=01134738</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1689805" class="layer">#10楼</a><a name="1689805" id="comment_anchor_1689805"></a>  <span class="comment_date">2009-11-04 17:59</span> <a id="a_comment_author_1689805" href="http://www.cnblogs.com/binarytree/" target="_blank">二叉树</a> <a href="http://msg.cnblogs.com/msg/send/%e4%ba%8c%e5%8f%89%e6%a0%91" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1689805" class="blog_comment_body">保存了。谢谢楼主。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1689805,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1689805,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1689844" class="layer">#11楼</a><a name="1689844" id="comment_anchor_1689844"></a>  <span class="comment_date">2009-11-04 18:26</span> <a id="a_comment_author_1689844" href="http://www.cnblogs.com/BenjaminYao/" target="_blank">超人Mike</a> <a href="http://msg.cnblogs.com/msg/send/%e8%b6%85%e4%ba%baMike" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1689844" class="blog_comment_body"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1688956" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1688956);">@</a>LanceZhang<br>嘿嘿嘿，不要急</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1689844,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1689844,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1689844_avatar" style="display:none;">http://pic.cnitblog.com/face/u95554.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1694569" class="layer">#12楼</a><a name="1694569" id="comment_anchor_1694569"></a>  <span class="comment_date">2009-11-10 21:15</span> <a id="a_comment_author_1694569" href="http://home.cnblogs.com/u/73276/" target="_blank">三桂</a> <a href="http://msg.cnblogs.com/msg/send/%e4%b8%89%e6%a1%82" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1694569" class="blog_comment_body">F5一次,消费1毛...</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1694569,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1694569,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1704182" class="layer">#13楼</a><a name="1704182" id="comment_anchor_1704182"></a>  <span class="comment_date">2009-11-22 19:31</span> <a id="a_comment_author_1704182" href="http://www.cnblogs.com/OceanChen/" target="_blank">海洋——海纳百川,有容乃大.</a> <a href="http://msg.cnblogs.com/msg/send/%e6%b5%b7%e6%b4%8b%e2%80%94%e2%80%94%e6%b5%b7%e7%ba%b3%e7%99%be%e5%b7%9d%2c%e6%9c%89%e5%ae%b9%e4%b9%83%e5%a4%a7." title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1704182" class="blog_comment_body">没看完，以后看，先赞一个。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1704182,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1704182,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1704182_avatar" style="display:none;">http://pic.cnitblog.com/face/u47297.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1758227" class="layer">#14楼</a><a name="1758227" id="comment_anchor_1758227"></a>  <span class="comment_date">2010-02-01 11:16</span> <a id="a_comment_author_1758227" href="http://www.cnblogs.com/kingjiong/" target="_blank">KiNg.JiOnG</a> <a href="http://msg.cnblogs.com/msg/send/KiNg.JiOnG" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1758227" class="blog_comment_body">是挺麻烦的，paypal最好搞了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1758227,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1758227,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1758531" class="layer">#15楼</a><a name="1758531" id="comment_anchor_1758531"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2010-02-01 16:03</span> <a id="a_comment_author_1758531" href="http://www.cnblogs.com/blodfox777/" target="_blank">LanceZhang</a> <a href="http://msg.cnblogs.com/msg/send/LanceZhang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1758531" class="blog_comment_body"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1758227" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1758227);">@</a>KiNg.JiOnG<br><br>没做过paypal，支付宝是挺麻烦的，其实国内的易宝、云网和块钱都还不错。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1758531,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1758531,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1758531_avatar" style="display:none;">http://pic.cnitblog.com/face/u25148.gif</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1759262" class="layer">#16楼</a><a name="1759262" id="comment_anchor_1759262"></a>  <span class="comment_date">2010-02-02 16:32</span> <a id="a_comment_author_1759262" href="http://www.cnblogs.com/kingjiong/" target="_blank">KiNg.JiOnG</a> <a href="http://msg.cnblogs.com/msg/send/KiNg.JiOnG" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1759262" class="blog_comment_body">我搞过paypal,paydollar。。，但国内的易宝、云网和块钱都没搞过，有机会交流一下这些付款的东西，呵呵</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1759262,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1759262,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1785580" class="layer">#17楼</a><a name="1785580" id="comment_anchor_1785580"></a>  <span class="comment_date">2010-03-23 17:50</span> <a id="a_comment_author_1785580" href="http://www.cnblogs.com/Kevan/" target="_blank">Kevan</a> <a href="http://msg.cnblogs.com/msg/send/Kevan" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1785580" class="blog_comment_body">mark!!!</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1785580,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1785580,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1785580_avatar" style="display:none;">http://pic.cnitblog.com/face/u34244.gif</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#1892143" class="layer">#18楼</a><a name="1892143" id="comment_anchor_1892143"></a>  <span class="comment_date">2010-08-12 15:49</span> <a id="a_comment_author_1892143" href="http://home.cnblogs.com/u/150992/" target="_blank">随风止步</a> <a href="http://msg.cnblogs.com/msg/send/%e9%9a%8f%e9%a3%8e%e6%ad%a2%e6%ad%a5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1892143" class="blog_comment_body">哦，米噶。。看的头晕- -</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1892143,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1892143,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2312631" class="layer">#19楼</a><a name="2312631" id="comment_anchor_2312631"></a>  <span class="comment_date">2012-02-20 15:14</span> <a id="a_comment_author_2312631" href="http://www.cnblogs.com/inovo/" target="_blank">xpurple</a> <a href="http://msg.cnblogs.com/msg/send/xpurple" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2312631" class="blog_comment_body">555~~怎么下载都不能用了.</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2312631,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2312631,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2312631_avatar" style="display:none;">http://pic.cnitblog.com/face/u207659.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2638008" class="layer">#20楼</a><a name="2638008" id="comment_anchor_2638008"></a>  <span class="comment_date">2013-03-19 16:38</span> <a id="a_comment_author_2638008" href="http://www.cnblogs.com/LazzyDog/" target="_blank">LazyDong</a> <a href="http://msg.cnblogs.com/msg/send/LazyDong" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2638008" class="blog_comment_body">3Q 正好借鉴一下</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2638008,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2638008,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2638008_avatar" style="display:none;">http://pic.cnitblog.com/face/505969/20130318110602.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2724516" class="layer">#21楼</a><a name="2724516" id="comment_anchor_2724516"></a>  <span class="comment_date">2013-07-10 22:47</span> <a id="a_comment_author_2724516" href="http://www.cnblogs.com/xinod/" target="_blank">OD_Huang</a> <a href="http://msg.cnblogs.com/msg/send/OD_Huang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2724516" class="blog_comment_body">学习了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2724516,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2724516,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2781993" class="layer">#22楼</a><a name="2781993" id="comment_anchor_2781993"></a>  <span class="comment_date">2013-09-25 15:51</span> <a id="a_comment_author_2781993" href="http://home.cnblogs.com/u/252073/" target="_blank">hupeh</a> <a href="http://msg.cnblogs.com/msg/send/hupeh" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2781993" class="blog_comment_body">我调用这个支付接口，金额是我来定的还是用户录入的？如果是我来定的那么支付成功后我就知道了，然后就可以作相应的流程了。但如果是用户录入的，支付成功后接口会告诉我用户付了多少吗？</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2781993,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2781993,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2790349" class="layer">#23楼</a><a name="2790349" id="comment_anchor_2790349"></a>  <span class="comment_date">2013-10-11 10:10</span> <a id="a_comment_author_2790349" href="http://www.cnblogs.com/sunshch/" target="_blank">齐鲁青未了</a> <a href="http://msg.cnblogs.com/msg/send/%e9%bd%90%e9%b2%81%e9%9d%92%e6%9c%aa%e4%ba%86" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2790349" class="blog_comment_body">怎么联系你，现在想开发一个模式和支付宝模式相同的功能，唯一不同的就是中间人不是支付宝，而是农业银行！兄弟留一个联系方式吧！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2790349,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2790349,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2790349_avatar" style="display:none;">http://pic.cnitblog.com/face/u310945.jpg?id=26141206</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2874320" class="layer">#24楼</a><a name="2874320" id="comment_anchor_2874320"></a>  <span class="comment_date">2014-02-12 15:52</span> <a id="a_comment_author_2874320" href="http://www.cnblogs.com/geqinggao/" target="_blank">袁书</a> <a href="http://msg.cnblogs.com/msg/send/%e8%a2%81%e4%b9%a6" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2874320" class="blog_comment_body">支付宝示例程序都下载不了了，能否重新提供下？谢谢</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2874320,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2874320,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2874320_avatar" style="display:none;">http://pic.cnitblog.com/face/u267313.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2875849" class="layer">#25楼</a><a name="2875849" id="comment_anchor_2875849"></a>  <span class="comment_date">2014-02-14 17:48</span> <a id="a_comment_author_2875849" href="http://www.cnblogs.com/yyj/" target="_blank">杨义金</a> <a href="http://msg.cnblogs.com/msg/send/%e6%9d%a8%e4%b9%89%e9%87%91" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2875849" class="blog_comment_body">mark</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2875849,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2875849,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2914886" class="layer">#26楼</a><a name="2914886" id="comment_anchor_2914886"></a>  <span class="comment_date">2014-04-10 17:06</span> <a id="a_comment_author_2914886" href="http://home.cnblogs.com/u/622413/" target="_blank">chhmxxm</a> <a href="http://msg.cnblogs.com/msg/send/chhmxxm" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2914886" class="blog_comment_body">实力不够，表示看不懂啊。。。文中很多链接又打不开。。。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2914886,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2914886,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2920549" class="layer">#27楼</a><a name="2920549" id="comment_anchor_2920549"></a>  <span class="comment_date">2014-04-18 13:43</span> <a id="a_comment_author_2920549" href="http://home.cnblogs.com/u/605254/" target="_blank">tankcnb</a> <a href="http://msg.cnblogs.com/msg/send/tankcnb" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2920549" class="blog_comment_body">mark<br>学习一下</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2920549,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2920549,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2957835" class="layer">#28楼</a><a name="2957835" id="comment_anchor_2957835"></a>  <span class="comment_date">2014-06-04 17:34</span> <a id="a_comment_author_2957835" href="http://www.cnblogs.com/tanshaohua0911/" target="_blank">tanshaohua</a> <a href="http://msg.cnblogs.com/msg/send/tanshaohua" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2957835" class="blog_comment_body">楼主，问一个问题，.NET下，支付完成返回的时候，出现异常，怎么调试？之前都正常的，后来加入了往自己数据库写入交易记录，就出现异常了，但是看上去代码是没有问题的</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2957835,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2957835,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2957835_avatar" style="display:none;">http://pic.cnitblog.com/face/u256719.jpg?id=10232657</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2958744" class="layer">#29楼</a><a name="2958744" id="comment_anchor_2958744"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2014-06-05 21:53</span> <a id="a_comment_author_2958744" href="http://www.cnblogs.com/blodfox777/" target="_blank">LanceZhang</a> <a href="http://msg.cnblogs.com/msg/send/LanceZhang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2958744" class="blog_comment_body"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2957835" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2957835);">@</a>tanshaohua<br>考虑从异常的堆栈信息分析吧</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2958744,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2958744,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2958744_avatar" style="display:none;">http://pic.cnitblog.com/face/u25148.gif</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2960677" class="layer">#30楼</a><a name="2960677" id="comment_anchor_2960677"></a>  <span class="comment_date">2014-06-09 16:26</span> <a id="a_comment_author_2960677" href="http://www.cnblogs.com/shuxiaolong/" target="_blank">『大雪无痕』</a> <a href="http://msg.cnblogs.com/msg/send/%e3%80%8e%e5%a4%a7%e9%9b%aa%e6%97%a0%e7%97%95%e3%80%8f" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2960677" class="blog_comment_body">我再也控制不了自己了。<br><br>——楼主，我要大喊一声：楼主，我爱你！！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2960677,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2960677,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2960677_avatar" style="display:none;">http://pic.cnitblog.com/face/166267/20140712085254.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2992244" class="layer">#31楼</a><a name="2992244" id="comment_anchor_2992244"></a>  <span class="comment_date">2014-07-22 11:37</span> <a id="a_comment_author_2992244" href="http://home.cnblogs.com/u/629245/" target="_blank">fishcats</a> <a href="http://msg.cnblogs.com/msg/send/fishcats" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2992244" class="blog_comment_body">博主的演示也是能用就行，只是复制 去粘贴 出什么问题就 不关博主的事了，真是狡猾狡猾的，stream 都不显示关闭。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2992244,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2992244,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#3007693" class="layer">#32楼</a><a name="3007693" id="comment_anchor_3007693"></a>  <span class="comment_date">2014-08-14 14:22</span> <a id="a_comment_author_3007693" href="http://www.cnblogs.com/xusui/" target="_blank">xusui</a> <a href="http://msg.cnblogs.com/msg/send/xusui" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3007693" class="blog_comment_body">想问下楼主，在多商铺的支付情况下要怎么实现，比如现在一个购物车中有多个商铺商品，买家付款的时候怎么实现多支付呢</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3007693,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3007693,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#3034683" class="layer">#33楼</a><a name="3034683" id="comment_anchor_3034683"></a>  <span class="comment_date">2014-09-25 19:14</span> <a id="a_comment_author_3034683" href="http://www.cnblogs.com/maanshancss/" target="_blank">小马过河滴答滴</a> <a href="http://msg.cnblogs.com/msg/send/%e5%b0%8f%e9%a9%ac%e8%bf%87%e6%b2%b3%e6%bb%b4%e7%ad%94%e6%bb%b4" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3034683" class="blog_comment_body">楼主又不是神，你们问楼主 不如问小二！<br>链接官网有，不能再麻烦楼主了！<br>借用<br>@『大雪无痕』<br><fieldset class="comment_quote"><legend><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2960677" title="查看引用原文">引用</a></legend>我再也控制不了自己了。<br><br>——楼主，我要大喊一声：楼主，我爱你！！</fieldset></div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3034683,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3034683,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3034683_avatar" style="display:none;">http://pic.cnitblog.com/face/u350472.jpg?id=24083221</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#3091504" class="layer">#34楼</a><a name="3091504" id="comment_anchor_3091504"></a><span id="comment-maxId" style="display:none;">3091504</span><span id="comment-maxDate" style="display:none;">2014/12/22 15:58:43</span>  <span class="comment_date">2014-12-22 15:58</span> <a id="a_comment_author_3091504" href="http://home.cnblogs.com/u/706180/" target="_blank">胡霸天</a> <a href="http://msg.cnblogs.com/msg/send/%e8%83%a1%e9%9c%b8%e5%a4%a9" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3091504" class="blog_comment_body">看起来好难，求指点</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3091504,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3091504,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.imooc.com/view/59?from=cnblogs" target="_blank"><b>【免费课程】案例：倒计时效果</b></a><br><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="http://www.rongcloud.cn/promotion" target="_blank">融云，免费为你的App加入IM功能——让你的App“聊”起来！！</a><br><a href="http://amazeui.org/" target="_blank">【推荐】最懂中文的 H5 开源前端框架</a><br><a href="http://www.cnblogs.com/cmt/p/4168231.html" target="_blank">【活动】加班一整年了，程序员们，你们还好吗？</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = canShowAdsense(); var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        if (enableGoogleAd) {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        }
+    })();
+</script>
+<script type="text/javascript">
+    try {
+        if (enableGoogleAd) {
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C2', [468, 60], 'div-gpt-ad-1410860226396-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id="div-gpt-ad-1346480159711-0" style="width:300px; height:250px;">
+    <script type="text/javascript">
+        try {
+            if (enableGoogleAd) {
+                googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });            
+            } else {
+                $('#div-gpt-ad-1346480159711-0').hide();
+            }
+    } catch (e) { }
+    </script>
+    <div id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom;"></iframe></div><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" width="0" height="0" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom; visibility: hidden; display: none;"></iframe></div>
+</div>
+</div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/512516/" target="_blank">国产智能手机“大而不强”“抄袭”损形象</a><br> ·  <a href="http://news.cnblogs.com/n/512515/" target="_blank">研究称暗能量或不存在：宇宙并未加速膨胀</a><br> ·  <a href="http://news.cnblogs.com/n/512514/" target="_blank">谷歌推出Google Cast 可直接将音乐发送到音响上</a><br> ·  <a href="http://news.cnblogs.com/n/512513/" target="_blank">日开发出3D打印皮肤和关节的技术</a><br> ·  <a href="http://news.cnblogs.com/n/512512/" target="_blank">Misfit发布智能灯泡Misfit Bolt</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id="div-gpt-ad-1410860226396-0" style="width:468px; height:60px;">
+<script type="text/javascript">
+try {
+    if (enableGoogleAd) {
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1410860226396-0'); });
+    } else {
+        $('#div-gpt-ad-1346480159711-0').hide();
+    }
+} catch (e) { }
+</script>
+<div id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom;"></iframe></div></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/512323/" target="_blank">工程师忽略的隐形成本</a><br> ·  <a href="http://kb.cnblogs.com/page/512391/" target="_blank">响应式设计的现状与趋势</a><br> ·  <a href="http://kb.cnblogs.com/page/512250/" target="_blank">从0到100——知乎架构变迁史</a><br> ·  <a href="http://kb.cnblogs.com/page/511888/" target="_blank">动效设计的物理法则</a><br> ·  <a href="http://kb.cnblogs.com/page/511895/" target="_blank">证券创新之翼——阿里金融云</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><p>一个懒惰的家伙。好几年没写东西了，见笑见笑...</p><p>&nbsp;</p>
+<p><img src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/211512248107894.jpg" alt="" width="200" height="90" style="line-height: 1.5;"><span style="line-height: 1.5;">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p><img src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/211507307958985.jpg" alt="" style="line-height: 1.5;" width="185" height="109">&nbsp;</p>
+<p>&nbsp;</p>
+<img alt="" src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/sa_LOGO.gif" border="0" width="187" height="63"><br>
+<p>&nbsp;</p>
+<p><img alt="" src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/Logo_160x80.jpg" border="0" width="190" height="95"></p>
+<p>&nbsp;</p>
+<p><img alt="" src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/mcp.png" border="0" width="180" height="90"></p>
+<p><br>
+</p>
+<p><img border="0" alt="" src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/logo_fifteen.jpg" style="line-height: 1.5;"></p>
+<p>&nbsp;</p>
+<p><img src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/211512387162214.jpg" alt="" width="170" style="line-height: 1.5;" height="121">&nbsp;<br>
+</p>
+<p>&nbsp;<img src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/211517085139256.png" alt="" style="line-height: 1.5;" width="180" height="170"></p>
+<p>&nbsp;</p><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/blodfox777/">LanceZhang</a><br>园龄：<a href="http://home.cnblogs.com/u/blodfox777/" title="入园时间：2007-08-18">7年4个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/blodfox777/followers/">212</a><br>关注：<a href="http://home.cnblogs.com/u/blodfox777/followees/">32</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;387c3d0b-63cf-dd11-9e4d-001cf0cd104b&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="日历">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2009/10/01&#39;);return false;">&lt;</a></td><td align="center">2009年11月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2009/12/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">25</td><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td></tr><tr><td class="CalWeekendDay" align="center">1</td><td align="center">2</td><td align="center"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03.html"><u>3</u></a></td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td class="CalWeekendDay" align="center">7</td></tr><tr><td class="CalWeekendDay" align="center">8</td><td align="center">9</td><td align="center"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/10.html"><u>10</u></a></td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td class="CalWeekendDay" align="center">14</td></tr><tr><td class="CalWeekendDay" align="center">15</td><td align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td class="CalWeekendDay" align="center">21</td></tr><tr><td class="CalWeekendDay" align="center">22</td><td align="center"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/23.html"><u>23</u></a></td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td class="CalWeekendDay" align="center">28</td></tr><tr><td class="CalWeekendDay" align="center">29</td><td align="center">30</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+<div class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+
+
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/blodfox777/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/blodfox777/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/blodfox777/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/blodfox777/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/blodfox777/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/blodfox777/tag/JavaScript%2FAJAX/">JavaScript/AJAX</a>(78)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/ASP.NET/">ASP.NET</a>(62)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/Web%20UI/">Web UI</a>(51)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/ASP.NET%20AJAX/">ASP.NET AJAX</a>(19)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/Visual%20Studio%202010/">Visual Studio 2010</a>(14)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/C%23/">C#</a>(11)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/Browser%20Compatibility/">Browser Compatibility</a>(10)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/Performance/">Performance</a>(9)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/Windows%20Form/">Windows Form</a>(7)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/%E7%BF%BB%E8%AF%91/">翻译</a>(5)</li><li><a href="http://www.cnblogs.com/blodfox777/tag/">更多</a></li>
+</ul>
+</div>
+<div class="catListPostCategory">
+<h3 class="catListTitle">随笔分类<span style="font-size:11px;font-weight:normal">(275)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/blodfox777/category/228821.html">00. Open Source(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/blodfox777/category/179979.html">01. ASP.NET(24)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/blodfox777/category/158370.html">02. ASP.NET AJAX(17)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/blodfox777/category/137640.html">03. JavaScript &amp; CSS(101)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/blodfox777/category/159373.html">04. Visual Studio 2010 (11)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/blodfox777/category/103175.html">05. Daily Work(50)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/blodfox777/category/149878.html">06. My Translation(9)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/blodfox777/category/150554.html">07. Resources &amp; Controls(34)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/blodfox777/category/184718.html">08. Common Lib(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/blodfox777/category/103486.html">09. Career &amp; Job(13)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/blodfox777/category/228808.html">10. AOP(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/blodfox777/category/230024.html">11. SQL Server(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/blodfox777/category/273020.html">12. MOSS (2)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案<span style="font-size:11px;font-weight:normal">(208)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/blodfox777/archive/2011/12.html">2011年12月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/blodfox777/archive/2011/10.html">2011年10月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/blodfox777/archive/2011/05.html">2011年5月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/blodfox777/archive/2011/03.html">2011年3月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/blodfox777/archive/2011/01.html">2011年1月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/blodfox777/archive/2010/12.html">2010年12月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/blodfox777/archive/2010/11.html">2010年11月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/blodfox777/archive/2010/10.html">2010年10月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/blodfox777/archive/2010/08.html">2010年8月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/blodfox777/archive/2010/07.html">2010年7月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/blodfox777/archive/2010/03.html">2010年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/blodfox777/archive/2010/02.html">2010年2月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/blodfox777/archive/2010/01.html">2010年1月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/blodfox777/archive/2009/11.html">2009年11月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/blodfox777/archive/2009/10.html">2009年10月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/blodfox777/archive/2009/08.html">2009年8月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/blodfox777/archive/2009/07.html">2009年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/blodfox777/archive/2009/06.html">2009年6月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/blodfox777/archive/2009/05.html">2009年5月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/blodfox777/archive/2009/04.html">2009年4月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/blodfox777/archive/2009/03.html">2009年3月 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/blodfox777/archive/2009/02.html">2009年2月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/blodfox777/archive/2009/01.html">2009年1月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/blodfox777/archive/2008/12.html">2008年12月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_24" href="http://www.cnblogs.com/blodfox777/archive/2008/11.html">2008年11月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_25" href="http://www.cnblogs.com/blodfox777/archive/2008/10.html">2008年10月 (21)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_26" href="http://www.cnblogs.com/blodfox777/archive/2008/09.html">2008年9月 (21)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_27" href="http://www.cnblogs.com/blodfox777/archive/2008/08.html">2008年8月 (50)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_28" href="http://www.cnblogs.com/blodfox777/archive/2008/07.html">2008年7月 (19)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_29" href="http://www.cnblogs.com/blodfox777/archive/2008/05.html">2008年5月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_30" href="http://www.cnblogs.com/blodfox777/archive/2007/11.html">2007年11月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_31" href="http://www.cnblogs.com/blodfox777/archive/2007/08.html">2007年8月 (3)</a> </li>
+
+</ul>
+
+</div>
+
+
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	447574
+	</li>
+	<li class="liRank">
+		排名 -	175
+	</li>
+</ul>
+</div>
+
+
+<div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2010/12/21/ganttplanner.html#3093825">1. Re:【开源】Winform甘特日程控件GanttPlanner V1.0发布</a></li>
+    <li class="recent_comment_body">设计ComponentOne的dll引用等裁剪，可直接发帖咨询官方厂家、中文问答：<br><br><a href="" target="_blank"></a></li>
+    <li class="recent_comment_author">--葡萄城控件技术团队</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#3091504">2. Re:支付宝接口程序、文档及解读(ASP.NET)</a></li>
+    <li class="recent_comment_body">看起来好难，求指点</li>
+    <li class="recent_comment_author">--胡霸天</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/21/1295232.html#3036825">3. Re:开发资源收集：128个ajax/javascript框架</a></li>
+    <li class="recent_comment_body">哪里能查得到dojo是日本团队研发</li>
+    <li class="recent_comment_author">--谁说我不是会员</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#3034683">4. Re:支付宝接口程序、文档及解读(ASP.NET)</a></li>
+    <li class="recent_comment_body">楼主又不是神，你们问楼主 不如问小二！链接官网有，不能再麻烦楼主了！借用@『大雪无痕』引用我再也控制不了自己了。——楼主，我要大喊一声：楼主，我爱你！！...</li>
+    <li class="recent_comment_author">--maanshancss</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#3007693">5. Re:支付宝接口程序、文档及解读(ASP.NET)</a></li>
+    <li class="recent_comment_body">想问下楼主，在多商铺的支付情况下要怎么实现，比如现在一个购物车中有多个商铺商品，买家付款的时候怎么实现多支付呢</li>
+    <li class="recent_comment_author">--xusui</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/09/1307462.html#2993301">6. Re:javascript格式化排版工具</a></li>
+    <li class="recent_comment_body">牛逼啊，我测试了之后专门注册 了用户来顶你··屌爆了！</li>
+    <li class="recent_comment_author">--lastspring</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/03/1595223.html#2992244">7. Re:支付宝接口程序、文档及解读(ASP.NET)</a></li>
+    <li class="recent_comment_body">博主的演示也是能用就行，只是复制 去粘贴 出什么问题就 不关博主的事了，真是狡猾狡猾的，stream 都不显示关闭。</li>
+    <li class="recent_comment_author">--fishcats</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2008/08/29/1279675.html#2981254">8. Re:为TreeView的节点添加右键菜单(Add ContextMenu to ASP.NET TreeView)</a></li>
+    <li class="recent_comment_body">不过还是要谢谢师兄的分享。</li>
+    <li class="recent_comment_author">--Drely(夢想永恆)</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2008/08/29/1279675.html#2981248">9. Re:为TreeView的节点添加右键菜单(Add ContextMenu to ASP.NET TreeView)</a></li>
+    <li class="recent_comment_body">师兄，如果能够是中文的我想就更好了，毕竟大多数人英文还是不怎么能够融会贯通的。</li>
+    <li class="recent_comment_author">--Drely(夢想永恆)</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/09/1307462.html#2977771">10. Re:javascript格式化排版工具</a></li>
+    <li class="recent_comment_body">屌爆了！</li>
+    <li class="recent_comment_author">--海天鹰</li>
+</ul>
+</div>
+</div>
+</div><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园.htm">1. 支付宝接口程序、文档及解读(ASP.NET)(51127)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/07/21/1247447.html">2. ASP.NET获取IP的6种方法(28291)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/04/27/1444474.html">3. 用JavaScript写Session的两种方法(22952)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2010/01/21/sqlserver-collation-conflict-and-solutions.html">4. SQL Server的 排序规则(collation)冲突和解决方案(19310)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2010/02/09/1666388.html">5. Digg被黑了？No，呵呵(15910)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/08/13/1266639.html">6. 大量JavaScript日历控件（some free Calendar control by JS）(13050)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/12/01/1344818.html">7. .NET 3.5 发布功能强大的新控件(Winform&amp;WebForm) —— Chart(13016)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/09/16/1291888.html">8. 网页的横向打印的三种方案(print your page landscape)(11829)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/02/10/1387229.html">9. 实时股票数据获取方式 (10990)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2010/07/28/1787016.html">10. 在64位Windows系统上安装Toad和PLSQL Developer等Oracle客户端工具(10705)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/21/1316104.html">11. 使用VisualStudio 2010从分析到实施（1）——安装VisualStudio 2010 CTP2(10162)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/10/1307685.html">12. 程序员的年龄，没有话题的话题(10118)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/09/23/1297351.html">13. 15个强大的在线图片编辑器(Top 15 Online Image Editors - Who needs Photoshop? )(9720)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/14/1311255.html">14. 56 个AJAX图片展示框架(Galleries, Slideshows and Lightboxes)(9318)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/08/12/1266191.html">15. ASP.NET页面传值汇总 (Session / Server.Transfer / Query String / Cookie / Application )(8538)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/17/1313335.html">16. 13个AJAX验证框架(8402)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2010/10/27/sqlserver-row-counts-each-table.html">17. SQL Server 中统计各用户表记录条数 的两种方法(8370)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2011/01/25/qiangpiaokuaishou.html">18. 【开源】二手火车票监控程序 抢票快手 V1.0发布(8293)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/09/18/1292796.html">19. VisualStudio 10 (或称Visual Studio 2010 ) 将支持多种架构设计图(7750)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/02/11/1388157.html">20. 一个睡五分钟等于六个钟头的方法【实用】(7209)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/08/27/1277785.html">21. ModalPopupExtender使用技巧( operate ModalPopupExtender by JavaScript)(7109)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/09/16/1291771.html">22. 两个比较好用的C#转VB.NET工具(Convert C# to VB.NET or Convert VB.NET to C#)(6769)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/05/18/1459225.html">23. AJAX Control Toolkit 5月13日更新介绍及分析(6407)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/01/1302770.html">24. 17个使用AJAX技术的数据表格控件解决方案(Data Grids with AJAX, DHTML and JavaScript)(6248)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/09/1307462.html">25. javascript格式化排版工具(6157)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/04/21/1440386.html">26. 在外部CSS中实现Table td的colspan(6113)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/06/1304586.html">27. 从外部的js文件中获取ASPX页面的控件ClientID(get control reference from external javascript)(5994)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/08/14/1267679.html">28. 网页幻灯片过渡效果大全（淡入淡出、开幕、星状散射……共17种）(IE page transitions)(5974)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/08/29/1279675.html">29. 为TreeView的节点添加右键菜单(Add ContextMenu to ASP.NET TreeView)(5881)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/07/24/1250268.html">30. 一个DIV三列布局100%高度自适应的好例子（国外）(5763)</a></li></ul></div>
+</div>
+</div><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/02/23/1396391.html">1. 2009 .NET技术大会图文分享(93)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/10/1307685.html">2. 程序员的年龄，没有话题的话题(78)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/10/21/1316104.html">3. 使用VisualStudio 2010从分析到实施（1）——安装VisualStudio 2010 CTP2(63)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2011/01/25/qiangpiaokuaishou.html">4. 【开源】二手火车票监控程序 抢票快手 V1.0发布(62)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/12/01/1344818.html">5. .NET 3.5 发布功能强大的新控件(Winform&amp;WebForm) —— Chart(36)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/03/02/1401199.html">6. 2009年.NET技术大会讲义（上）——PDF分享(34)</a></li><li><a href="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园.htm">7. 支付宝接口程序、文档及解读(ASP.NET)(34)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/09/18/1292796.html">8. VisualStudio 10 (或称Visual Studio 2010 ) 将支持多种架构设计图(33)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/05/18/1459225.html">9. AJAX Control Toolkit 5月13日更新介绍及分析(32)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/03/11/1408568.html">10. 使用HttpHandler解析并展示PDF文档内容(31)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/04/02/1427972.html">11. 薛定谔的猫——.NET 4.1 中的新基类，开源Preview中(30)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2009/11/10/1600021.html">12. 部分不能激活Win 7 的问题分析和解决方案(27)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2010/02/09/1666388.html">13. Digg被黑了？No，呵呵(25)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2010/12/21/ganttplanner.html">14. 【开源】Winform甘特日程控件GanttPlanner V1.0发布(25)</a></li><li><a href="http://www.cnblogs.com/blodfox777/archive/2008/09/08/1286582.html">15. Google Chrome 不兼容ASP.NET Menu!(24)</a></li></ul></div>
+</div>
+</div></div><script type="text/javascript">loadBlogSideColumn();</script><iframe src="./支付宝接口程序、文档及解读(ASP.NET) - LanceZhang - 博客园_files/container.htm" style="visibility: hidden; display: none;"></iframe>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2015 LanceZhang
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+<iframe id="google_osd_static_frame_4325187967624" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body></html>

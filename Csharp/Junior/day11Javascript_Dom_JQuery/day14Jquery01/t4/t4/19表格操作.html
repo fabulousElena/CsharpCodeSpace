@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style>
+        td {
+            color: white;
+        }
+    </style>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script>
+        var list = [
+            { id: '1', country: '中国', capital: '北京' },
+            { id: '2', country: '美国', capital: '华盛顿' },
+            { id: '3', country: '日本', capital: '东京' },
+            { id: '4', country: '韩国', capital: '首尔' }
+       
+        ];
+
+        $(function () {
+            //遍历集合，创建tr与td
+            $.each(list, function (index, item) {
+                $('<tr><td>' + item.id + '</td><td>' + item.country + '</td><td>' + item.capital + '</td></tr>').appendTo('#list');
+            });
+            //为奇偶行指定不同背景色
+            $('#list tr:even').css('background-color', 'red');
+            $('#list tr:odd').css('background-color', 'green');
+            //指定移上、移开效果
+            $('#list tr').hover(function () {//移上
+                bgColor = $(this).css('background-color');
+                $(this).css('background-color', 'blue');
+            }, function () {//移开
+                $(this).css('background-color', bgColor);
+            });
+            //前三名变粗
+            $('#list tr:lt(3)').css('font-weight', 'bold');
+        });
+    </script>
+</head>
+<body>
+    <table border="1">
+        <thead>
+        <th width="100">编号</th>
+        <th width="100">国家</th>
+        <th width="100">首都</th>
+        </thead>
+        <tbody id="list"></tbody>
+    </table>
+</body>
+</html>

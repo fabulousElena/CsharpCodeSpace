@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+    <input type="button" id="btnShow" value="显示"/>
+    <img src="images/idle.png" />
+    <script>
+            //操作属性
+            //获取属性的值：只写第一个参数，属性的名字
+        //alert($('#btnShow').attr('value'));
+        
+        //设置属性的值：写两个参数，第一个表示属性的名字，第二个表示值
+        //$('#btnShow').attr('value', 'Hello World');
+        
+        //prop表示html的原有属性，attr而表示扩展属性
+        //如：img的src操作使用prop，而href操作使用attr
+        //一般使用attr因为各种情况都适用
+        //$('img').attr('href', 'abc');
+
+        //移除属性
+        //$('#btnShow').removeAttr('value');
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+</head>
+<body>
+    <input type="button" id="btnShow" value="显示"/>
+    <script>
+        //对于value属性的一种简写操作
+    //$('#btnShow').attr('value');=>
+        //$('#btnShow').val('');
+        
+        //为按钮绑定点击事件
+        //$('#btnShow').click(function() {
+        //    alert(this.value);//this是dom对象，不能调用jquery的成员
+        //});
+        
+        //dom的事件注册:一个事件只能注册一个处理函数，不支持多播
+        //document.getElementById('btnShow').onclick = function() {
+        //    alert(1);
+        //};
+        //document.getElementById('btnShow').onclick += function() {
+        //    alert(2);
+        //};
+        
+        //jquery事件注册：支持多播，一个事件可以指定多个处理函数
+        $('#btnShow').click(function() {
+            alert(1);
+        });
+        $('#btnShow').click(function() {
+            alert(2);
+        });
+    </script>
+</body>
+</html>

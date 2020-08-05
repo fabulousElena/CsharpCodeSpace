@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        var index = 1;//图片编号
+        onload = function() {
+            //定时器：间隔一段时间执行一次代码
+            setInterval(birdFly1, 100);
+        };
+
+        function birdFly1() {
+            //计算当前图片的编号
+            index++;
+            if (index > 4) {
+                index = 1;//因为只有4张图片，所以大于4时回到1
+            }
+            //找到小鸟的图片对象
+            var birdFly = document.getElementById('birdFly');
+            //设置图片
+            birdFly.src = 'images/bird'+index+'.png';
+        }
+    </script>
+</head>
+<body>
+    <img src="images/bird1.png" id="birdFly"/>
+</body>
+</html>

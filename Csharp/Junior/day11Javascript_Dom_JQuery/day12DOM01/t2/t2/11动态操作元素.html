@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        onload = function() {
+            //追加图片
+            document.getElementById('btnImg').onclick = function() {
+                //创建img对象
+                var img = document.createElement('img');
+                //通过属性src指定要显示的图片
+                img.src = 'fly/000000.jpg';
+                //在div中追加图片对象
+                document.getElementById('divContainer').appendChild(img);
+            };
+            //追加文本框
+            document.getElementById('btnText').onclick = function() {
+                //创建input对象
+                var input = document.createElement('input');
+                //设置属性
+                input.type = "text";
+                //加入div中
+                document.getElementById('divContainer').appendChild(input);
+            };
+            //追加超链接
+            document.getElementById('btnA').onclick = function() {
+                //创建a对象
+                var a = document.createElement('a');
+                //设置属性
+                a.href = '10Event.html';
+                a.innerHTML = '点击显示';
+                //加入div中
+                document.getElementById('divContainer').appendChild(a);
+            };
+            
+            //删除所有元素
+            document.getElementById('btnRemove').onclick = function() {
+                //获取所有子元素
+                var childs = document.getElementById('divContainer').childNodes;
+                //遍历子元素，逐个删除
+                for (var i = childs.length-1; i >=0; i--) {
+                    document.getElementById('divContainer').removeChild(childs[i]);
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+    <input type="button" id="btnImg" value="图片"/>
+    <input type="button" id="btnText" value="文本框"/>
+    <input type="button" id="btnA" value="超链接"/>
+    <input type="button" id="btnRemove" value="删除所有元素"/>
+    <div id="divContainer">
+        
+    </div>
+</body>
+</html>

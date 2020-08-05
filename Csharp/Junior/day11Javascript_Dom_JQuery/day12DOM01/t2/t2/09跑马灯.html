@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style>
+        #msg {
+            /*绝对定位*/
+            position: absolute;
+            border: 1px solid red;
+            background-color: blue;
+            color: white;
+            width: 100px;
+        }
+    </style>
+    <script>
+        var left = 0;
+        var direction = 1;
+        onload = function () {
+            //设置移动的定时器
+            setInterval(run, 100);
+        };
+
+        function run() {
+            //计算距离左侧的值
+            left += 10*direction;
+            
+            //判断宽度:小于浏览器宽度
+            if (left + 100 >= window.innerWidth) {
+                //当到达最右侧时
+                direction = -1;
+            }
+            if (left <= 0) {
+                //当到达最左侧时
+                direction = 1;
+            }
+
+            var msg = document.getElementById('msg');
+            msg.style.left = left + 'px';
+        }
+    </script>
+</head>
+<body>
+    <div id="msg">跑马灯文本</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script>
+        ////创建时间对象
+        //var date = new Date();
+        //alert(100);
+        //alert(date.tostring());
+        //alert(date.toLocaleDateString)
+
+        //代码分离   一般不将HTML和js混合写
+        function showTime() {
+            var date = new Date();
+            alert(date.toLocaleDateString());
+            return false;
+        }
+
+
+    </script>
+
+    <input type="button" value="按钮" onclick="showTime();" />
+    <hr />
+    点击超链接，执行js脚本，而不进行url跳转
+    <br />
+    方式一：让js函数返回false,在onclick中也返回false;
+    <br />
+    方式二：将href指定成一段脚本
+    <br />
+    <a href="javascript:showTime();">显示当前时间</a>
+    <br />
+    <hr />
+    <a href="http://www.xiaodaizhi.com" onclick="return forTemp();">显示当前时间2</a>
+
+    
+        <script>
+            //在本例中，JavaScript 会在页面加载时向 HTML 的 <body>写文本：
+            
+            document.write("<h1>This is a heading</h1>");
+            document.write("<p>This is a paragraph</p>");
+
+            function forTemp() {
+                for (var i = 0; i < 10; i++) {
+                    document.write(i);
+                }
+            }
+        </script>
+    </body>
+</html>

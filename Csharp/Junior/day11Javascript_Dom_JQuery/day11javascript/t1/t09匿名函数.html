@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+    <body>
+         <input type="button" id="btnShow" value="显示"/>
+        <script>
+            
+            //快捷键：fun,tab
+            //定义匿名函数，赋值给一个变量
+            var f1 = function(a, b) {
+                alert(a+b);
+            };   
+            //通过变量调用
+            //f1(1, 2);
+
+            //典型应用：为事件绑定处理函数，传递回调函数
+            //根据id获取页面元素，为它绑定单击事件
+            document.getElementById('btnShow').onclick = function() {
+                alert(123);
+            };
+        </script>
+    
+   
+    </body>
+</html>

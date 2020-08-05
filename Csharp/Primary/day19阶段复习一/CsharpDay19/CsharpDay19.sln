@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01语法复习", "01语法复习\01语法复习.csproj", "{5715AD3D-237C-4AFF-A74F-64D48A060BB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02模拟磁盘打开文件", "02模拟磁盘打开文件\02模拟磁盘打开文件.csproj", "{4DEC2459-74D8-48DE-AF3F-AF3FB3C3128E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03、面向对象复习", "03、面向对象复习\03、面向对象复习.csproj", "{87C0F1D8-1C80-46DF-812E-23211CF7EF49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04继承", "04继承\04继承.csproj", "{86CAB9A6-4A76-4046-8AC6-8BAA9FF94225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05里氏转换", "05里氏转换\05里氏转换.csproj", "{ED6D4E75-63C2-4BB1-A7B8-38EF45E08B98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06多态复习", "06多态复习\06多态复习.csproj", "{FB2A5940-8A65-4070-9838-E429925F9BC4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5715AD3D-237C-4AFF-A74F-64D48A060BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5715AD3D-237C-4AFF-A74F-64D48A060BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5715AD3D-237C-4AFF-A74F-64D48A060BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5715AD3D-237C-4AFF-A74F-64D48A060BB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DEC2459-74D8-48DE-AF3F-AF3FB3C3128E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DEC2459-74D8-48DE-AF3F-AF3FB3C3128E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DEC2459-74D8-48DE-AF3F-AF3FB3C3128E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DEC2459-74D8-48DE-AF3F-AF3FB3C3128E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87C0F1D8-1C80-46DF-812E-23211CF7EF49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87C0F1D8-1C80-46DF-812E-23211CF7EF49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87C0F1D8-1C80-46DF-812E-23211CF7EF49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87C0F1D8-1C80-46DF-812E-23211CF7EF49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86CAB9A6-4A76-4046-8AC6-8BAA9FF94225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86CAB9A6-4A76-4046-8AC6-8BAA9FF94225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86CAB9A6-4A76-4046-8AC6-8BAA9FF94225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86CAB9A6-4A76-4046-8AC6-8BAA9FF94225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED6D4E75-63C2-4BB1-A7B8-38EF45E08B98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED6D4E75-63C2-4BB1-A7B8-38EF45E08B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED6D4E75-63C2-4BB1-A7B8-38EF45E08B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED6D4E75-63C2-4BB1-A7B8-38EF45E08B98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB2A5940-8A65-4070-9838-E429925F9BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB2A5940-8A65-4070-9838-E429925F9BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB2A5940-8A65-4070-9838-E429925F9BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB2A5940-8A65-4070-9838-E429925F9BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainMaster.master.cs" Inherits="CZBK.ItcastProject.WebApp._2015_6_5.MainMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+
+        <table style="width:100%"><tr><td>首页</td><td>我的相册</td><td>我的文档</td><td>我的电脑</td></tr></table>
+        <hr />
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+         <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+        <hr />
+            <table style="width:100%"><tr><td style="font-size:14px;color:blue">About ITcast- 公司简介- 官方微博- 传智快报- 校园活动- 汇款账号- 加入我们- 来校路线
+
+传智播客-专业java培训、.net培训、php培训、iOS培训、C++培训、网页设计、平面设计、网络营销培训机构
+地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096
+电话：010-82935150/60/70 传真：010-82935100 邮箱: zhanghj+itcast.cn
+京ICP备08001421号 京公网安备110108007702
+友情链接：  传智官网黑马程序员官网CSDN教学论文IT教程网公开课Java论坛c语言赵宝峰讲堂教学视频</td></tr></table>
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        //call与apply的意义：在不改变对象源代码的情况下，可以让函数内部的this表示当前对象
+
+        var id = 10;//为window对象定义了属性id
+        function showId() {
+            alert(this.id);
+        }
+
+        function Person(fn) {
+            this.id = 20;//为类定义了属性id
+            //this.sayId2 = fn;
+        }
+
+        //var p1 = new Person();
+        //p1.sayId = showId;//将方法showId赋值给变量sayId
+        //p1.sayId();//调用方法,使用p1调用的方法，所以函数中的this就是p1
+
+        //var p2 = new Person(showId);
+        //p2.sayId2();
+        
+        //在不改变原有成员的情况下，让person对象调用showId方法
+        //showId();
+        showId.call(new Person());//call表示由哪个对象来调用这个方法，方法中的this就是这个对象
+    </script>
+</head>
+<body>
+
+</body>
+</html>

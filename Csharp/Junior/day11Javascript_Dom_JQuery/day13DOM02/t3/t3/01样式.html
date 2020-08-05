@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style>
+        .d1 {
+            color: white;
+        }
+        </style>
+    <script>
+        //对于纯js的代码，不需要考虑加载顺序问题
+        //需要考虑加载顺序的情况：使用js操作html时，要看对应的html是否已经存在
+        
+        onload = function() {
+            var div1 = document.getElementById('div1');
+            div1.style.width = '200px';//使用js操作样式
+            //特例：background-color，因为命名中不允许使用-，所以改为：去掉-，将-后面的单词的首字母大写，格式如：backgroundColor
+            div1.style.backgroundColor = 'blue';
+            div1.className = 'd1';//将类样式应用到dom上
+            //特例：float->cssFloat
+            div1.style.cssFloat = 'right';
+        };
+        var p1 = 1;
+    </script>
+</head>
+<body>
+    <div id="div1" style="width:100px;height: 100px;background-image:  border: 1px solid red;">
+        123
+    </div>
+    
+    <script>
+        
+        </script>
+</body>
+</html>

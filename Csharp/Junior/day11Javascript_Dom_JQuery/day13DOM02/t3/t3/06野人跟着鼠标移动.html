@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style>
+        #img1 {
+            position: absolute;
+            border: 1px solid red;
+            width: 63px;
+            height: 75px;
+        }
+    </style>
+    <script>
+        //强调：window对象在浏览器打开时，就被创建了
+        //加载完成指：页面中的html都被加载了
+        onload = function() {
+            //鼠标移动：mousemove
+            window.onmousemove = function (e) {
+                //获取图片对象
+                var img1 = document.getElementById('img1');
+                //设置x坐标
+                img1.style.left = e.clientX - parseInt(img1.width) / 2 + 'px';
+                //设置y坐标
+                img1.style.top = e.clientY - parseInt(img1.height) / 2 + 'px';
+            };
+        };
+    </script>
+</head>
+<body>
+    <img id="img1" src="images/idle.png" />
+</body>
+</html>

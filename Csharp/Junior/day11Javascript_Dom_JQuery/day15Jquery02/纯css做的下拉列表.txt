@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="站长,网页特效,js特效,广告代码,zzjs,zzjs.net,sky,www.zzjs.net,站长特效 网" />
+<meta name="description" content="www.zzjs.net,站长特效网，站长必备js特效及广告代码。大量高质量js特效，提供高质量广告代码下载,尽在站长特效网" />
+<title>纯CSS下拉菜单，zzjs.net收集，站长特效网欢迎您。</title>
+<style type="text/css">
+/* 整体设置*/
+.navigation {
+    margin:0;
+    padding:0;
+    width:610px;
+    list-style-type:none;
+    font:12px Arial;
+    float:left;
+    }
+.navigation li {
+    float:left;
+    padding:0;
+    margin:0 10px 0 0;
+    _margin:0 2px 0 0;
+    width:150px;
+    }
+/* 设置选单区块*/
+.navigation li dl {
+    width:150px;/*ie6*/
+    margin:0;
+    padding:0;
+    background-color:#fff;
+    border:solid 2px #666;
+    }
+.navigation li dt a , .navigation li dd a{ display:block;}
+/* 设置主选单dt */
+.navigation li dt {
+    margin:0;
+    padding: 5px;
+    text-align:center;
+    background-color:#fff;
+    font-size: 12px;
+    font-weight: bold;
+    height:15px;
+    overflow:hidden;
+    }
+.navigation li dt a ,.navigation  li dt a:visited {
+    display:block;
+    color:#333;
+    text-decoration:none;
+    }
+/* 设置子选单dd */
+.navigation li dd {
+    margin:0;
+    padding:0;
+    color: #333;
+    background-color:#efefef;
+    border-bottom:dotted 1px #666;
+    }
+.navigation li dd.last {
+    border-bottom:0;
+    }
+.navigation li dd a, .navigation  li dd a:visited {
+    display:block;
+    color:#333;
+    text-decoration:none;
+    padding:4px 5px 4px 20px;
+    }
+/*隐藏子选单*/
+.navigation li dd { display:none;}
+/* 滑鼠滑入显示子选单 */
+.navigation li:hover dd, .navigation li a:hover dd { display:block;}
+/*ie6 hack*/
+.navigation li:hover,.navigation li a:hover { border:0;}
+.navigation table { border-collapse:collapse;
+    padding:0;
+    text-align:left;
+    }
+</style>
+</head>
+<body>
+<a href="http://www.zzjs.net/">站长特效网</a>,站长必备的高质量网页特效和广告代码。zzjs.net，站长js特效。<hr>
+<!--欢迎来到站长特效网，我们网站收集大量高质量js特效，提供许多广告代码下载，网址：www.zzjs.net，zzjs@msn.com,用.net打造靓站-->
+<ul class="navigation">
+    <li>
+    <!--[if lte IE 6]><a href="#"><table><tr><td><![endif]-->
+        <dl>
+            <dt><a href="http://www.zzjs.net">站长特效</a></dt>
+            <dd><a href="http://zzjs.net">网站首页</a></dd>
+            <dd><a href="http://zzjs.net/?cat=1">导航菜单</a></dd>
+            <dd><a href="http://zzjs.net/?cat=8">广告代码</a></dd>
+            <dd class="last"><a href="#">欢迎光临</a></dd>
+        </dl>
+    <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+    </li>
+    <li>
+    <!--[if lte IE 6]><a href="#"><table><tr><td><![endif]-->
+        <dl>
+            <dt><a href="http://zzjs.net/?cat=3">站长特效</a></dt>
+            <dd><a href="http://zzjs.net/?cat=4">欢迎光临</a></dd>
+            <dd class="last"><a href="http://zzjs.net/?cat=5">欢迎光临</a></dd>
+        </dl>
+     </li>
+     <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+     <li>
+     <!--[if lte IE 6]><a href="#"><table><tr><td><![endif]-->
+        <dl>
+            <dt><a href="http://zzjs.net/?cat=10">zzjs.net</a></dt>
+            <dd><a href="#">欢迎光临</a></dd>
+            <dd class="last"><a href="http://zzjs.net/?cat=8">欢迎光临</a></dd>
+        </dl>
+    <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+    </li>
+</ul>
+ 
+ 
+ 
+ 
+ 
+ 
+<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+</body>
+</html> 

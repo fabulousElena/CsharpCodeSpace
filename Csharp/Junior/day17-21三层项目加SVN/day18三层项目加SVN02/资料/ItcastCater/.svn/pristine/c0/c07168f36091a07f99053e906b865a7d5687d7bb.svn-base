@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{977E901F-E4D6-4EB1-866C-B19E00836C37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01复习", "01复习\01复习.csproj", "{BE3F4CEF-6923-4EA1-9DD2-6716C99F0F6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaterUI", "CaterUI\CaterUI.csproj", "{45C339DD-3E00-419C-8423-304420011648}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaterBll", "CaterBll\CaterBll.csproj", "{C4E0F214-3C1E-49CA-AF34-71E49EE4D6BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaterDal", "CaterDal\CaterDal.csproj", "{D622E73C-8C6E-4CC8-BDDC-C952A73988F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaterModel", "CaterModel\CaterModel.csproj", "{BACDABAB-CFE9-4FF9-B232-FBCC633FBA60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaterCommon", "CaterCommon\CaterCommon.csproj", "{6058214F-7C1E-4C5E-ACCE-AD5C7F29936D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE3F4CEF-6923-4EA1-9DD2-6716C99F0F6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3F4CEF-6923-4EA1-9DD2-6716C99F0F6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3F4CEF-6923-4EA1-9DD2-6716C99F0F6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3F4CEF-6923-4EA1-9DD2-6716C99F0F6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45C339DD-3E00-419C-8423-304420011648}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45C339DD-3E00-419C-8423-304420011648}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45C339DD-3E00-419C-8423-304420011648}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45C339DD-3E00-419C-8423-304420011648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4E0F214-3C1E-49CA-AF34-71E49EE4D6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4E0F214-3C1E-49CA-AF34-71E49EE4D6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4E0F214-3C1E-49CA-AF34-71E49EE4D6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4E0F214-3C1E-49CA-AF34-71E49EE4D6BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D622E73C-8C6E-4CC8-BDDC-C952A73988F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D622E73C-8C6E-4CC8-BDDC-C952A73988F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D622E73C-8C6E-4CC8-BDDC-C952A73988F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D622E73C-8C6E-4CC8-BDDC-C952A73988F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BACDABAB-CFE9-4FF9-B232-FBCC633FBA60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BACDABAB-CFE9-4FF9-B232-FBCC633FBA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BACDABAB-CFE9-4FF9-B232-FBCC633FBA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BACDABAB-CFE9-4FF9-B232-FBCC633FBA60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6058214F-7C1E-4C5E-ACCE-AD5C7F29936D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6058214F-7C1E-4C5E-ACCE-AD5C7F29936D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6058214F-7C1E-4C5E-ACCE-AD5C7F29936D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6058214F-7C1E-4C5E-ACCE-AD5C7F29936D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BE3F4CEF-6923-4EA1-9DD2-6716C99F0F6E} = {977E901F-E4D6-4EB1-866C-B19E00836C37}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
+	EndGlobalSection
+EndGlobal

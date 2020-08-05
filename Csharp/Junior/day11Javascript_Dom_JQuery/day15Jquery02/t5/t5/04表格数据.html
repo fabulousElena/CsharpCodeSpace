@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style>
+        #bgDiv {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background-color: black;
+            opacity: 0.2; /*设置不透明度，即可以看到层下面的内容，但是由于层的遮挡，是不可以进行操作的*/
+            display: none;
+        }
+
+        #fgDiv {
+            position: absolute;
+            width: 300px;
+            height: 100px;
+            border: 1px solid red;
+            background-color: #e7e7e7;
+            display: none;
+        }
+    </style>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script>
+        var list = [
+	{ id: '1', country: '中国', capital: '北京' },
+	{ id: '2', country: '美国', capital: '华盛顿' },
+	{ id: '3', country: '日本', capital: '东京' },
+	{ id: '4', country: '韩国', capital: '首尔' }
+        ];
+
+        $(function () {
+            //生成表格数据
+            $.each(list, function() {
+                $('<tr id="'+this.id+'">' +
+                    '<td><input type="checkbox"/></td>' +
+                    '<td>'+this.id+'</td>' +
+                    '<td>'+this.country+'</td>' +
+                    '<td>'+this.capital+'</td>' +
+                    '<td><input type="button" value="修改"/></td>' +
+                    '</tr>').appendTo('#list');
+            });
+            
+            //为复选框chkAll设置点击事件，完成全选、全消的功能
+            $('#chkAll').click(function () {
+                //根据当前复选框的状态设置其它行复选框的状态
+                $('#list :checkbox').attr('checked', this.checked);
+            });
+            
+            //反选
+            $('#btnReverse').click(function () {
+                //获取实际数据行的复选框
+                $('#list :checkbox').each(function() {//jquery对象.each
+                    this.checked = !this.checked;
+                });
+            });
+            
+            //删除选中项
+            $('#btnRemove').click(function() {
+                //确认
+                if (confirm('确定要删除吗')) {
+                    //获取所有数据行中选中的checkbox
+                    //$('#list :checked').parent().parent().remove();
+                    //直接在祖宗节点中找到tr节点
+                    $('#list :checked').parents('tr').remove();
+                }
+            });
+            
+            //添加
+            $('#btnAdd').click(function () {
+                //显示添加界面
+                $('#bgDiv').css('display', 'block')
+                    .css('width', window.innerWidth + 'px')
+                    .height(window.innerHeight + 'px');
+                $('#fgDiv').css('display', 'block')
+                    .css('left', (window.innerWidth - 300) / 2 + 'px')
+                    .css('top', (window.innerHeight - 100) / 2 + 'px');
+                //清除文本框中的数据
+                $('#fgDiv :text,:hidden').val('');
+            });
+
+            //保存
+            $('#btnSave').click(function () {
+                var id = $('#hidId').val();
+                if (id == '') { //添加
+                    $('<tr id="' + $('#txtId').val() + '">' +
+                        '<td><input type="checkbox"/></td>' +
+                        '<td>' + $('#txtId').val() + '</td>' +
+                        '<td>' + $('#txtCountry').val() + '</td>' +
+                        '<td>' + $('#txtCapital').val() + '</td>' +
+                        '<td><input type="button" value="修改"/></td>' +
+                        '</tr>').appendTo('#list')
+                        .find(':button').click(function () {//为修改按钮绑定事件
+                            //显示添加界面
+                            $('#bgDiv').css('display', 'block')
+                                .css('width', window.innerWidth + 'px')
+                                .height(window.innerHeight + 'px');
+                            $('#fgDiv').css('display', 'block')
+                                .css('left', (window.innerWidth - 300) / 2 + 'px')
+                                .css('top', (window.innerHeight - 100) / 2 + 'px');
+                            //找到当前按钮所在td的之前的所有td，因为数据就在这些td中
+                            var tds = $(this).parent().prevAll();
+                            //设置文本框的值
+                            $('#hidId').val(tds.eq(2).text());//作用：在修改后用于查找原始数据的行
+                            $('#txtId').val(tds.eq(2).text());
+                            $('#txtCountry').val(tds.eq(1).text());
+                            $('#txtCapital').val(tds.eq(0).text())
+                        });
+                } else {//修改
+                    var tds = $('#' + id + '>td');
+                    tds.eq(1).text($('#txtId').val());
+                    tds.eq(2).text($('#txtCountry').val());
+                    tds.eq(3).text($('#txtCapital').val());
+                    //改tr的id属性，保持数据一致
+                    $('#' + id).attr('id', $('#txtId').val());
+                }
+
+                //隐藏层
+                $('#bgDiv').css('display', 'none');
+                $('#fgDiv').css('display', 'none');
+            });
+            
+            //修改
+            $('#list :button').click(function() {
+                //显示添加界面
+                $('#bgDiv').css('display', 'block')
+                    .css('width', window.innerWidth + 'px')
+                    .height(window.innerHeight + 'px');
+                $('#fgDiv').css('display', 'block')
+                    .css('left', (window.innerWidth - 300) / 2 + 'px')
+                    .css('top', (window.innerHeight - 100) / 2 + 'px');
+                //找到当前按钮所在td的之前的所有td，因为数据就在这些td中
+                var tds = $(this).parent().prevAll();
+                //设置文本框的值
+                $('#hidId').val(tds.eq(2).text());//作用：在修改后用于查找原始数据的行
+                $('#txtId').val(tds.eq(2).text());
+                $('#txtCountry').val(tds.eq(1).text());
+                $('#txtCapital').val(tds.eq(0).text());
+            });
+        });
+    </script>
+
+</head>
+    <body>
+        修改操作：1、将原有数据展示在div中；2、点击保存时，需要知道对应表格中的哪行数据；3、为新增的修改按钮绑定事件
+        <br/>
+        难点：在第2步中，如何在点击div中按钮时，知道对应原表格中的哪行数据
+        <hr/>
+        <input type="button" id="btnAdd" value="添加" />
+        <input type="button" id="btnReverse" value="反转"/>
+        <input type="button" id="btnRemove" value="删除选中项"/>
+        <table border="1">
+            <thead>
+                <th width="100"><input type="checkbox" id="chkAll"/></th>
+                <th width="100">编号</th>
+                <th width="100">国家</th>
+                <th width="100">首都</th>
+                <th width="100">修改</th>
+            </thead>
+            <tbody id="list">
+            
+            </tbody>
+        </table>
+    
+    
+
+        <div id="bgDiv">
+        </div>
+        <div id="fgDiv">
+            <input type="hidden" id="hidId"/>
+            编号：<input type="text" id="txtId"/>
+            <br/>
+            国家：<input type="text" id="txtCountry"/>
+            <br/>
+            首都：<input type="text" id="txtCapital"/>
+            <br/>
+            <input type="button" id="btnSave" value="保存"/>
+        </div>
+    </body>
+</html>

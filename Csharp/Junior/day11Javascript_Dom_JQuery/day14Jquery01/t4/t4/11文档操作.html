@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script>
+        $(function() {
+            $('#btnAppend').click(function () {
+                //动态创建jquery对象
+                var zhh = $('<b>Zhh</b>');
+                //追加
+                $('#divContainer').append(zhh);
+            });
+
+            $('#btnAppendTo').click(function () {
+                //追加到
+                $('<b>拍电影</b>').appendTo($('#divContainer'));
+            });
+
+            $('#btnEmpty').click(function () {
+                //清空所有子元素
+                $('#divContainer').empty();
+            });
+
+            $('#btnRemove').click(function() {
+                //$('#divContainer').remove();
+                $('<span style="color:red">sadkfjlsad</span>').insertBefore('#divContainer');
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="button" id="btnAppend" value="Append"/>
+    <input type="button" id="btnAppendTo" value="AppendTo"/>
+    <input type="button" id="btnEmpty" value="Empty"/>
+    <input type="button" id="btnRemove" value="Remove"/>
+    <div id="divContainer">asdfsdaf</div>
+</body>
+</html>

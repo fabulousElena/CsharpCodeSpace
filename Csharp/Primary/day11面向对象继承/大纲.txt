@@ -1,0 +1,34 @@
+Path
+	操作路径的
+
+File
+	Create
+	Delete
+	Move
+	Copy
+	读写数据
+		ReadAllBytes()
+			字节数组---字符串
+				Encoding.Default.GetString(字节数组)
+		WriteAllBytes()
+			字符串--->字节数组
+				Encoding.Default.GetBytes(字符串)
+
+集合
+	ArrayList
+		Add
+		AddRange
+		Remove
+		RemoveAt
+		RemoveRange
+		Insert
+		InsertRange
+		clear
+		Reverse
+		Sort
+	Hashtable
+		怎样根据键去找值  ht[键]=值;
+
+里氏转换
+	1、子类可以赋值给父类
+	2、如果父类中装的是子类，那么可以讲这个父类强制转换为子类对象

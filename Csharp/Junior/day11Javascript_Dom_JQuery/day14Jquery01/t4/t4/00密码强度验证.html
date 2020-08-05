@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script>
+        onload = function () {
+            //为文本框注册失去焦点事件，失去焦点时，进行密码验证
+            document.getElementById('txtPwd').onblur = function () {
+                var msg = this.value;
+
+                //获取提示框
+                var msgPwd = document.getElementById('msgPwd');
+
+                if (msg.length < 6) {
+                    msgPwd.innerText = '弱爆了';
+                } else {
+                    //纯字符：弱，两种混合：中，三种混合：强
+                    var pwd = 0;
+                    if (/[a-zA-Z]/.test(msg)) {
+                        pwd++;//有一个字母
+                    }
+                    if (/[0-9]/.test(msg)) {
+                        pwd++;//有一个数字
+                    }
+                    if (/[!@#$%^&*()]/.test(msg)) {
+                        pwd++;//有一个特殊字符
+                    }
+                    //提示结果
+                    switch (pwd) {
+                        case 1:
+                            msgPwd.innerText = '弱';
+                            break;
+                        case 2:
+                            msgPwd.innerText = '中';
+                            break;
+                        case 3:
+                            msgPwd.innerText = '强';
+                            break;
+                    }
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+    <input type="text" id="txtPwd" /><span id="msgPwd"></span>
+</body>
+</html>

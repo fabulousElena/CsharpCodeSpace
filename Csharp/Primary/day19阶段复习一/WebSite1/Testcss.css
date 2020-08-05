@@ -1,0 +1,23 @@
+﻿
+* {
+    margin:0px;
+}
+
+
+div.divIndex {
+    height:1200px;
+    width:800px;
+    background-color:yellow;
+    margin:0px auto;/*居中*/
+}
+div.divLogo {
+    width:800px;
+    height:110px;
+    background-color:pink;
+}
+
+div.divNav {
+    height:30px;
+    width:800px;
+    background-color:blue;
+}

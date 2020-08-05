@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script>
+        $(function() {
+            $('#btnChange').click(function () {
+                //链式编号：只查找一次，支持逐个使用方法
+                $('p').text('都是P').css('color','red');
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="button" id="btnChange" value="都是P"/>
+    <p>p1</p>
+    <p>p2</p>
+    <p>p3</p>
+    <p>p4</p>
+    <p>p5</p>
+    <p>p6</p>
+</body>
+</html>

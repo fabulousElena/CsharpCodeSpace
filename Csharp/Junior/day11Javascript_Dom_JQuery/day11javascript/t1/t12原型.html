@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    <script>
+        //原型：对象的类型
+
+        function Person() {
+            this.Age = 100;
+        }
+
+        var p1 = new Person();
+        //p1.Title = 'abc';
+        
+        //访问原型
+        p1.__proto__.Title = 'abc';//为原型注释数据成员
+        //Person.prototype.Title = 'abc';//功能同上面的代码
+
+        var p2 = new Person();
+        alert(p2.Title);
+    </script>
+</body>
+</html>

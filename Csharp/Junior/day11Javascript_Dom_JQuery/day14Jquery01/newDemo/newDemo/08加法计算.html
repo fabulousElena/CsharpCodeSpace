@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.5.1.min.js"></script>
+    <script>
+        $(function () {
+            $('#btn').click(function () {
+                var v1 = $('#t1').val();
+                var v2 = $('#t2').val();
+                var v3 = parseInt(v2) + parseInt(v1);
+                alert(v3);
+            });
+        });
+        
+
+    </script>
+</head>
+<body>
+    <input id="btn" type="button" value="button" />
+    <input id="t1" type="text" />
+    <input id="t2" type="text" />
+</body>
+</html>

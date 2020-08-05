@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        onload = function() {
+            document.getElementById('btnShow').onclick = function(e) {
+                //event在事件发生时，由浏览器创建出来的一个对象，包含了鼠标的位置等信息
+                //alert(event);
+                //对于早期ie浏览器，不支持参数e的形式
+                //对于ff浏览器，不支持event保留关键字
+                //对于最新的ie浏览器，两种方式都支持
+                alert(e.clientX);
+            };
+        };
+    </script>
+</head>
+<body>
+    <input type="button" id="btnShow" value="显示"/>
+</body>
+</html>

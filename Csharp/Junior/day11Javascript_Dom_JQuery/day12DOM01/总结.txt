@@ -1,0 +1,17 @@
+重点
+window:对话框（alert,confirm,prompt），
+	setInterval(code,delay),
+	setTimeOut(code,delay)
+	location.href获取或设置当前窗口的地址
+document:获取元素get***
+	事件：onclick,onload
+	event：事件发生时，浏览器创建的一个对象，用于带有一些数据（鼠标的位置）
+	动态操作节点：创建，追加，移除
+	获取标签对的内容：innerHTML,innerText或textContent
+
+了解
+w3c
+dom
+js-dom:bom,html dom
+
+作业：见ppt最后一张

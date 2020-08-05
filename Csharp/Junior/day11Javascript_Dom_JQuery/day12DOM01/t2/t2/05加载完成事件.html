@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        //页面中的所有节点加载完成后，会触发此事件
+        onload = function () {
+            //当节点存在后，找到并注册点击事件
+            document.getElementById('span1').onclick = function() {
+                alert('ok');
+            };
+        };
+    </script>
+</head>
+<body>
+    <span id="span1">点击显示</span>
+</body>
+</html>

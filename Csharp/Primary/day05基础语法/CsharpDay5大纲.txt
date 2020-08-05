@@ -1,0 +1,23 @@
+程序的调试
+	F11逐语句调试
+	F10逐过程调试
+	断点调试
+
+for循环
+	用来处理已知循环次数的循环
+		1、for循环的正序和倒序输出
+		2、for循环的嵌套
+
+continue
+
+break
+
+类型转换
+	Convert.Toint32()
+	int.parse()
+	int.Tryparse()
+
+三元表达式
+	if-else的简化写法
+
+产生随机数

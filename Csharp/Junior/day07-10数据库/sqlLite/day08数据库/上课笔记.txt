@@ -1,0 +1,125 @@
+1、复习
+	->创建数据库的SQL：********
+		create database 数据库名
+		on
+		(
+			name=‘’,
+			size=5MB,
+			filegrowth=2MB,
+			filename="....\data\db.mdf"
+		)
+		log on
+		(
+			name=‘_log’,
+			size=5MB,
+			filegrowth=2MB,
+			filename="....\data\db_log.ldf"
+		)
+	->创建表的SQL：*******
+		create table 表名
+		(
+			列名 类型 null,
+			.....,
+			列名  类型 primaryt key not null,--主键列
+			
+			列名  类型 identity(1,1) not null,--自动增长,只能用于数据的类型：int，bigint,float
+			
+		)
+	
+	->NChar和Char的区别？
+		->避免乱码
+		->N:Unicode,用两个自己表示一个字符。
+	->数据库的实例名怎么理解呢？
+		->区分一台机器上的不同的数据库服务实例。
+	->select , delete ,update , Insert************
+		->select 列名，....   from 表  where  表达式1  and 表达式2
+		->delete from 表 where  表达式1  and 表达式2
+		->update 表名  set 列1=值，列2=值
+		->insert into 表名（列1，列2...） values(值1，值2...)	
+	
+2、约束详解
+	->约束的目的：保证数据的完整性.  not null
+	
+	->默认值约束、可空约束、主键约束、外键约束(6遍)、唯一键约束、检查约束
+	
+	
+	->alter table 添加列，修改列，删除列:不是重点，练习3遍。
+	
+	
+3、Select查询详解
+	->select 常量，系统函数，表达式，列名 ....
+	->查询结果的别名
+		->列 as 别名（建议用这种）
+		->列 别名
+		->别名=列
+	->聚合函数
+		->Avg()
+		->Count()
+		->Sum()
+		->Min()/Max()
+		->Group
+	->Top截取和Order 排序
+	
+	
+	->去除重复:Distinct					  		  	->--distinct只能紧跟这select后面，而且是对后面的所有的列都进行去重复操作
+	
+	->where条件过滤
+		->常见的表达式过滤：比如 ，select * from 表 where Id>10
+		
+		->多条件过滤： and or not（优先级：not > and >or）  &&  ||  !
+		->区间过滤：between and   和 in
+		
+		->模糊查询
+			->like查询语法
+			->针对字符串查询的通配符： %  _   []
+			->特殊字符转义。‘’  和 [ 
+			
+			
+		->空值处理：
+			-> 列=Null的结果
+			->is null和is not  null
+	->排序Order by
+		->asc 和 desc
+		->一般放在所有的语句的最后，所有查询结果进行过滤完成后，再对最后的结果集合进行排序。
+		->默认是asc
+	->数据进行分组：Group by
+	select 用户的ID,Count(1) ,sum(订单金额)
+		from 订单信息表
+		group by 用户的ID
+	
+	->Having 过滤
+	->Sql语句的执行顺序。
+		->from 找到表->where过滤->Group分组->having 筛选分组结果 ->Order 排序
+		
+	->join  left join  
+	->表连接
+	
+4、类型转换
+	->查询：比如把一个字符串和整数进行相加
+	->Convert类型转换：Convert(目标类型，表达式，类型))
+	->Cast类型转换：Cast(表达式 as 类型)
+	
+5、表联合
+	->Union
+	->Union all
+	
+6、一次性插入多条数据
+	->select into
+	->insert into  select
+	
+7、日期函数
+	->getdate():
+
+8、字符串函数的使用
+	
+9、练习
+	->呼叫中心查询练习
+	->NorthWind练习：
+		->把订单的详细信息显示出来。要求：有订单编号，订单对应的产品信息，用户信息，产品的类型信息
+		->统计包含产品最多的3个分类信息
+		
+		123  
+		123  
+123  
+		
+	

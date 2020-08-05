@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        var clickIndex = -1;
+        onload = function() {
+            //获取所有的img标签
+            var imgs = document.getElementsByTagName('img');
+            //遍历所有的图片对象
+            for (var index in imgs) {
+                //为每个图片对象注册指向事件
+                imgs[index].onmouseover = function() {
+                    //将当前及之前的图片变黄，之后的图片变灰
+                    var id = this.id;
+                    for (var i = 0; i < imgs.length; i++) {
+                        //当前元素及之前的元素
+                        if (i <= id) {
+                            imgs[i].src = 'images/star2.png';
+                        } else {
+                            //当前元素之后的元素
+                            imgs[i].src = 'images/star1.png';
+                        }
+                    }
+                };
+                
+                //为每个图片对象注册移开事件
+                imgs[index].onmouseout = function() {
+                    //被点击的项及之前的元素是黄色
+                    for (var i = 0; i <= clickIndex; i++) {
+                        imgs[i].src = 'images/star2.png';
+                    }
+                    //将点击的项之后的元素变成灰色
+                    for (var i = clickIndex+1; i < imgs.length; i++) {
+                        imgs[i].src = 'images/star1.png';
+                    }
+                };
+                
+                //为每个图片对象注册点击事件
+                imgs[index].onclick = function () {
+                    //记录下来被点的图片的编号，编号与索引对应
+                    clickIndex = parseInt(this.id);
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <img id="0" src="images/star1.png"/>
+    <img id="1" src="images/star1.png"/>
+    <img id="2" src="images/star1.png"/>
+    <img id="3" src="images/star1.png"/>
+    <img id="4" src="images/star1.png"/>
+</body>
+</html>

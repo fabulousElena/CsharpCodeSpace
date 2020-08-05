@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.5.1.min.js"></script>
+    <script>
+        //为window的onload事件注册处理函数，表示页面加载完成后触发执行
+        //标签加载完成，并且标签指定的资源也加载完成
+        //onload = function() {
+        //};
+
+        //表示加载完成后执行此代码:dom就绪，指标签加载完成，这时，标签指定的资源可能还没有加载完成
+        //$(document).ready(function(){});
+        //效率高
+        $(function () {
+            $('#btn').click(function () {
+                alert(123);
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <input id="btn" type="button" value="button" />
+</body>
+</html>

@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+
+/* left side*/
+#content-bottom{width:980px; background:#FFFFFF; clear:both;}
+#content-bottom-l{float:left; width:715px;}
+#content-bottom-r{float:right; width:250px; padding:0px; background:#FFF;}
+
+/* logform */
+.log-btn{width:50px; float:right;}
+.log-btn input{margin:4px 6px 0px 0px;}
+.content-bottom-r-1{background:url(http://static.epaidai.com/images/bbs/log-bg.jpg) no-repeat left top; height:118px; width:250px; font-size:12px; margin-bottom:10px; padding:12px 0px 0px 0px;}
+.content-bottom-r-1 a{display:inline-block; }
+.content-bottom-r-1 img{border:none; vertical-align:top;}
+.content-bottom-r-1 p{display:inline-block; margin:0px 0px 5px 28px; color:#4B4B4B; font: 16px Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;}
+
+/* 收藏数、回复数图标 */
+.active_replay, .replay {background: url(http://static.epaidai.com/images/tags/replay_iconh.gif?v=3) no-repeat 0 3px;padding-left: 16px;line-height: 14px;}
+.active_readNum, .readNum {background: url(http://static.epaidai.com/images/bbs/read_icon.gif?v=5) no-repeat 0 3px;padding-left: 16px;line-height: 14px;}
+.active_collectNum, .collectNum {background: url(http://static.epaidai.com/images/bbs/collect_iconh.gif?v=2) no-repeat 0 3px;padding-left: 13px;line-height: 14px;}
+.readNum, .collectNum,.replay {background-position: 0px -17px;}

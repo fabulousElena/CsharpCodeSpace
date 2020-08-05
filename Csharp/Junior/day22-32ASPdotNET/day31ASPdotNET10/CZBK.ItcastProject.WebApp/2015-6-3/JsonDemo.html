@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="../Js/jquery-1.7.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnData").click(function () {
+                $.post("GetJson.ashx", {}, function (data) {
+                    alert("用户名是:"+data.Name);
+                },"json");
+            });
+
+
+            $("#btnData1").click(function () {
+                $.post("GetJson.ashx", {}, function (data) {
+                    var serverData = $.parseJSON(data);
+                    alert("用户名是:" + serverData.Name);
+                });
+            });
+
+
+
+            $("#btnData222").click(function () {
+                $.getJSON("GetJson.ashx", {}, function (data) {
+                 
+                    alert("用户名是:" + data.Name);
+                });
+            });
+           
+       
+        });
+    </script>
+</head>
+<body>
+    <input type="button" value="获取数据" id="btnData" />
+      <input type="button" value="获取数据1111" id="btnData1" />
+
+      <input type="button" value="获取数据2222" id="btnData222" />
+</body>
+</html>

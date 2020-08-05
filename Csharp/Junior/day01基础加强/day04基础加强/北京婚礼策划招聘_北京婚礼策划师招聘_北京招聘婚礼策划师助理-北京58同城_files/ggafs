@@ -1,0 +1,176 @@
+(function() {
+	
+	var listPage = "listpage";
+	var finalPage = "finalpage";
+	
+	var dispLocalId;
+	var dispLocalName = 'bj';
+	var subDispLocalName = '';
+	var rootDispCateId;
+	var dispCateId;
+	var subDispCateName = '';
+	var pageType;
+	var entityId = -1;
+	var entityType = 0;
+	var dispLocalPath = '';
+	var dispCatePath = '';
+	var dispLocalTitlePath = '';
+	var dispCateTitlePath = '';
+	var pageTitle = '';
+
+	var show_zhineng_flag = false;
+	var safe_html = function(content) {
+        if(!content) {
+            return '';
+        }
+        return content.replace(/[\n|,|\r\n|'|"|\t]/g, '');
+    }
+
+	var isJobsCate = function(rootDispCateId) {
+		return rootDispCateId == '9224' || rootDispCateId == '9225' || rootDispCateId == '13941' || rootDispCateId == '13952';
+	}
+
+	var isHuangYeCate = function(rootDispCateId) {
+		return rootDispCateId == '8512' || rootDispCateId == '8703' || rootDispCateId == '8538' || rootDispCateId == '26509'
+			|| rootDispCateId == '92' || rootDispCateId == '187' || rootDispCateId == '8640' || rootDispCateId == '8581'
+			|| rootDispCateId == '143' || rootDispCateId == '26506' || rootDispCateId == '28921' || rootDispCateId == '26510'
+			|| rootDispCateId == '26508';
+	}
+
+	var isOtherCate = function(rootDispCateId){
+		return rootDispCateId == '3' || rootDispCateId == '832' || rootDispCateId == '833';
+	}
+
+	var isOnloadAd = function(rootDispCateId,dispCateId) {
+		return rootDispCateId == '4' || rootDispCateId == '832' || rootDispCateId == '833' || isOtherCate(rootDispCateId)
+			|| rootDispCateId == '5' ||isHuangYeCate(rootDispCateId) || rootDispCateId == '1' || isJobsCate(rootDispCateId);
+		//return dispCateId == '12'
+	}
+
+	try {
+		if(typeof(____json4fe) != "undefined" && ____json4fe.hasOwnProperty("modules") 
+				&& ____json4fe.hasOwnProperty("catentry") && ____json4fe.hasOwnProperty("locallist")) {
+			//取一级展现城市ID
+			if(____json4fe.locallist.length > 0 && ____json4fe.locallist[0].hasOwnProperty("dispid")) {
+				dispLocalId = ____json4fe.locallist[0].dispid;
+			}
+
+			if(____json4fe.locallist.length > 0 && ____json4fe.locallist[0].hasOwnProperty("listname")) {
+				dispLocalName = ____json4fe.locallist[0].listname;
+			}
+		
+			//取最低级展现城市name
+			if(____json4fe.locallist.length > 1 && ____json4fe.locallist[____json4fe.locallist.length-1].hasOwnProperty("listname")) {
+				subDispLocalName = ____json4fe.locallist[____json4fe.locallist.length-1].listname;
+			}
+			//取最低级展现类别name
+			if(____json4fe.catentry.hasOwnProperty("listname")){
+				subDispCateName = ____json4fe.catentry.listname;
+			}
+			if(____json4fe.catentry.length > 0 && ____json4fe.catentry[____json4fe.catentry.length-1].hasOwnProperty("listname")) {
+				subDispCateName = ____json4fe.catentry[____json4fe.catentry.length-1].listname;
+			}
+			//取城市的idpath和titlepath
+			for(var i in ____json4fe.locallist) {
+				var locObj = ____json4fe.locallist[i];
+				if(locObj.hasOwnProperty("name")) {
+					if(dispLocalTitlePath != '') {
+						dispLocalTitlePath += ",";
+					}
+					dispLocalTitlePath += encodeURIComponent(safe_html(locObj.name));
+				}
+				if(locObj.hasOwnProperty("dispid")) {
+					if(dispLocalPath != '') {
+						dispLocalPath += ",";
+					}
+					dispLocalPath += locObj.dispid;
+				}
+			}
+			
+			//取二级展现类ID
+			if(____json4fe.modules == listPage || ____json4fe.modules == "list") {
+				//列表页
+				if(____json4fe.catentry.length > 1 && ____json4fe.catentry[0].hasOwnProperty("dispid") 
+						&& ____json4fe.catentry[1].hasOwnProperty("dispid")) {
+					rootDispCateId = ____json4fe.catentry[0].dispid;
+					dispCateId = ____json4fe.catentry[1].dispid;
+				}
+
+				for(var i in ____json4fe.catentry) {
+					var cateObj = ____json4fe.catentry[i];
+					if(cateObj.hasOwnProperty("name")) {
+						if(dispCateTitlePath != '') {
+							dispCateTitlePath += ",";
+						}
+						dispCateTitlePath += encodeURIComponent(safe_html(cateObj.name));
+					}
+					if(cateObj.hasOwnProperty("dispid")) {
+						if(dispCatePath != '') {
+							dispCatePath += ",";
+						}
+						dispCatePath += cateObj.dispid;
+					}
+				}
+				pageType = listPage;
+			} else if (____json4fe.modules == finalPage || ____json4fe.modules == "final") {
+				//最终页
+				//pageTitle = encodeURIComponent(get_title());
+
+				if(____json4fe.hasOwnProperty("rootcatentry") && ____json4fe.rootcatentry.hasOwnProperty("dispid")) {
+					rootDispCateId = ____json4fe.rootcatentry.dispid;
+					if(____json4fe.rootcatentry.hasOwnProperty("name")) {
+						dispCateTitlePath += encodeURIComponent(safe_html(____json4fe.rootcatentry.name));
+					}
+					dispCatePath += ____json4fe.rootcatentry.dispid;
+				}
+				if(____json4fe.catentry.hasOwnProperty("dispid")) {
+					dispCateId = ____json4fe.catentry.dispid;
+					if(____json4fe.catentry.hasOwnProperty("name")) {
+						if(dispCateTitlePath != '') {
+							dispCateTitlePath += ",";
+						}
+						dispCateTitlePath += encodeURIComponent(safe_html(____json4fe.catentry.name));
+					}
+					if(dispCatePath != '') {
+						dispCatePath += ",";
+					}
+					dispCatePath += ____json4fe.catentry.dispid;
+				}
+				if(____json4fe.hasOwnProperty("infoid")) {
+					entityId = ____json4fe.infoid;
+				}
+				pageType = finalPage;
+
+			}
+		}
+
+		if(typeof(dispLocalId) != "undefined" && typeof(rootDispCateId) != "undefined" && typeof(dispCateId) != "undefined"
+				&& typeof(pageType) != "undefined") {
+			show_zhineng_flag = true;
+			//获取城市、类别、页面类型成功
+			if(isOnloadAd(rootDispCateId,dispCateId)){
+				$(window).load(function(){
+					var new_script = document.createElement("script");
+					new_script.type = "text/javascript";
+					new_script.src = 'http://static.track.58.com/asyn_show_zhineng.js?r'+ Math.random();
+					document.body.appendChild(new_script);
+				});
+			}else{
+				var show_zhineng_js = 'http://static.track.58.com/show_zhineng.js?r='+Math.random();
+				document.write('<scri' + 'pt src="' + show_zhineng_js + '"></scri' + 'pt>');
+			}
+		}
+
+	} catch (e) {
+
+	}
+
+	if(!show_zhineng_flag){
+		//var new_script = document.createElement("script");
+		//new_script.type = "text/javascript";
+		//new_script.src = 'http://static.track.58.com/show_zhineng.js?r='+Math.random();
+		//document.body.appendChild(new_script);
+		var show_zhineng_js = 'http://static.track.58.com/show_zhineng.js?r='+Math.random();
+		document.write('<scri' + 'pt src="' + show_zhineng_js + '"></scri' + 'pt>');
+	}
+})();

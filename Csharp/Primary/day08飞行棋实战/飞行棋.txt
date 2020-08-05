@@ -1,0 +1,109 @@
+1、画游戏头
+2、初始化地图(加载地图所需要的资源)
+将整数数组中的数字编程控制台中显示的特殊字符串的这个过程 就是初始化地图
+3、画地图 
+
+
+4、玩游戏
+
+
+游戏规则：
+如果玩家A踩到了玩家B  玩家B退6格  
+踩到了地雷 退6格
+踩到了时空隧道 进10格
+踩到了幸运轮盘 1交换位置  2 轰炸对方 使对方退6格
+踩到了暂停  暂停一回合  
+踩到了方块  神马都不干
+
+Map[50]
+if(map[40]==1)
+{
+	Console.WriteLine("◎");
+}
+
+
+//初始化地图   Map[6]=1
+            //我用0表示普通,显示给用户就是 □
+            //....1...幸运轮盘,显示组用户就◎ 
+            //....2...地雷,显示给用户就是 ☆
+            //....3...暂停,显示给用户就是 ▲
+            //....4...时空隧道,显示组用户就 卐
+            int[] luckyturn = { 6, 23, 40, 55, 69, 83 };//幸运轮盘◎
+            int[] landMine = { 5, 13, 17, 33, 38, 50, 64, 80, 94 };//地雷☆
+            int[] pause = { 9, 27, 60, 93 };//暂停▲
+            int[] timeTunnel = { 20, 25, 45, 63, 72, 88, 90 };//时空隧道卐
+			for(int i=0;i<luckyturn.Length;i++)
+			{
+				int n=luckyturn[i];
+				Map[n]=1;
+			}
+			for(int i=0;i<landMine.Length;i++)
+			{
+				int n=landMine[i];
+				Map[n]=1;
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public static void Win()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("                                          ◆                      ");
+            Console.WriteLine("                    ■                  ◆               ■        ■");
+            Console.WriteLine("      ■■■■  ■  ■                ◆■         ■    ■        ■");
+            Console.WriteLine("      ■    ■  ■  ■              ◆  ■         ■    ■        ■");
+            Console.WriteLine("      ■    ■ ■■■■■■       ■■■■■■■   ■    ■        ■");
+            Console.WriteLine("      ■■■■ ■   ■                ●■●       ■    ■        ■");
+            Console.WriteLine("      ■    ■      ■               ● ■ ●      ■    ■        ■");
+            Console.WriteLine("      ■    ■ ■■■■■■         ●  ■  ●     ■    ■        ■");
+            Console.WriteLine("      ■■■■      ■             ●   ■   ■    ■    ■        ■");
+            Console.WriteLine("      ■    ■      ■            ■    ■         ■    ■        ■");
+            Console.WriteLine("      ■    ■      ■                  ■               ■        ■ ");
+            Console.WriteLine("     ■     ■      ■                  ■           ●  ■          ");
+            Console.WriteLine("    ■    ■■ ■■■■■■             ■              ●         ●");
+            Console.ResetColor();
+        }

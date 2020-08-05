@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style>
+        #divShowId {
+            position: absolute;display: none;
+            width: 100px;height: 100px;
+            background-color: blue;color: white;
+        }
+    </style>
+    <script>
+        onload = function () {
+            //获取所有按钮
+            var btns = document.getElementsByTagName('input');
+            //遍历按钮，绑定事件
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].onmouseover = function(e) {
+                    //显示div，内容是id
+                    //获取div
+                    var divShowId = document.getElementById('divShowId');
+                    divShowId.textContent = this.id;
+                    //显示
+                    divShowId.style.display = 'block';
+                    //定义位置
+                    divShowId.style.left = e.clientX + 'px';
+                    divShowId.style.top = e.clientY + 'px';
+                };
+                btns[i].onmouseout = function() {
+                    //隐藏div
+                    //获取div
+                    var divShowId = document.getElementById('divShowId');
+                    //隐藏
+                    divShowId.style.display = 'none';
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <input type="button" id="btn1" value="按钮1"/>
+    <input type="button" id="btn2" value="按钮2"/>
+    <input type="button" id="btn3" value="按钮3"/>
+    <input type="button" id="btn4" value="按钮4"/>
+    <input type="button" id="btn5" value="按钮5"/>
+    <div id="divShowId"></div>
+</body>
+</html>

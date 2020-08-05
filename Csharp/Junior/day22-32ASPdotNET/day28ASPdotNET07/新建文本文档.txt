@@ -1,0 +1,31 @@
+
+        //自己封装了一个异步方法。 
+        //第一个参数：GET或者是POST，二个参数：请求的url地址，
+        //第三个：是否异步第四个：往后台发送的Post的数据，最后一个后台返回数据之后，处理数据的回调函数。
+        function myAjax(method,url,isAsync,postData,afterSuccess) {
+            var xhr;
+            
+            if (XMLHttpRequest) {//ff，ie8，chrome
+                xhr = new XMLHttpRequest();
+            } else {//兼容ie6，ie5
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            xhr.open(method, url, isAsync);
+
+            
+            xhr.send(postData);//发送请求。
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    //alert(xhr.responseText);
+                    afterSuccess(xhr.responseText);
+                }
+            };
+        }
+
+
+
+   myAjax("GET", "LoadData.ashx", true, "", function(data) {
+               
+            });

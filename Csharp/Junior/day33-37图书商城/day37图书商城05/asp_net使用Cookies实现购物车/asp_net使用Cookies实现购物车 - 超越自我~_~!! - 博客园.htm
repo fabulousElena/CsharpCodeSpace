@@ -1,0 +1,306 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0059)http://www.cnblogs.com/duwx/archive/2010/08/30/1812415.html -->
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=8.0000" 
+http-equiv="X-UA-Compatible">
+<TITLE>asp.net使用Cookies实现购物车 - 超越自我~_~!! - 博客园</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type><LINK 
+rel=stylesheet type=text/css 
+href="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/common.css"><LINK 
+id=MainCss rel=stylesheet type=text/css 
+href="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/style.css"><LINK 
+rel=stylesheet type=text/css 
+href="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/common2.css"><LINK 
+rel=stylesheet type=text/css 
+href="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/shStyle.css"><LINK 
+title=RSS rel=alternate type=application/rss+xml 
+href="http://www.cnblogs.com/duwx/rss"><LINK title=RSD rel=EditURI 
+type=application/rsd+xml href="http://www.cnblogs.com/duwx/rsd.xml"><LINK 
+rel=wlwmanifest type=application/wlwmanifest+xml 
+href="http://www.cnblogs.com/duwx/wlwmanifest.xml">
+<SCRIPT type=text/javascript 
+src="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+var currentBlogApp = 'duwx';
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name=GENERATOR content="MSHTML 8.00.7600.17267"></HEAD>
+<BODY><A name=top></A><!--done-->
+<DIV id=home>
+<DIV id=header>
+<DIV id=blogTitle><A id=lnkBlogLogo href="http://www.cnblogs.com/duwx/"><IMG 
+id=blogLogo alt=返回主页 
+src="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/logo.gif"></A> <!--done-->
+<H1><A id=Header1_HeaderTitle class=headermaintitle 
+href="http://www.cnblogs.com/duwx/">超越自我</A></H1>
+<H2>每个人都是一座山，世界上最难攀越的山其实是自己，往上走即便一小步，也有新高度，做最好的自己，我能。。</H2></DIV><!--end: blogTitle 博客的标题和副标题 --></DIV><!--end: header 头部 -->
+<DIV id=main>
+<DIV id=mainContent>
+<DIV class=forFlow>
+<DIV id=navigator><!--done-->
+<UL id=navList>
+  <LI><A id=MyLinks1_HomeLink class=menu 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A id=MyLinks1_IngLink class=menu 
+  href="http://home.cnblogs.com/ing/">闪存</A></LI>
+  <LI><A id=MyLinks1_MyHomeLink class=menu 
+  href="http://www.cnblogs.com/duwx/">首页</A></LI>
+  <LI><A id=MyLinks1_NewPostLink class=menu 
+  href="http://www.cnblogs.com/duwx/admin/EditPosts.aspx?opt=1" 
+  rel=nofollow>新随笔</A></LI>
+  <LI><A accessKey=9 id=MyLinks1_ContactLink class=menu 
+  href="http://space.cnblogs.com/msg/send/%e8%b6%85%e8%b6%8a%e8%87%aa%e6%88%91~_~!!" 
+  rel=nofollow>联系</A></LI>
+  <LI><A id=MyLinks1_Admin class=menu 
+  href="http://www.cnblogs.com/duwx/admin/EditPosts.aspx" 
+  rel=nofollow>管理</A></LI>
+  <LI><A id=MyLinks1_Syndication class=menu 
+  href="http://www.cnblogs.com/duwx/rss">订阅</A> <A id=MyLinks1_XMLLink 
+  class=aHeaderXML href="http://www.cnblogs.com/duwx/rss"><IMG alt=订阅 
+  src="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/xml.gif"></A></LI></UL>
+<DIV class=blogStats><!--done-->随笔- 34&nbsp; 文章- 0&nbsp; 评论- 11&nbsp; </DIV><!--end: blogStats --></DIV><!--end: navigator 博客导航栏 --><!--done-->
+<DIV id=topics>
+<DIV class=post>
+<H1 class=postTitle><A id=cb_post_title_url class=postTitle2 
+href="http://www.cnblogs.com/duwx/archive/2010/08/30/1812415.html">asp.net使用Cookies实现购物车</A> 
+</H1>
+<DIV class=clear></DIV>
+<DIV class=postBody>
+<DIV id=cnblogs_post_body>
+<H1>asp.net使用Cookies实现购物车</H1>
+<P><SPAN 
+style="FONT-SIZE: 12pt"><STRONG>ListInfo.aspx向购物车的添加商品的方法</STRONG></SPAN></P>
+<P>private void GouWu(string name, double price, string 
+id)<BR>&nbsp;&nbsp;&nbsp; { <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+//往购物车中添加商品<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HttpCookie hc = 
+null;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (Request.Cookies["<SPAN 
+id=result_box class=short_text><SPAN style="BACKGROUND-COLOR: #fff; COLOR: #000" 
+title="" zc="Shopping Cart" yc="购物车" closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>"] == 
+null)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+//如果Cookies中不存在<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>，则创建<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+hc = new HttpCookie("<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN style="FONT-SIZE: 10pt"><SPAN 
+id=result_box class=short_text><SPAN style="BACKGROUND-COLOR: #fff; COLOR: #000" 
+title="" zc="Shopping Cart" yc="购物车" closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN></SPAN></FONT></SPAN></SPAN>");&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+else<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+//如果Cookies中存在<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>，则取出<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+hc= Request.Cookies["<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN style="FONT-SIZE: 10pt"><SPAN 
+id=result_box class=short_text><SPAN style="BACKGROUND-COLOR: #fff; COLOR: #000" 
+title="" zc="Shopping Cart" yc="购物车" closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN></SPAN></FONT></SPAN></SPAN>"];<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bool 
+flag=true;//标记在购物车中是否存在本次选择的物品</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+//在购物车的Cookies中查找是否存在这次要选择的物品<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+foreach (string item in hc.Values)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (item 
+== id)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+flag = 
+false;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if 
+(flag)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+//如果选择的内容在购物车中没有，则创建一个新的子键<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+hc.Values.Add(id, id + "|" + name + "|" + price + "|" + 1 + 
+"|");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+else<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+//如果选择的内容在购物车中没，则删除原来的，添加一个新的<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+int num = int.Parse(hc.Values[id].Split(new char[] { '|' })[3]) + 
+1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+hc.Values.Remove(id);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+hc.Values.Add(id,id + "|" + name + "|" + price + "|" + num + 
+"|");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hc.Expires = 
+DateTime.Now.AddDays(1);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Response.Cookies.Add(hc);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Response.Redirect("<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>.aspx");<BR>&nbsp;&nbsp;&nbsp; 
+}</P>
+<P><SPAN style="FONT-SIZE: 12pt"><STRONG>在<SPAN id=result_box 
+class=short_text><SPAN style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" 
+zc="Shopping Cart" yc="购物车" closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 12pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>.aspx页面的Load事件中</STRONG></SPAN></P>
+<P>&nbsp;List&lt;<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>&gt; list = new 
+List&lt;<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>&gt;();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+//循环从购物车中取出物品添加到集合<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach (string 
+item in Request.Cookies["<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>"].Values)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (item 
+!= null)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+char[] sp = { '|' };</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+string[] w = Request.Cookies["<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>"][item].Split(sp);</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<SPAN id=result_box class=short_text><SPAN 
+style="BACKGROUND-COLOR: #fff; COLOR: #000" title="" zc="Shopping Cart" yc="购物车" 
+closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN> gwc = new <SPAN 
+id=result_box class=short_text><SPAN style="BACKGROUND-COLOR: #fff; COLOR: #000" 
+title="" zc="Shopping Cart" yc="购物车" closure_uid_sd4bpo="23"><FONT size=5><SPAN 
+style="FONT-SIZE: 10pt">ShoppingCart</SPAN></FONT></SPAN></SPAN>();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+gwc.Id = 
+w[0];<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+gwc.Name = 
+w[1];<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+gwc.Price = 
+int.Parse(w[2]);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+gwc.Number = 
+int.Parse(w[3]);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+list.Add(gwc);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridView1.DataSource = 
+list;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GridView1.DataBind();</P>
+<P>&nbsp;</P>
+<P><STRONG style="FONT-SIZE: 12pt">&nbsp;ShoppingCart类代码</STRONG></P>
+<P>public class ShoppingCart<BR>{<BR>&nbsp;public 
+ShoppingCart()<BR>&nbsp;{<BR>&nbsp;&nbsp;//<BR>&nbsp;&nbsp;//TODO: 
+在此处添加构造函数逻辑<BR>&nbsp;&nbsp;//<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;}<BR>&nbsp;&nbsp;&nbsp; string name;</P>
+<P>&nbsp;&nbsp;&nbsp; public string Name<BR>&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; get { return name; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set { name = value; 
+}<BR>&nbsp;&nbsp;&nbsp; }<BR>&nbsp;&nbsp;&nbsp; double price;</P>
+<P>&nbsp;&nbsp;&nbsp; public double Price<BR>&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; get { return price; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set { price = value; 
+}<BR>&nbsp;&nbsp;&nbsp; }<BR>&nbsp;&nbsp;&nbsp; string id;</P>
+<P>&nbsp;&nbsp;&nbsp; public string Id<BR>&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; get { return id; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set { id = value; 
+}<BR>&nbsp;&nbsp;&nbsp; }<BR>&nbsp;&nbsp;&nbsp; int number;</P>
+<P>&nbsp;&nbsp;&nbsp; public int Number<BR>&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; get { return number; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set { number = value; 
+}<BR>&nbsp;&nbsp;&nbsp; }</P>
+<P>}</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P></DIV>
+<DIV id=MySignature></DIV>
+<SCRIPT type=text/javascript>
+var isLogined = false;
+var cb_blogId = 55654;
+var cb_entryId = 1812415;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "f84c87a6-6132-de11-9510-001cf0cd104b";
+var cb_entryCreatedDate = '2010/8/30 11:06:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV class=clear></DIV>
+<DIV id=blog_post_info_block>
+<DIV id=blog_post_info></DIV>
+<DIV class=clear></DIV>
+<DIV id=post_next_prev></DIV></DIV>
+<SCRIPT type=text/javascript>
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {  
+        loadViewCount(cb_entryId);
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+</DIV>
+<DIV class=postDesc>posted @ <SPAN id=post-date>2010-08-30 11:06</SPAN> <A 
+href="http://www.cnblogs.com/duwx/">超越自我~_~!!</A> 阅读(<SPAN 
+id=post_view_count>...</SPAN>) 评论(<SPAN id=post_comment_count>...</SPAN>) <A 
+href="http://www.cnblogs.com/duwx/admin/EditPosts.aspx?postid=1812415" 
+rel=nofollow>编辑</A> <A onclick="AddToWz(1812415);return false;" 
+href="http://www.cnblogs.com/duwx/archive/2010/08/30/1812415.html#">收藏</A></DIV></DIV>
+<SCRIPT type=text/javascript 
+src="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/1812415"></SCRIPT>
+</DIV><!--end: topics 文章、评论容器-->
+<DIV id=blog-comments-placeholder></DIV>
+<SCRIPT type=text/javascript>var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+
+<DIV id=comment_form class=commentform>
+<DIV id=divCommentShow></DIV>
+<DIV id=comment_nav><SPAN id=span_refresh_tips></SPAN><A id=lnk_RefreshComments 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" 
+href="http://www.cnblogs.com/duwx/archive/2010/08/30/1812415.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/duwx/archive/2010/08/30/1812415.html#top">返回顶部</A></DIV>
+<DIV id=comment_form_container></DIV>
+<SCRIPT type=text/javascript>
+    if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id=ad_text_under_commentbox class=ad_text_commentbox></DIV>
+<DIV id=site_nav_under><A title=程序员的网上家园 href="http://www.cnblogs.com/" 
+target=_blank>博客园首页</A><A title=程序员问答社区 href="http://q.cnblogs.com/" 
+target=_blank>博问</A><A title=IT新闻 href="http://news.cnblogs.com/" 
+target=_blank>新闻</A><A href="http://home.cnblogs.com/ing/" 
+target=_blank>闪存</A><A href="http://job.cnblogs.com/" target=_blank>程序员招聘</A><A 
+href="http://kb.cnblogs.com/" target=_blank>知识库</A></DIV>
+<DIV id=ad_under_post_holder></DIV>
+<DIV id=HistoryToday 
+class=c_ad_block></DIV></DIV></DIV><!--end: forFlow --></DIV><!--end: mainContent 主体内容容器-->
+<DIV id=sideBar>
+<DIV id=sideBarMain><!--done-->
+<DIV class=newsItem>
+<H3 class=catListTitle>公告</H3>
+<DIV id=blog-news></DIV></DIV>
+<DIV id=calendar>
+<DIV style="displya: none" id=blog-calendar></DIV></DIV>
+<DIV id=leftcontentcontainer>
+<DIV id=blog-sidecolumn></DIV></DIV></DIV><!--end: sideBarMain --></DIV><!--end: sideBar 侧边栏容器 -->
+<DIV class=clear></DIV></DIV><!--end: main -->
+<DIV class=clear></DIV>
+<DIV id=footer><!--done-->Copyright ©2013 超越自我~_~!! 
+</DIV><!--end: footer --></DIV><!--end: home 自定义的最大容器 -->
+<SCRIPT type=text/javascript 
+src="asp_net使用Cookies实现购物车%20-%20超越自我~_~!!%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

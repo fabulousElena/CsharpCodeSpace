@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        //事件只能接收函数，这里直接使用匿名函数更简便
+        onload = function () {
+            //获取所有name为btnCry的按钮
+            var btn = document.getElementsByName('btnCry');
+            for (var i = 0; i < btn.length; i++) {
+                //逐个为按钮注册点击事件
+                btn[i].onclick = function () {
+                    //改写按钮的显示文本
+                    this.value = '呜呜';
+
+                    //错误原因：i的闭包
+                    //document.getElementById(i).value = '呜呜';
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <input type="button" name="btnCry" id="0" value="哈哈"/>
+    <input type="button" name="btnCry" id="1" value="哈哈"/>
+    <input type="button" name="btnCry" id="2" value="哈哈"/>
+    <input type="button" name="btnCry" id="3" value="哈哈"/>
+    <input type="button" name="btnCry" id="4" value="哈哈"/>
+    <input type="button" name="btnCry" value="哈哈"/>
+    <input type="button" name="btnCry" value="哈哈"/>
+    <input type="button" name="btnCry" value="哈哈"/>
+    <input type="button" name="btnCry" value="哈哈"/>
+</body>
+</html>

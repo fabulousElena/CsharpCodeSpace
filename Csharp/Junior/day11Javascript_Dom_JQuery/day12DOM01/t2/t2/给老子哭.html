@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+
+    </script>
+</head>
+<body>
+    <br />
+    <input id="1" type="button" name="bt1" value="嘻嘻嘻" ; />
+    <br />
+    <input id="2" type="button" name="bt1" value="嘻嘻嘻" ; /><br />
+    <input id="3" type="button" name="bt1" value="嘻嘻嘻" ; /><br />
+    <input id="4" type="button" name="bt1" value="嘻嘻嘻" ; /><br />
+    <input id="5" type="button" name="bt1" value="嘻嘻嘻" ; /><br />
+    <input id="7" type="button" name="bt1" value="嘻嘻嘻" ; /><br />
+    <input id="6" type="button" name="bt1" value="嘻嘻嘻" ; /><br />
+    <input id="8" type="button" name="bt1" value="嘻嘻嘻" ; /><br />
+    <input id="9" type="button" name="bt1" value="嘻嘻嘻" ; /><br />
+    <input id="10" type="button" name="bt1" value="嘻嘻嘻" ; /><br />
+    <input id="11" type="button" name="bt1" value="嘻嘻嘻" ; />
+
+    <script>
+        for (var i = 1; i < 12; i++) {
+            var j = 0;
+            document.getElementById(i).onclick = function () {
+                if (this.value == '嘻嘻嘻') {
+                    this.value = '呜呜呜';
+                    j++;
+                } else {
+                    this.value = '嘻嘻嘻';
+                    j++;
+                }
+
+                if (j > 6) {
+                    alert("老子喜怒无常");
+                    j = 0;
+                }
+            }
+        }
+        
+
+    </script>
+
+</body>
+</html>

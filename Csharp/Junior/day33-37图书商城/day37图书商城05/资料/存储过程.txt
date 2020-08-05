@@ -1,0 +1,31 @@
+create proc createOrder
+@address nvarchar(255),--收货人地址
+@orderId nvarchar(50),--订单号
+@userId int,--用户编号
+@totalMoney money output --总金额
+as
+begin
+  declare @error int
+  set @error=0
+  begin transaction
+   ---计算总金额
+  select @totalMoney=sum([Count]*UnitPrice)from Cart inner join Books on Cart.BookId=Books.Id where Cart.UserId=@userId
+   set @error=@@error+@error
+  --向订单主表中插入数据。
+  insert into dbo.Orders(OrderId, OrderDate, UserId, TotalPrice, PostAddress, state) values(@orderId,getdate(),@userId,@totalMoney,@address,0)
+set @error=@@error+@error
+ --行订单明细表中插入数据
+  insert into dbo.OrderBook(OrderID, BookID, Quantity, UnitPrice) select @orderId,Cart.BookId,Cart.Count,Books.UnitPrice from Cart inner join Books on Cart.BookId=Books.Id where Cart.UserId=@userId
+  set @error=@@error+@error
+--删除购物车表中的数据
+  delete from Cart where UserId=@userId
+  set @error=@@error+@error
+  if @error>0
+    begin
+		rollback transaction--回滚
+    end
+  else
+     begin
+		commit transaction--提交
+     end 
+end

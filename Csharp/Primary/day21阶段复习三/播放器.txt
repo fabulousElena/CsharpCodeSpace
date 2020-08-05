@@ -1,0 +1,14 @@
+1、取消播放器的自动播放功能
+2、播放或者暂停按钮
+3、下一曲、上一曲
+4、多选删除
+5、静音和放音
+6、选择列表中的音乐文件，单击播放按钮直接播放
+7、自动进行下一曲
+
+
+
+15秒  44秒 当我和世界不一样
+44.--47 那就让我不一样
+
+   lblInfomation.Text = musicPlayer.currentMedia.duration.ToString() + "\r\n" + musicPlayer.currentMedia.durationString + "\r\n" + musicPlayer.Ctlcontrols.currentPosition.ToString() + "\r\n" + musicPlayer.Ctlcontrols.currentPositionString;

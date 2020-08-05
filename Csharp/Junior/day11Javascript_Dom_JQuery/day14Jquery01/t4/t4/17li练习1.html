@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script>
+        $(function() {
+            $('li').hover(function() {//指向
+                $(this).css({
+                    'color': 'red',
+                    'cursor':'pointer'
+                });
+            }, function () {//移开
+                $(this).css('color', 'black');
+            }).click(function() {//链式编程，编写点击事件
+                $(this).appendTo('#ul2');
+            });
+        });
+    </script>
+</head>
+<body>
+    <ul id="ul1">
+        <li>北京</li>
+        <li>上海</li>
+        <li>广州</li>
+        <li>深圳</li>
+    </ul>
+    
+    <ul id="ul2">
+        
+    </ul>
+</body>
+</html>

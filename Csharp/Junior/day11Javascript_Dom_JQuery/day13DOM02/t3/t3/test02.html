@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script>
+        var index = 1;//图片编号
+        onload = function () {
+            //定时器：间隔一段时间执行一次代码
+            setInterval(birdFly1, 1000);
+        };
+
+        function birdFly1() {
+            var date = new Date('2020-01-01');//可以传时间，也可以不传，不传的话就是默认的当前时间
+            var datenow = new Date();
+            var timeSub = datenow.getTime() - date.getTime()
+
+            var day = (timeSub - (timeSub % 86400000)) / 86400000; //天数
+            var hour = ((timeSub % 86400000) - (timeSub % 86400000) % 3600000) / 3600000;//hour
+            var leftMinSec = (timeSub % 86400000) % 3600000;
+            var minute = (leftMinSec - (leftMinSec % 60000)) / 60000;
+            var second = parseInt(leftMinSec % 60000 / 1000);
+            var send = day + '天' + hour + '小时' + minute + '分钟' + second + '秒';
+            //alert(send);
+
+            var birdFly = document.getElementById('asd');
+            //设置图片
+            birdFly.innerHTML = send;
+        }
+    </script>
+</head>
+<body>
+    <a id="asd">con</a>
+</body>
+</html>

@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        //直接定义的方法，是属于window对象的成员
+        function showValue() {
+            alert(this.value);
+        }
+    </script>
+</head>
+    <body>
+        在元素上注册事件
+        <input type="button" id="btnShow1" value="显示1" onclick="alert(this.value);"/>
+        <br/>
+        动态注册：
+        <input type="button" id="btnShow2" value="显示2"/>
+        <script>
+            //推荐使用这种方式注册事件
+            //好处：实现了代码分离（html与js）;可以使用this
+            document.getElementById('btnShow2').onclick= function() {
+                alert(this.value);
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        // 1、表单提交会触发onsubmit事件，不想提交使用return false;
+        //2、模拟事件：onclick->click()
+        //3、form.submit直接提交，不会触发onsubmit事件
+        
+        onload = function() {
+            var form1 = document.getElementById('form1');
+            form1.onsubmit = function() {
+                alert(1);
+                //return false;//停止转向
+            };
+
+            var submit1 = document.getElementById('submit1');
+            submit1.onclick = function () {
+                //模拟表单提交方式一：
+                //form1.submit();//这种方式不会触发 onsubmit事件
+                
+                //模拟表单提交方式二：
+                //将事件当作一个方法用，会模拟用户对这个控件的事件操作
+                //去掉on
+                //form1.onsubmit();
+                document.getElementById('submit2').click();
+            };
+        };
+    </script>
+</head>
+    <body>
+        submit按钮可以让form完成提交，提交时会触发onsubmit事件
+        <br/>
+        onsubmit事件的作用：可以在转向页面前，进行数据的有效性验证
+        <br/>
+        取消提交的方式：return false;
+        <br/>
+        <form id="form1" action="hello.html">
+            <input type="button" id="submit1" value="模拟提交"/>
+            <input type="text"/>
+            <input type="submit" id="submit2"/>
+        </form>
+    </body>
+</html>

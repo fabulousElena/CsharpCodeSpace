@@ -1,0 +1,12 @@
+重点：
+基本选择器（#，标签，.）
+属性（attr,text,html,val）
+事件（click,ready）
+样式（css）
+$.each(数组或集合,fun(index,item))
+
+了解：
+层级选择器（空格，>,+,~）,next(),prev(),siblings(),parent(),children()
+过滤选择器（:eq(),:lt(),:gt(),:first,:last(),:not(),:even,:odd）
+
+作业：ppt最后一张

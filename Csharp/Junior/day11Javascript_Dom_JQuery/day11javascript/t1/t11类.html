@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+<body>
+    <script>
+        //为类增加成员
+        function Person(name) {
+            this.Name = name;//在类内部声明一个属性Name,初始化为name值
+            this.say = function () {
+                alert(this.Name);
+            };
+        }
+        //使用构造方法创建对象
+        var p1 = new Person('zhh');
+        p1.say();//调用 方法
+            //alert(typeof (p1));//object
+            //alert(typeof (Person('zhh')));//因为Person作为函数时，没有返回值，所以是undefined
+            //alert(typeof(Person));//Person就是一个函数，类型是function
+    </script>
+</body>
+</html>

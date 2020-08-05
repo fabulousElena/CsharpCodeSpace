@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Books>
+  <Book>
+    <BookName>水浒传</BookName>
+    <Author>XXX</Author>
+    <Price>100RMB</Price>
+    <Des>好看！！经典！！！！顶！！！！</Des>
+  </Book>
+  <Book>
+    <BookName>三国演义</BookName>
+    <Author>XXX</Author>
+    <Price>200RMB</Price>
+    <Des>好看，顶！！！！</Des>
+  </Book>
+</Books>
+

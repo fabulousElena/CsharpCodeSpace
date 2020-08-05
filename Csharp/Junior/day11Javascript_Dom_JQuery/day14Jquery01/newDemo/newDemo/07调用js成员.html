@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.5.1.min.js"></script>
+    <script>
+        $(function () {
+            //找到按钮，并绑定点击事件
+            $('#btnShow').click(function () {
+                //找到文本框并获取值
+                var num = parseInt($('#txtNum').val());//直接调用js的成员进行操作
+                num++;
+                //将值显示到文本框
+                $('#txtNum').val(num);//传递参数时，表示将值赋给value
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="txtNum" /><input type="button" id="btnShow" value="显示" />
+
+</body>
+</html>

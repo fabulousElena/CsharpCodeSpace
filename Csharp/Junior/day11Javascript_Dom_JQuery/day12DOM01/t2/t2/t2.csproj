@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{74FE7227-DC6C-438B-B755-E8E90043D5D9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>t2</RootNamespace>
+    <AssemblyName>t2</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="01对话框.html" />
+    <Content Include="02location.html" />
+    <Content Include="03获取元素.html" />
+    <Content Include="03获取元素02.html" />
+    <Content Include="04事件.html" />
+    <Content Include="04事件02.html" />
+    <Content Include="05加载完成事件.html" />
+    <Content Include="06加法计算器.html" />
+    <Content Include="07点谁谁哭.html" />
+    <Content Include="08小鸟飞.html" />
+    <Content Include="09跑马灯.html" />
+    <Content Include="10Event.html" />
+    <Content Include="11动态操作元素.html" />
+    <Content Include="12评分.html" />
+    <Content Include="13内部内容.html" />
+    <Content Include="fly\000000.jpg" />
+    <Content Include="fly\000001.jpg" />
+    <Content Include="fly\000002.jpg" />
+    <Content Include="fly\000003.jpg" />
+    <Content Include="fly\000004.jpg" />
+    <Content Include="fly\000005.jpg" />
+    <Content Include="fly\000006.jpg" />
+    <Content Include="fly\000007.jpg" />
+    <Content Include="fly\000008.jpg" />
+    <Content Include="fly\000009.jpg" />
+    <Content Include="fly\000010.jpg" />
+    <Content Include="fly\000011.jpg" />
+    <Content Include="fly\000012.jpg" />
+    <Content Include="fly\000013.jpg" />
+    <Content Include="fly\000014.jpg" />
+    <Content Include="fly\000015.jpg" />
+    <Content Include="fly\000016.jpg" />
+    <Content Include="fly\000017.jpg" />
+    <Content Include="fly\000018.jpg" />
+    <Content Include="fly\000019.jpg" />
+    <Content Include="fly\000020.jpg" />
+    <Content Include="fly\000021.jpg" />
+    <Content Include="fly\000022.jpg" />
+    <Content Include="fly\000023.jpg" />
+    <Content Include="fly\000024.jpg" />
+    <Content Include="fly\000025.jpg" />
+    <Content Include="fly\000026.jpg" />
+    <Content Include="fly\000027.jpg" />
+    <Content Include="fly\000028.jpg" />
+    <Content Include="fly\000029.jpg" />
+    <Content Include="fly\000030.jpg" />
+    <Content Include="fly\000031.jpg" />
+    <Content Include="fly\000032.jpg" />
+    <Content Include="fly\000033.jpg" />
+    <Content Include="fly\000034.jpg" />
+    <Content Include="fly\000035.jpg" />
+    <Content Include="fly\000036.jpg" />
+    <Content Include="fly\000037.jpg" />
+    <Content Include="fly\000038.jpg" />
+    <Content Include="fly\000039.jpg" />
+    <Content Include="fly\000040.jpg" />
+    <Content Include="fly\000041.jpg" />
+    <Content Include="fly\000042.jpg" />
+    <Content Include="fly\000043.jpg" />
+    <Content Include="fly\000044.jpg" />
+    <Content Include="fly\000045.jpg" />
+    <Content Include="fly\000046.jpg" />
+    <Content Include="fly\000047.jpg" />
+    <Content Include="fly\000048.jpg" />
+    <Content Include="fly\000049.jpg" />
+    <Content Include="fly\000050.jpg" />
+    <Content Include="fly\000051.jpg" />
+    <Content Include="fly\000052.jpg" />
+    <Content Include="fly\000053.jpg" />
+    <Content Include="fly\000054.jpg" />
+    <Content Include="fly\000055.jpg" />
+    <Content Include="fly\000056.jpg" />
+    <Content Include="fly\000057.jpg" />
+    <Content Include="fly\000058.jpg" />
+    <Content Include="fly\000059.jpg" />
+    <Content Include="fly\000060.jpg" />
+    <Content Include="fly\000061.jpg" />
+    <Content Include="fly\000062.jpg" />
+    <Content Include="fly\000063.jpg" />
+    <Content Include="fly\000064.jpg" />
+    <Content Include="fly\000065.jpg" />
+    <Content Include="fly\000066.jpg" />
+    <Content Include="fly\000067.jpg" />
+    <Content Include="fly\000068.jpg" />
+    <Content Include="fly\000069.jpg" />
+    <Content Include="fly\000070.jpg" />
+    <Content Include="fly\000071.jpg" />
+    <Content Include="fly\000072.jpg" />
+    <Content Include="fly\000073.jpg" />
+    <Content Include="fly\000074.jpg" />
+    <Content Include="fly\000075.jpg" />
+    <Content Include="fly\000076.jpg" />
+    <Content Include="fly\000077.jpg" />
+    <Content Include="fly\000078.jpg" />
+    <Content Include="fly\000079.jpg" />
+    <Content Include="fly\000080.jpg" />
+    <Content Include="fly\000081.jpg" />
+    <Content Include="fly\000082.jpg" />
+    <Content Include="fly\000083.jpg" />
+    <Content Include="fly\000084.jpg" />
+    <Content Include="fly\000085.jpg" />
+    <Content Include="fly\000086.jpg" />
+    <Content Include="fly\000087.jpg" />
+    <Content Include="fly\000088.jpg" />
+    <Content Include="fly\000089.jpg" />
+    <Content Include="fly\000090.jpg" />
+    <Content Include="fly\000091.jpg" />
+    <Content Include="fly\000092.jpg" />
+    <Content Include="fly\000093.jpg" />
+    <Content Include="fly\000094.jpg" />
+    <Content Include="fly\000095.jpg" />
+    <Content Include="fly\000096.jpg" />
+    <Content Include="fly\000097.jpg" />
+    <Content Include="fly\000098.jpg" />
+    <Content Include="fly\000099.jpg" />
+    <Content Include="fly\000100.jpg" />
+    <Content Include="fly\000101.jpg" />
+    <Content Include="fly\000102.jpg" />
+    <Content Include="fly\000103.jpg" />
+    <Content Include="fly\000104.jpg" />
+    <Content Include="fly\000105.jpg" />
+    <Content Include="fly\000106.jpg" />
+    <Content Include="fly\000107.jpg" />
+    <Content Include="fly\000108.jpg" />
+    <Content Include="fly\000109.jpg" />
+    <Content Include="fly\000110.jpg" />
+    <Content Include="images\bird1.png" />
+    <Content Include="images\bird2.png" />
+    <Content Include="images\bird3.png" />
+    <Content Include="images\bird4.png" />
+    <Content Include="images\star1.png" />
+    <Content Include="images\star2.png" />
+    <Content Include="images\walk1.png" />
+    <Content Include="images\walk2.png" />
+    <Content Include="images\walk3.png" />
+    <Content Include="images\walk4.png" />
+    <Content Include="images\walk5.png" />
+    <Content Include="images\walk6.png" />
+    <Content Include="images\walk7.png" />
+    <Content Include="Web.config" />
+    <Content Include="给老子哭.html" />
+    <Content Include="起飞.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:1661/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

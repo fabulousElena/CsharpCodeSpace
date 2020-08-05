@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        //讨论问题：在函数内部使用变量时，写不写var的区别？
+        //在script标签中定义的成员（变量，函数）都是属于window对象的
+        //在函数内部使用var声明变量时，表示这个变量的作用域是当前函数
+        //在函数内部使用一个未声明的变量时，浏览器会将这个变量声明到window上
+        
+        var time1 = 5;
+        var id1, btnShow;
+        onload = function () {
+            //获取按钮
+            btnShow = document.getElementById('btnShow');
+            //启动定时器
+            id1 = setInterval('changeBtn(btnShow)', 1000);
+        };
+
+        function changeBtn(btn1) {
+            time1--;//更改计时数
+            btn1.value = "等待" + time1 + "秒后可用";
+            if (time1 == 0) {//当5秒结束后，让按钮可用
+                btn1.value = "注册";
+                btn1.disabled = false;
+                clearInterval(id1);//停止定时器
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="button" id="btnShow" disabled="true" value="等待5秒后可用"/>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>IT新闻网</title>
+<link rel="stylesheet" type="text/css" href="css/Layout.css">
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+			$(window).scroll(function(){
+					//当滚动条的位置距顶部大于150时出现
+					if($(window).scrollTop() > 150){
+						$("#scrolltop").fadeIn(1500);
+					}
+					else{
+						$("#scrolltop").fadeOut(1000);
+					}
+			});
+			//点击跳转后，回到顶部
+			$("#scrolltop").click(function(){
+				$("body,html").animate({scrollTop:0}, 1000);
+				return false;		
+			});			
+	});
+</script>
+</head>
+
+<body>
+	<div id="container">
+    	<div id="head">
+            <h2>
+            	<a href="#">
+            		<img src="images/myLogo.png" alt="logo" title="It News" />
+                </a>
+            </h2>
+            <form action="#" metho="post">
+            	<div id="headCont">	            	                	       
+                	<table cellpadding="0" cellspacing="0">
+                    	<tr>
+                        	<td class="addborder"><a href="#"><img src="images/qq_login.gif" alt="qq"/></a></td>
+                        	<td><label for="txtName">帐号</label></td>
+                            <td><input type="text" class="txtstyle tip" value="UID/用户名/Email" id="txtName" name="txtName" onblur="if(this.value == ''){this.value = 'UID/用户名/Email';}" onfocus="if(this.value == 'UID/用户名/Email'){this.value = ''}" /></td>
+                            <td class="addborder"><label for="remPwd"><input type="checkbox" name="remPwd" id="remPwd" />自动登录</label></td>
+                            <td><a href="#">找回密码</a></td>
+                        </tr>
+						<tr>
+                        	<td align="center" class="tip addborder">只需一步，快速开始</td>
+                        	<td><label for="txtPwd">密码</label></td>
+                            <td><input type="password" class="txtstyle" id="txtPwd" name="txtPwd" /></td>
+                            <td class="addborder"><input type="submit" value="登录" /></td>
+                            <td><a href="#" id="reg">立即注册</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </form>            
+        </div>
+		<div class="clsfloat"></div>
+        <div id="nav">
+        	<ul>
+            	<li><a href="#">首 页</a></li>
+                <li><a href="#">应用推荐</a></li>
+                <li><a href="#">资 讯</a></li>
+                <li><a href="#">排 行</a></li>
+                <li><a href="#">移动互联</a></li>
+                <li><a href="#">开始工具</a></li>
+                <li><a href="#">关 于</a></li>
+            </ul>
+        </div>
+        <div class="clsfloat"></div>
+        <div id="search">
+        	<table cellpadding="0" cellspacing="0" border="0">
+            	<tr>
+                	<td class="srchPic"></td>
+                    <td class="serchtxt_td"><input type="text" class="xgl" value="请输入搜索内容" name="srchtxt" onblur="if(this.value == ''){this.value = '请输入搜索内容';}" onfocus="if(this.value == '请输入搜索内容'){this.value = ''}" /></td>
+                    <td class="titletxt_td"><a href="#" id="titilestyle">文章</a></td>
+                    <td class="srchbtn_td"><button id="serch" class="btnstyle" type="submit"><strong>搜索</strong></button></td>
+                    <td>
+                    	<div id="hotsrch">
+                        	<strong>热搜：</strong>
+                            <a href="#">苹果</a>
+                            <a href="#">小米</a>
+                            <a href="#">三星</a>
+                            <a href="#">谷歌</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+         <div class="banner">
+        	<a href="#"><img src="news/news.gif" title="广告" alt="ad" width="1000px" /></a>
+        </div>        
+        <div class="main">
+        	<div class="title frametitle"><span class="tabtitle">资讯中心</span><span class="more"><a href="#">更多&gt;&gt;</a></span></div>
+            <div class="left">
+            	<div class="leftnews">
+                	<img src="news/news1.jpg" alt="" title="" width="335" height="204"/>
+                    <h4><a href="#">微软新任CEO--塞特亚·纳德拉(Satya Nadella)。</a></h4>
+					&nbsp;&nbsp;与此同时，比尔·盖茨卸任微软董事会主席一职，担任技术顾问，继续参与微软工作。董事会主席由John Thompson担任。
+                </div>
+                <div class="leftnews">
+                	<img src="news/news2.jpg" alt="" title="" width="335" height="204" />
+                    <h4><a href="#">腾讯与银河基金合推“定投宝” 2月14日发行</a></h4>
+                </div>
+            </div>
+            <div class="center">
+            	<dt><img src="images/list.gif" /><a href="#">传Google强迫OEM厂商升级到Android最新版本</a></dt>
+                <dd>
+                	我们通常使用鼠标和键盘（在移动端使用触摸）来操作网站，如今 Voix.js 能够让我们使用声音控制 ...<span class="readmore"><a href="#">【阅读全文】</a></span>
+                </dd>
+                <dt><img src="images/list.gif" /><a href="#">传微软去年从Android身上赚了16亿美元</a></dt>
+                <dd>外媒ZDNet从野村证券那里获得了一份预测报告，报告显示，Google Android替微软赚取了大把钞票。得益于专利授权协议，微软在过去一财年从Android身上净赚16亿美元。野村证券分析师Rick Sherlund猜测微软从每部Android手机赚取5美元授权费，覆盖市售Android手机的70%，并由此推算得出 ...<span class="readmore"><a href="#">【阅读全文】</a></span></dd>
+                <dt><img src="images/list.gif" /><a href="#">小米为什么要做支付？</a></dt>
+                <dd>互联网金融领域的消息令人目不暇接，P2P企业倒闭的新闻与互联网金融群雄并起的新闻对比鲜明，是利是弊各有评说。只是一直低调的腾讯突然发飙，春节期间上线的微信红包打了多家互联网金融的脸，红包当如微信，弹指间连接了用户与银行，再看其他漫天飞舞的红包简直都弱爆了。有人以此 ...<span class="readmore"><a href="#">【阅读全文】</a></span></dd>
+                <dt><img src="images/list.gif" /><a href="#">阿里全资收购高德：新的世界大战即将爆发</a></dt>
+                <dd>10.45亿美元100%拿下高德，阿里巴巴获得了O2O布局中最重要的中间层——地图，在腾讯、百度的LBS入口大战中抢得先机。 ...<span class="readmore"><a href="#">【阅读全文】</a></span></dd>
+                <dt><img src="images/list.gif" /><a href="#">Android 对移动应用开发者越来越有</a></dt>
+                <dd>按市场份额计算，Android是移动设备市场上的霸主，但它在开发者创收方面的表现与其市场份额是不 ...<span class="readmore"><a href="#">【阅读全文】</a></span></dd>
+            </div>
+            <div class="right">
+            	<div>
+                	<img src="news/news3.jpg" width="282" height="160"/>
+                </div>
+                <div>
+                	<div class="title frametitle">扫一扫IT News中国官方微信</div>
+                	<div id="weblogo"><img src="news/website.png" width="240" height="240"/></div>                    
+                </div>
+                <div id="weibo">
+                	<div class="title frametitle">@IT News中国官方微信</div>
+                	<img src="news/MyWeibo.jpg" />
+                </div>
+            </div>
+        </div>
+        <div class="banner">
+        	<a href="#"><img src="images/banner.gif" title="广告" alt="ad" width="1000"/></a>
+        </div>
+        <div id="supBrowser">
+        	<div class="title frametitle"><span class="tabtitle">本网站支持以下浏览器</span></div>
+            <div id="broswershow">            	
+            	<ul>
+                	<li><img src="news/360.jpg" /></li>
+                    <li><img src="news/aoyou.jpg" /></li>
+                    <li><img src="news/chrome.jpg" /></li>
+                    <li><img src="news/firefox.jpg" /></li>
+                    <li><img src="news/ie.jpg" /></li>
+                    <li><img src="news/liebao.jpg" /></li>
+                    <li><img src="news/opera.jpg" /></li>
+                    <li><img src="news/sougou.jpg" /></li>
+                    <li><img src="news/phone/baidu.jpg" /></li>
+                    <li><img src="news/phone/haitun.jpg" /></li>
+                    <li><img src="news/phone/oupeng.jpg" /></li>
+                    <li><img src="news/phone/qlifang.jpg" /></li>
+                    <li><img src="news/phone/qq.jpg" /></li>
+                    <li><img src="news/phone/uc.jpg" /></li>
+                    <li><img src="news/phone/tt.jpg" /></li>
+                    <li><img src="news/phone/safari.jpg" /></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clsfloat"></div>
+        <div id="frilink">
+        	<div class="title frametitle"><span class="tabtitle">友情链接</span></div>
+            <div class="links">
+            	<span><a href="#">百度</a></span><span><a href="#">谷歌</a></span><span><a href="#">搜狐</a></span><span><a href="#">网易</a></span><span><a href="#">新浪</a></span><span><a href="#">优酷</a></span><span><a href="#">腾讯</a></span><span><a href="#">淘宝</a></span><span><a href="#">凤凰网</a></span><span><a href="#">新浪微博</a></span><span><a href="#">58同城</a></span><span><a href="#">优酷空间</a></span><span><a href="#">赶集网</a></span><span><a href="#">珍爱网</a></span><span><a href="#">猫扑网</a></span><span><a href="#">中关村在线</a></span><span><a href="#">糯米</a></span><span><a href="#">太平洋电脑</a></span><span><a href="#">乐蜂</a></span><span><a href="#">下载吧</a></span><span><a href="#">电影天堂</a></span><span><a href="#">微软</a></span><span><a href="#">12306</a></span><span><a href="#">当当网</a></span><span><a href="#">凡客</a></span><span><a href="#">亚马逊</a></span><span><a href="#">360</a></span>
+            </div>            
+        </div>
+        <!-- <span id="scrolltop" style="left: 1175px; visibility: visible;" onclick="window.scrollTo('0','0')">回顶部</span> -->
+        <div id="scrolltop"><a href="#"><span></span>返回顶部</a></div>
+        <div id="footer">
+        	<a href="#">关于我们</a>|<a href="#">It News论坛</a>|<a href="#">友情链接</a>|<a href="#">手机版</a><br />
+            Copyright <a href="#">@itnews.net</a> &copy;All Right Reserved.<br />
+            <img src="news/mail.png" /> 
+        </div>
+    </div>
+</body>
+</html>

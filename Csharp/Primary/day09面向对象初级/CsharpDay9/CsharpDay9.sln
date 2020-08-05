@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1145
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01面向对象", "01面向对象\01面向对象.csproj", "{D8325C09-B156-4A89-9E97-F9731EAF61E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02面向对象复习", "02面向对象复习\02面向对象复习.csproj", "{525FAD15-73DF-4477-A01D-9315725D5688}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03静态和非静态的区别", "03静态和非静态的区别\03静态和非静态的区别.csproj", "{1E3E1AC8-53A3-40C0-8EAC-64DA4A36CC67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04面向对象练习", "04面向对象练习\04面向对象练习.csproj", "{3E9BC12E-B874-4690-9E79-745778305A74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05练习", "05练习\05练习.csproj", "{6479682F-8E11-4337-AF18-2934C0BF4D75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02面向对象复习02", "02面向对象复习02\02面向对象复习02.csproj", "{61CEF56A-6F45-4CAE-AF7C-59EA25DA71A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04面向对象练习02", "04面向对象练习02\04面向对象练习02.csproj", "{E21705AA-CDA7-439B-B8A1-D32760929D06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8325C09-B156-4A89-9E97-F9731EAF61E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8325C09-B156-4A89-9E97-F9731EAF61E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8325C09-B156-4A89-9E97-F9731EAF61E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8325C09-B156-4A89-9E97-F9731EAF61E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{525FAD15-73DF-4477-A01D-9315725D5688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{525FAD15-73DF-4477-A01D-9315725D5688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{525FAD15-73DF-4477-A01D-9315725D5688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{525FAD15-73DF-4477-A01D-9315725D5688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E3E1AC8-53A3-40C0-8EAC-64DA4A36CC67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E3E1AC8-53A3-40C0-8EAC-64DA4A36CC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E3E1AC8-53A3-40C0-8EAC-64DA4A36CC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E3E1AC8-53A3-40C0-8EAC-64DA4A36CC67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E9BC12E-B874-4690-9E79-745778305A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E9BC12E-B874-4690-9E79-745778305A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E9BC12E-B874-4690-9E79-745778305A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E9BC12E-B874-4690-9E79-745778305A74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6479682F-8E11-4337-AF18-2934C0BF4D75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6479682F-8E11-4337-AF18-2934C0BF4D75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6479682F-8E11-4337-AF18-2934C0BF4D75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6479682F-8E11-4337-AF18-2934C0BF4D75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61CEF56A-6F45-4CAE-AF7C-59EA25DA71A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61CEF56A-6F45-4CAE-AF7C-59EA25DA71A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61CEF56A-6F45-4CAE-AF7C-59EA25DA71A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61CEF56A-6F45-4CAE-AF7C-59EA25DA71A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E21705AA-CDA7-439B-B8A1-D32760929D06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E21705AA-CDA7-439B-B8A1-D32760929D06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E21705AA-CDA7-439B-B8A1-D32760929D06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E21705AA-CDA7-439B-B8A1-D32760929D06}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C81D4E9-B68D-463B-9526-E082F45549DF}
+	EndGlobalSection
+EndGlobal

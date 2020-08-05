@@ -1,0 +1,129 @@
+1、CSS是Cascading Style Sheet这个几个英文单词的缩写，翻译成中文是“层叠样式表”的意思。CSS能让网页制作者有效的定制、改善网页的效果。CSS是对HTML的补充，网页设计师曾经为无法很好的控制网页的显示效果而倍感苦恼，CSS的出现解决了这个问题。
+
+Css实现了网页内容和页面效果的彻底分离。
+
+
+Ctrl+j  弹出智能提示的快捷键
+2、CSS的几种设置方式(你可以通过怎样的方式向HTML页面中写入CSS代码)
+有三种方式可以将样式表加入到HTML文档中，每种方式都有自己的优缺点，这三种方式是：
+内联样式表(在标签内设置元素的样式)
+嵌入样式表(需要在head标签内写<style type=”text/css”></style>)
+外部样式表 link
+
+内联样式表缺点：如果要将同样的样式风格设置到网页中所有的段落上，就需要对每个<p>标签都进行重复的设置。
+
+嵌入样式表缺点：如果要为整个网站定义通用的的样式风格，也就是同样的样式风格要被应用到很多网页时，使用嵌入样式表，则需要在每个<head></head>标签中都加入同样的<style></style>代码段。为了解决这个问题，我们可以使用外部样式表
+
+
+
+3、样式规则的选择器(通过怎样的途径来获得页面上要设置样式的元素)
+1）、HTML Selector
+2）、Class Selector （需要给要设置样式的元素的class属性赋值）
+3）、ID Selector （需要给要设置样式的元素的id属性赋值）
+4）、关联选择器   P EM{background-Color:Yellow}
+5）、组合选择器 <table></table>
+6）、伪元素选择器
+伪元素选择器是指对同一个HTML元素的各种状态和其所包括的部分内容的一种定义方式。例如，对于超链接标签(<a></a>)的正常状态(没有任何动作前)、访问过的状态、选中状态、光标移到超链接文本上的状态，对于段落的首字母和首行，都可以使用伪元素选择器来定义。
+目前常用的伪元素有以下几种：
+A:active 选中超链接时的状态
+A:hover 光标移动到超链接上的状态
+A:link 超链接的正常状态
+A:visited 访问过的超链接状态
+P:first-line 段落中的第一行文本
+P:first-letter 段落中的第一个字母
+
+
+
+
+3、CSS当中的样式属性详解
+Css当中的属性非常多，大体上可以分为以下几类：字体、背景、文本、位置、布局、边缘、列表。
+1）、字体
+字体的属性主要包括文字的字体、大小、颜色、显示效果等基本样式，下面是各种字体属性的详细介绍。
+Font-family:该属性用于设置字体系列。
+Font-size:该属性定义文字的大小，可以使用度量单位来设置字体的大小，也可以使用一个相对的字体大小。还可以使用绝对的大小标记符。
+绝对大小的设置为 xx-small、x-small、small、medium、large、x-large、xx-large中的任意一个。Xx-small为最小，xx-large为最大。
+font-style
+该属性用于定义字体样式为Normal、Italic或者Oblique（斜体）。
+text-decoration
+该属性用于在文本中条件下划线、上划线、中划线、闪烁效果。
+font-weight
+该属性用于设置粗体字的磅值
+该属性的值有：normal、bold、bolder、lighter、100~900
+
+
+2)背景
+背景包括背景颜色、背景图像、以及背景图像的控制。
+Background-color:设置背景色，transparent表示透明的背景色。
+Background-image：设置元素的背景图像
+Background-repeat：确定背景图像是否以及如何重复。
+这个属性的取值no-repeat：表示背景图像只在元素的显示区域中出现一遍。
+Repeat：在水平和垂直方向上垂直。
+Repeat-x和Repeat-y分别在水平或者垂直方向上重复
+
+Background-attachment：确定背景图像是否跟随内容滚动，
+
+设置为fixed时，表示固定背景图像，为scroll时，表示图像跟随内容的移动而移动。
+Background-position:指定背景图像的水平位置和垂直位置。水平位置的取值可以是left、center、right。也可以是数值。
+垂直的取值可以是top、center、bottom。也可以是数值。
+
+
+文档流：
+
+
+
+3）文本
+文本的属性包括：文字间距、对齐方式、上标、下标、排列方式、首行缩进。
+Word-spacing:设置单词之间的间距。
+Letter-spacing：设置字符之间的间距
+Text-align：设置文本的水平对齐方式，取值可以是left、right、center、justfy
+Text-indent：设置第一行文本的缩进值
+Line-height：设置文本所在行的行高。
+
+
+
+文档流
+4）位置 
+位置属性就是制定元素的位置。
+Position：设置对象的定位方式。有三种取值：absolute(绝对定位)、relative(相对定位)和static(无特殊定位)默认为static。
+Left：设置元素左边的水平位置
+Top：设置元素顶部的垂直位置
+Width：设置元素显示的宽度
+Height：设置元素显示的高度
+Z-index:使用定位后，
+
+5、边缘
+Margin类用于设置元素的边界与其他元素的空隙大小。
+Margin-top：设置元素的上边界和与其他元素之间的空隙大小。
+Margin-right：设置元素的右边界与其他元素之间的空隙大小。
+Margin-bottom：设置元素的下边界与其他元素之间的空隙大小。
+Margin-left：设置元素的左边界与其他元素之间的空隙大小。
+Margin：用作上面4个属性的略写。
+
+
+
+
+Padding类属性用于设置元素边界与内部内容之间的空隙大小。
+Padding-top:设置元素的上边界与内部内容之间的空隙大小
+Padding-right：设置元素的右边界于内部内容之间的空隙大小。
+Padding-bottom：设置元素的下边界与内容之间的空隙大小。
+Padding-left：设置元素的左边界与内部内容之间的空隙大小。
+Padding：用作上面4个属性的略写。
+
+Width类属性用于设置元素边框的宽度。可以使用thin(细)、medium(中)、thick(粗)三个值中的一个。
+Border-top-width：指定元素上边框的宽度。
+Border-right-width：用于指定元素右边框的宽度
+Border-left-width：用于指定元素左边框的宽度
+Border-bottom-width：用于指定元素下边框的宽度
+Border-width：用作对上面四个属性的略写。
+
+Color属性用于设置元素边框的颜色
+Border-top-color
+Border-left-color
+Border-bottom-color:
+Border-right-color:
+Border-color:用于上面四个属性的略写
+
+
+Style类属性用于设置元素边框的样式。可以使之为none、dotted(点线)、dashed(虚线)、solid(实现)、double(双线)、groove(凹槽)、ridge(凸槽)、inset(凹边)、outset(凸边)。
+布局：
+Display：inline|block|none

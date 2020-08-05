@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        //1、匹配test
+        //2、提取exec
+        //3、替换：字符串对象的replace
+        //4、全局模式g:使用时表示匹配所有，不使用表示匹配第一个
+
+        onload = function () {
+            //匹配test
+            document.getElementById('btnTest').onclick = function() {
+                //构造正则表达式对象
+                //var regExp = /^\d{6}$/;//邮政编码
+                var regExp=/\w+@[a-z0-9]+\..+/;//电子邮箱123@qq.com
+                //获取用户输入的值
+                var txtMsg = document.getElementById('txtMsg').value;
+                //进行匹配
+                if (regExp.test(txtMsg)) { //匹配成功返回True
+                    alert('ok');
+                } else {//匹配失败返回false
+                    alert('no');
+                }
+            };
+            
+            //提取exec
+            document.getElementById('btnExec').onclick = function() {
+                var str = '火车12306电信10000火警119哈哈';
+                //g表示全局模式，如果不加表示提取第一个，加了表示提取所有
+                var reg = /\d+/;//匹配电话号码，连续的数字
+                //var result = reg.exec(str);//如果未匹配到结果，则返回null，如果匹配到结果，则返回匹配的值，类型是数组
+                //使用全局模式时，结合循环来写
+                while (true) {
+                    var result = reg.exec(str);
+                    if (result == null) {
+                        break;
+                    }
+                }
+            };
+            
+            //提取组exec
+            document.getElementById('btnExecGroup').onclick = function() {
+                var str = '火车12306电信10000火警119哈哈';
+                var reg = /\d(\d)\d*/g;//使用()完成提取组的功能
+                while (true) {
+                    var result = reg.exec(str);
+                    //提取组时，结果数组中的0元素表示本身，从1元素开始是与(匹配的内容
+                    if (result == null) {
+                        break;
+                    }
+                }
+            };
+            
+            //替换：字符串对象的replace方法，将正则对象作为参数
+            document.getElementById('btnReplace').onclick = function() {
+                //如果使用全局模式g，表示匹配多个；如果不使用g表示只匹配第一个
+                var reg = /\s+/g;
+                var str = "  abc  ";
+                document.getElementById('txtMsg').value = '1' + str.replace(reg, '') + '1';
+            };
+        };
+    </script>
+</head>
+<body>
+    <input type="text" id="txtMsg"/>
+    <input type="button" id="btnTest" value="匹配test"/>
+    <input type="button" id="btnExec" value="提取exec"/>
+    <input type="button" id="btnExecGroup" value="提取组exec"/>
+    <input type="button" id="btnReplace" value="去除空格"/>
+</body>
+</html>

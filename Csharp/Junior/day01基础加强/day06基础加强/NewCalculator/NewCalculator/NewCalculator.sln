@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProOperation", "ProOperation\ProOperation.csproj", "{AB8A2F57-8231-495B-9494-0F35C62FC403}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProAdd", "ProAdd\ProAdd.csproj", "{63A8ABDD-019A-4992-8DA9-73C7CB895028}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProFactory", "ProFactory\ProFactory.csproj", "{328941A8-631A-4B97-BB49-49B0082A3419}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProCalculator", "ProCalculator\ProCalculator.csproj", "{6966D8E3-A686-4676-8132-CE0F46C2423D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProSubtract", "ProSubtract\ProSubtract.csproj", "{29E88E2C-3C30-4A78-AA6A-2FD69FA746D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageHelper", "ImageHelper\ImageHelper.csproj", "{AAB819FB-BB63-4312-ACF9-7486ED125806}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB8A2F57-8231-495B-9494-0F35C62FC403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB8A2F57-8231-495B-9494-0F35C62FC403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB8A2F57-8231-495B-9494-0F35C62FC403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB8A2F57-8231-495B-9494-0F35C62FC403}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A8ABDD-019A-4992-8DA9-73C7CB895028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A8ABDD-019A-4992-8DA9-73C7CB895028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A8ABDD-019A-4992-8DA9-73C7CB895028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A8ABDD-019A-4992-8DA9-73C7CB895028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{328941A8-631A-4B97-BB49-49B0082A3419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{328941A8-631A-4B97-BB49-49B0082A3419}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{328941A8-631A-4B97-BB49-49B0082A3419}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{328941A8-631A-4B97-BB49-49B0082A3419}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6966D8E3-A686-4676-8132-CE0F46C2423D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6966D8E3-A686-4676-8132-CE0F46C2423D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6966D8E3-A686-4676-8132-CE0F46C2423D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6966D8E3-A686-4676-8132-CE0F46C2423D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29E88E2C-3C30-4A78-AA6A-2FD69FA746D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E88E2C-3C30-4A78-AA6A-2FD69FA746D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29E88E2C-3C30-4A78-AA6A-2FD69FA746D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29E88E2C-3C30-4A78-AA6A-2FD69FA746D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAB819FB-BB63-4312-ACF9-7486ED125806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAB819FB-BB63-4312-ACF9-7486ED125806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAB819FB-BB63-4312-ACF9-7486ED125806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAB819FB-BB63-4312-ACF9-7486ED125806}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CDB7ADDC-B3AB-4E47-AE29-452DEA87E495}
+	EndGlobalSection
+EndGlobal

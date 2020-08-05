@@ -1,0 +1,292 @@
+﻿/* CSS Document */
+body{
+	margin:0px auto;
+	font-size:12px;
+	}
+ul{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+#container{
+	width:1000px; 
+	margin:0px auto;
+}
+a {
+	color:#000; 
+	text-decoration:none;
+}
+a:hover{
+	text-decoration:underline;
+}
+/*头部样式开始*/
+#head {
+	height:100px;
+}
+#head h2 {
+	float:left;
+}
+#head h2 img {
+	margin:20px 0px 0px;
+}
+#head form label{
+	cursor:pointer;
+}
+#head form input[type="submit"]{
+	width:65px;
+}
+#head form .txtstyle{
+	border-color:#E0E0E0 #F2F2F2 #F2F2F2 #E0E0E0;
+	width:120px;
+}
+#head #headCont{
+	float:right;
+	margin-top:30px;
+	width:450px;
+	height:50px;
+}
+#head table td {
+	padding:0px 5px;
+}
+#head table .tip {
+	color:#808080; 
+}
+/*checkbox*/
+#head table #remPwd{
+	margin:0 5px 1px 0;
+	padding:0;
+	vertical-align:middle;
+}
+#head .addborder{
+	border-right:1px solid #c0c0c0;
+}
+#head #reg{
+	color:#00f;
+	font-weight:bold;
+}
+/*头部样式结束*/
+
+.clsfloat{
+	height:0px;
+	clear:both;
+}
+
+/**/
+#nav {
+    height: 33px;
+	background:url(../images/nv.png);
+}
+#nav li {
+	float:left;
+	padding:0px 20px;
+}
+#nav li a {
+	color:#fff;
+	display:block;
+	line-height:33px;
+	font-size:14px;
+}
+#nav li:hover{
+	color:#fff;
+	line-height:36px;
+	background:url(../images/nv_a.png) no-repeat scroll 50% -66px #fff;
+}
+/*搜索开始*/
+#search{
+	height:45px;
+	border:1px solid #ccc;
+}
+#search td{
+	height:45px;
+}
+.xgl{
+	border:1px solid #fff;
+	font-size:14px;
+	width:400px;
+}
+#titilestyle{
+	padding-left:8px;
+	padding-right:13px;
+	text-align:left;	
+	text-decoration:none;
+	font-size:14px;
+	color:#ccc;
+	background:url(../images/arrwd.gif) no-repeat scroll 100% 50%;
+}
+.titletxt_td{
+	background:url(../images/search.png) no-repeat scroll 0 -370px;
+	padding-right:7px;
+}
+.serchtxt_td{
+	background:url(../images/search.png) repeat-x scroll 0 -222px;
+}
+.srchPic{
+	background:url(../images/search.png) no-repeat scroll 0 -74px;
+	width:50px;
+}
+.srchbtn_td{
+	background:url(../images/search.png) no-repeat scroll 0 -296px;
+	text-align:center;
+	width:67px;
+}
+.btnstyle{
+	background:none repeat scroll 0 0;
+	border:medium none;
+	margin:0;
+	paddding:0;
+}
+#hotsrch{
+	padding-left:8px;
+}
+/*搜索结束 */
+
+/*广告开始*/
+.banner{
+	height:90px;
+	margin-top:10px;
+	border:1px solid #f2f2f2;
+}
+/*广告结束*/
+.main{
+	height:600px;
+	margin-top:10px;
+	border:1px solid #ccc;
+}
+.title{
+	height:33px;
+	line-height:33px;
+}
+.frametitle,.tabtitle{
+	background:url(../images/title.png) repeat-x scroll 0 100% #f2f2f2;
+	font-size:15px;
+	font-weight:bold;
+	padding-left:5px;
+}
+.main .title span {
+	background:none;
+}
+.more{
+	float:right;
+	margin-right:5px;
+	font-size:11px;
+	font-weight:lighter;
+}
+.left, .center {
+	width:350px;
+	height:560px;
+	float:left;
+	border-right:1px dashed #ccc;
+	overflow:hidden;
+}
+.right{
+	width:282px;
+	height:560px;
+	float:right;
+	overflow:hidden;
+}
+.leftnews{
+	margin:10px;
+}
+.center {
+	padding:5px;
+	overflow:hidden;
+}
+.center a{
+	font-size:16px;
+}
+.center dt, .center dd{
+	line-height:25px;	
+	padding:0px;
+	margin:0;
+	color:#666;
+}
+.center dt{
+	font-size:18px;
+	color:#333;	
+}
+.center dt a{
+	color:#333;
+}
+.readmore a{
+	color:#333;
+	font-size:12px;
+}
+.readmore a:hover{
+	color:#f00;	
+	text-decoration:none;	
+}
+/*中部结束*/
+
+/*浏览器支持*/
+#supBrowser{
+	margin-top:10px;
+	height:150px;
+	border:1px solid #ccc;
+}
+#weblogo{
+	width:270px;
+	height:270px;
+	padding:10px 10px 0px 10px;
+}
+#broswershow{
+	margin:8px 0px;
+}
+#supBrowser span{
+	background:none;
+}
+#broswershow li{
+	float:left;
+	margin:3px;
+}
+
+/*友情链接*/
+#frilink{
+	margin-top:10px;
+	border:1px solid #ccc;
+	height:100px;
+}
+.links {
+	margin:10px;
+}
+#frilink span {
+	background:none;
+	float:left;
+	width:98px;
+	padding:0 0 3px 3px;
+}
+/*页脚*/
+#footer{
+	text-align:center;
+	margin-top:10px;
+}
+#footer a {
+	margin:10px;
+	line-height:26px;	
+}
+
+/*return top*/
+#scrolltop{
+	position:fixed;
+	display:none;
+	bottom:100px;
+	right:80px;
+}
+#scrolltop a {
+	text-align:center;
+	text-decoration:none;
+	color:#d1d1d1;
+	display:block;
+	width:64px;
+}
+#scrolltop a:hover{
+	color:#979797;
+}
+#scrolltop a span {
+	background:transparent url(../news/Go-Top-48.png) no-repeat 7px 0px;
+	border-radius:6px;
+	height:56px;
+	width:56px;
+}
+#scroll a:hover span {
+	background:transparent url(../news/Go-Top-48.png) no-repeat 7px 0px;
+}

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script>
+        //为window的onload事件注册处理函数，表示页面加载完成后触发执行
+        //标签加载完成，并且标签指定的资源也加载完成
+        //onload = function() {
+        //};
+
+        //表示加载完成后执行此代码:dom就绪，指标签加载完成，这时，标签指定的资源可能还没有加载完成
+        //$(document).ready(fun);简写如下：
+        $(function() {
+            $('#btnShow').click(function() {
+                alert(1);
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="button" id="btnShow" value="显示"/>
+</body>
+</html>

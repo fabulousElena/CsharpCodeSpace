@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <input id="Button1" type="button" value="button" />
+    <script>
+        //获得元素
+        //$('#Button1').attr('value');
+        //$('#Button1').val();
+        //赋值
+        //$('#Button1').val('adsadad');
+        //alert($('#Button1').val());
+        //为按钮绑定点击事件
+        $('#Button1').click(function () {
+            //this 是dom对象  不能调用jquery的成员
+            alert(this.value);
+        });
+        //移除所有的事件
+        //unbind();
+        //移除所有click的事件处理程序
+        //unbind('click');
+        //移除指定的事件  不能移除匿名函数
+        //unbind('click',函数名称);
+
+        //dom的事件注册:一个事件只能注册一个处理函数，不支持多播
+        //document.getElementById('btnShow').onclick = function() {
+        //    alert(1);
+        //};
+        //document.getElementById('btnShow').onclick += function() {
+        //    alert(2);
+        //};
+
+        //jquery事件注册：支持多播，一个事件可以指定多个处理函数
+        $('#Button1').click(function () {
+            alert(1);
+        });
+        $('#Button1').click(function () {
+            alert(2);
+        });
+    </script>
+</body>
+</html>

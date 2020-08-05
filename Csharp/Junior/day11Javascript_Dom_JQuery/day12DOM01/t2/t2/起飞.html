@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var index = 0;
+        var b = true;
+        function showPic() {
+            if (b) {
+
+                if (index == 42) {
+                    b = false;
+                }
+                index++;
+            }
+            if (!b) {
+                index--;
+                if (index == 0) {
+                    b = true;
+                }
+            }
+            if (index > 9) {
+                var pic2 = document.getElementById('pic');
+                pic2.src = 'fly/0000' + index + '.jpg';
+            } else {
+                var pic2 = document.getElementById('pic');
+                pic2.src = 'fly/00000' + index + '.jpg';
+            }
+        }
+    </script>
+</head>
+<body>
+    <img id="pic" src="" />
+    <input type="button" name="12" id="10" value="冲刺" />
+
+    <script>
+        document.getElementById('10').onclick = function () {
+
+            setInterval(showPic, 35);
+        };
+
+    </script>
+
+</body>
+</html>

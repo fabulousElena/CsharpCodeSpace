@@ -1,0 +1,111 @@
+@charset "utf-8";
+/* CSS Document */
+#container_r .public_cont{width:250px; float:left; display:inline; margin-bottom: 10px; border-top: 2px solid #F5F5F5;}
+#container_r .public_cont h3{height:32px; line-height:32px; font-weight:normal; padding:0 10px;}
+#container_r .public_cont h3 span{float:left; display:inline;font-size: 14px; color: #6FA42A;}
+#container_r .public_cont h3 p{float:right; display:inline; color:#d2d2d2; padding-top: 5px;}
+#container_r .public_cont h3 p a:link, #container_r .public_cont h3 p a:visited { width:40px; height:21px; display: inline-block; color:#5f7a5b; line-height:21px; background:#e9f5e7; text-align:center; border-radius:2px;}
+#container_r .public_cont h3 p a:hover { background:#5f7a5b; color:#fff; text-decoration:none;}
+
+/*用户信息*/
+#container_r .user_info{width:228px; float:left; padding:10px; border:1px solid #e6e6e6; background:#f5f6f5; margin-bottom:10px;}
+.user_info dl{width:100%; float:left;}
+.user_info dt{float:left; margin-right:10px;}
+.user_info dt img{width:48px; height:48px; background:#f5f6f8; padding:1px; border:1px solid #c9cdd0;}
+.user_info dd{width:54px; height:48px; float:left; display:inline; text-align:center; border-right:1px solid #d2d2d2;}
+.user_info .noline{border:none;}
+.user_info dd a{font-size:12px; font-family:Arial; background:url(http://static.epaidai.com/images/new/tips_bg.gif) no-repeat right center; padding-right:5px; padding-top:1px; padding-bottom:1px; margin-bottom:10px;}
+.user_info dd a:link,.user_info dd a:visited{color:#fff; text-decoration:none;}
+.user_info dd b{display:inline-block; padding-left:5px; padding-bottom:1px; padding-top:1px; background:url(http://static.epaidai.com/images/new/tips_bg_l.gif) no-repeat;}
+.user_info dd span{width:100%; float:left; margin-top:10px; display:inline;}
+.user_info dd span a:link,.user_info dd span a:visited{color:#336699; text-decoration:none; background:none;}
+.user_info dd span a:hover{text-decoration:underline;}
+
+.user_info h3{width:100%; float:left; margin-top:5px; font-size:12px; font-weight:normal;}
+.user_info h3 a{padding-right:22px; background:url(http://static.epaidai.com/images/new/wireless_icon.gif) no-repeat right center;}
+.user_info h4{width:100%; float:left; margin-top:5px; font-size:12px; font-weight:normal;}
+.user_info h4 img{width:24px; height:24px; float:left; margin-right:2px;}
+
+
+
+/*热门标签*/
+#container_r .public_cont .hot_tag{font-size:12px; padding:0 10px 5px 10px;}
+.hot_tag a:link,.hot_tag a:visited{float:left; word-warp: break-warp; word-break: break-all; white-space: nowrap; color:#4b4b4b; margin-bottom:7px; font-size:12px; margin-right:7px; padding:4px 7px; border:1px solid #f0f0f0; background:#f5f5f5; border-radius:2px;}
+.hot_tag a:hover{font-weight:bold; color:#fff; text-decoration:none; padding:4px; border:1px solid #728c37; background:#77a700; border-radius:2px;}
+
+/*人物推荐*/
+#container_r .public_cont .people{padding:0 10px;}
+.people dl{width:100%; float:left; display:inline; margin-bottom:10px;}
+.people dt img{width:43px; height:43px; float:left; padding:1px; background:#fff; border:1px solid #dedfda;}
+.people dt p{float:left; margin-left:5px; width: 110px; line-height:16px}
+.people dd{float:right;}
+.people dd a:link,.people dd a:visited{float:right; width:52px; height:21px; background:url(http://static.epaidai.com/images/new/btn_attention.gif) no-repeat;}
+.people dd a:hover{background:url(http://static.epaidai.com/images/new/btn_attention.gif) no-repeat left bottom;}
+
+/*神帖榜*/
+#container_r .public_cont .top_list{padding:0 10px 8px 10px;}
+.top_list ul{}
+.top_list li{height:17px; padding:4px 0;}
+.top_list li em{width:13px; height:13px; overflow:hidden; float:left; text-align:center; font-weight:bold; margin:2px 5px 0 0; color:#fff; font-family:Arial; background:url(http://static.epaidai.com/images/new/hot_icon.gif) no-repeat left -39px;}
+.top_list li .hot1{margin:0 5px 0 0; background:url(http://static.epaidai.com/images/new/hot_icon.gif) no-repeat;}
+.top_list li .hot2{background:url(http://static.epaidai.com/images/new/hot_icon.gif) no-repeat left -13px;}
+.top_list li .hot3{background:url(http://static.epaidai.com/images/new/hot_icon.gif) no-repeat left -26px;}
+.top_list li a{float:left; display:inline;}
+.top_list li span{float:right; display:inline;}
+
+/*最新活动*/
+#container_r .public_cont .new_activity{padding:0 10px 10px 10px; margin-top:-3px;}
+.new_activity dl{width:100%; float:left;}
+.new_activity dt{float:left; margin-right:10px; padding-top:5px;}
+.new_activity dd a,.new_activity dd span{line-height:20px;}
+.new_activity ul{width:100%; float:left;}
+.new_activity a:visited{color:#482872;}
+
+/*猜你可能喜欢*/
+#container_r .public_cont .savor{padding:0 10px 8px 10px;}
+.savor li{height:17px; padding:4px 0;}
+.savor li em{width:13px; height:13px; float:left; text-align:center; font-weight:bold; color:#a0a0a0;}
+.savor li a{float:left; display:inline;}
+
+/*新鲜干货*/
+#container_r .public_cont .best_list{padding:0 10px 8px 10px;}
+.best_list ul{}
+.best_list li{height:17px; padding:4px 0;}
+.best_list li em{width:13px; height:13px; overflow:hidden; float:left; text-align:center; font-weight:bold; margin:2px 5px 0 0; color:#fff; font-family:Arial; background:url(http://static.epaidai.com/images/new/hot_icon.gif) no-repeat left -39px;}
+.best_list li .hh0{background:url(http://static.epaidai.com/images/bbs/icon_a0.png) no-repeat;}
+.best_list li .hh1{background:url(http://static.epaidai.com/images/bbs/icon_a1.png) no-repeat;}
+.best_list li .hh2{background:url(http://static.epaidai.com/images/bbs/icon_a2.png) no-repeat;}
+.best_list li .hh3{background:url(http://static.epaidai.com/images/bbs/icon_a3.png) no-repeat;}
+.best_list li .hh4{background:url(http://static.epaidai.com/images/bbs/icon_a4.png) no-repeat;}
+.best_list li .hh5{background:url(http://static.epaidai.com/images/bbs/icon_a5.png) no-repeat;}
+
+.best_list li a{float:left; display:inline;}
+.best_list li span{float:right; display:inline;}
+
+/*常去版块*/
+#container_r .public_cont .often_forum{margin-top:-10px;*margin-bottom:10px; _margin-bottom:-10px;}
+.often_forum li{height:35px; float:left; overflow:hidden; background:url(http://static.epaidai.com/images/new/often_forum_bgline.png) no-repeat left bottom; padding-bottom:1px;}
+.often_forum #all_forum{padding:0; border-bottom:1px solid #ececec; background:none;position: relative;}/*所有帖子底部描边*/
+.often_forum li a:link,.often_forum li a:visited{width:211px; height:35px; overflow:hidden; line-height:32px; padding-right:37px; color:#000; font-size:14px; float:left; font-family:Microsoft YaHei;}
+.often_forum .cur a:link,.often_forum .cur a:visited{color:#89c000;}
+.often_forum li a:hover,.often_forum .cur a{background:#f5f5f5; text-decoration:none; color:#89c000;}
+/*定制感兴趣的版块 图标样式*/
+.customize{padding-left:12px; background:url(http://static.epaidai.com/images/new/add_icon.gif) no-repeat left 4px;}
+
+/*最新干货作者*/
+.new_author{padding:0 10px;}
+.new_author li{width:76px; height:70px; overflow:hidden; float:left; text-align:center; padding-bottom:10px; display:inline;}
+.new_author li img{width:46px; height:46px; padding:1px; margin-bottom:5px; border:1px solid #e6e6e6;}
+.new_author li a:link,.new_author li a:visited{color:#323232; text-decoration:none;}
+.new_author li a:hover{color:#89c000;}
+
+/*24小时热文*/
+.hot_paper{float:left; display:inline; overflow:hidden; margin-top:-5px; _margin-bottom:-10px;}
+.hot_paper ol{float:left; display:inline; padding:0 10px 5px 10px;}
+.hot_paper li{width:100%; float:left; display:inline; height:17px; padding:4px 0; overflow:hidden;}
+.hot_paper li em{font-size: 10px;width:13px; height:13px; float:left; margin:1px 5px 0 0; _margin:2px 5px 0 0; line-height:12px; color:#fff; text-align:center; background:url(http://static.epaidai.com/images/icons/hot_paper.gif) no-repeat left -79px;}
+.hot_paper li .hot_1{background-position:left top;}
+.hot_paper li .hot_2{background-position:left -27px;}
+.hot_paper li .hot_3{background-position:left -52px;}
+.hot_paper li a{float:left;}
+.hot_paper li strong{float:right; font-weight:normal; color:#787878;}

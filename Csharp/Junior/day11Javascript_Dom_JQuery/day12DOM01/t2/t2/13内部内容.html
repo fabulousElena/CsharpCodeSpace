@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        onload = function() {
+            document.getElementById('btnShowText').onclick = function() {
+                //获取div内的文本
+                alert(document.getElementById('div1').innerText);
+            };
+            document.getElementById('btnShowHTML').onclick = function() {
+                //获取div内的html
+                alert(document.getElementById('div1').innerHTML);
+            };
+        };
+    </script>
+</head>
+    <body>
+        <input type="button" id="btnShowText" value="显示text"/>
+        <input type="button" id="btnShowHTML" value="显示html"/>
+        <div id="div1"><h1>hello</h1></div>
+        <hr/>
+        特例：多行文本框，下拉列表框，通过value获取值
+        <textarea></textarea>
+        <select><option></option></select>
+    </body>
+</html>

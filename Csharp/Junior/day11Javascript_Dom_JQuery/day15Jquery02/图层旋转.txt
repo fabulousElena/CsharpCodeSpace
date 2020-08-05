@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=gb2312">
+<title>中国沃柑看武鸣，广西农产品供求信息，www.64pc.com</title>
+<meta name="Keywords" content="沃柑,武鸣沃柑,中国沃柑看武鸣,农产品信息,农业资讯,农产品供求信息,广西农产品供求信息,www.64pc.com" />
+<meta name="description" content="www.64pc.com，武鸣，沃柑之乡，中国沃柑看武鸣，本站有广西武鸣地区大量一手农产品供求信息，服务于广大武鸣老乡农民朋友，我爱你，我的家乡！各位呗哝需要发布农产品供求信息外嘀抖！" />
+<style type="text/css">
+#www_zzjs_net{position:relative;margin:20px auto;width:800px;border:1px solid #999999;}
+.zzjs_net{position:absolute;height:40px;width:60px;background:#999999;border:1px solid #eeeeee;cursor:pointer;}
+</style>
+<script language="javascript">
+var len;
+var showerObj;
+var listObj;
+var showerWidth=800;
+var showerHeight=400;
+var r;
+var cR=0;
+var ccR=0;
+var timer=0;
+window.onload=function(){
+showerObj=document.getElementById("www_zzjs_net");
+listObj=showerObj.getElementsByTagName("div");
+len=listObj.length;
+r=Math.PI/180*360/len;
+for(var i=0;i<len;i++){
+var zzjs_net=listObj[i];
+zzjs_net.style.top=showerHeight/2+Math.sin(r*i)*showerWidth/2-20+"px";
+zzjs_net.style.left=showerWidth/2+Math.cos(r*i)*showerWidth/2-30+"px";
+zzjs_net.rotate=(r*i+2*Math.PI)%(2*Math.PI);
+zzjs_net.onclick=function(){
+cR=Math.PI/2-this.rotate;
+timer || (timer=setInterval(rotate,10));
+}
+}
+var rX=showerObj.offsetLeft+showerWidth/2;
+var ry=showerObj.offsetTop+showerHeight/2;
+var rotate=function(){
+ccR=(ccR+2*Math.PI)%(2*Math.PI);
+if(cR-ccR<0) cR=cR+2*Math.PI;
+if(cR-ccR<Math.PI){
+ccR=ccR+(cR-ccR)/19;
+}else{
+ccR=ccR-(2*Math.PI+ccR-cR)/19;
+}
+if(Math.abs((cR+2*Math.PI)%(2*Math.PI)-(ccR+2*Math.PI)%(2*Math.PI))<Math.PI/720){
+ccR=cR;
+clearInterval(timer);
+timer=0;
+}
+for(var i=0;i<len;i++){
+var zzjs_net=listObj[i];
+var w,h;
+var sinR=Math.sin(r*i+ccR);
+var cosR=Math.cos(r*i+ccR);
+w=60+0.6*60*sinR;
+h=(40+0.6*40*sinR);
+zzjs_net.style.cssText +=";width:"+w+"px;height:"+h+"px;top:"+parseInt(showerHeight/2+sinR*showerWidth/2/3-w/2)+"px;left:"+parseInt(showerWidth/2+cosR*showerWidth/2-h/2)+"px;z-index:"+parseInt(showerHeight/2+sinR*showerWidth/2/3-w/2)+";";
+}
+}
+document.getElementById("l").onclick=function(){
+cR=(cR+r+2*Math.PI)%(2*Math.PI);
+timer || (timer=setInterval(rotate,10));
+}
+document.getElementById("r").onclick=function(){
+cR=(cR-r+2*Math.PI)%(2*Math.PI);
+timer || (timer=setInterval(rotate,10));
+}
+rotate();
+}//欢迎来到站长特效网，我们的网址是www.zzjs.net，很好记，zz站长，js就是js特效，本站收集大量高质量js代码，还有许多广告代码下载。
+</script>
+</head>
+<body>
+<a href="http://www.zzjs.net/">站长特效网</a>，以质量为核心，以实用为目的，打造一流网页特效站！zzjs.net，站长js特效。<a href="http://www.64pc.com">中国沃柑看武鸣</a>。<hr>
+<!--欢迎来到站长特效网，我们网站收集大量高质量js特效，提供许多广告代码下载，网址：www.zzjs.net，305686263@qq.com,用.net打造靓站。中国沃柑看武鸣，www.64pc.com-->
+<script type="text/javascript" src="http://www.zzjs.net/ad/tc.js"></script>
+<input id="l" type="button" value="left">
+<input id="r" type="button" value="right">
+<div id="www_zzjs_net">
+<div class="zzjs_net">站长特效一号</div>
+<div class="zzjs_net">站长特效二号</div>
+<div class="zzjs_net">站长特效三号</div>
+<div class="zzjs_net">站长特效四号</div>
+<div class="zzjs_net">站长特效五号</div>
+<div class="zzjs_net">站长特效六号</div>
+<div class="zzjs_net">站长特效七号</div>
+<div class="zzjs_net">站长特效八号</div>
+<div class="zzjs_net">站长特效九号</div>
+<div class="zzjs_net">站长特效十号</div>
+<div class="zzjs_net">站长特效十一号</div>
+<div class="zzjs_net">站长特效十二号</div>
+<div class="zzjs_net">站长特效十三号</div>
+<div class="zzjs_net">站长特效十四号</div>
+<div class="zzjs_net">站长特效十五号</div>
+</div>
+</body>
+</html>
+
+中国沃柑看武鸣，www.64pc.com，本段代码来自站长特效网，来源网址：http://www.zzjs.net/post/652.html

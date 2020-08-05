@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+</head>
+<body>
+    <script>
+        //定义一个函数show
+        function show(name) {
+            //返回一个函数
+            return function () {
+                //输出name的值
+                alert(name);
+            };
+        }
+        //运行show函数，将返回值赋给f1
+        //因为返回值是函数，所以f1现在指向一个函数
+        var f1 = show('a');
+        //通过f1可以调用匿名函数执行
+        f1();
+        
+        //闭包：支持在函数内部调用函数之前声明过的变量
+        //作用域链：变量的作用域在当前函数中，及当前函数内部定义的函数中，形成了一个链条
+        //建议：避免闭包，每次在用一个变量时，都要先声明再使用
+    </script>
+</body>
+</html>

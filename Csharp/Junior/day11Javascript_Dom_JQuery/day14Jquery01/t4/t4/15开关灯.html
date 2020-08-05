@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="scripts/jquery-1.7.1.min.js"></script>
+    <script>
+        $(function() {
+            $('#btnLight').click(function () {
+                if (this.value == '关灯') {
+                    $('body').css('background-color', 'black');
+                    $(this).val('开灯');
+                } else {
+                    $('body').css('background-color', 'white');
+                    $(this).val('关灯');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="button" id="btnLight" value="关灯"/>
+</body>
+</html>

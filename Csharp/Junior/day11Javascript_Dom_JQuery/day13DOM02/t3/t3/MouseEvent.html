@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script>
+        onload  = function () {
+            var btns = document.getElementsByTagName('input');
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].onmouseover = function (e) {
+                    
+                    this.value = '我是猪';
+                };
+
+                btns[i].onmouseleave = function (e) {
+
+                    this.value = '确实';
+                    var vs = document.getElementById('pic');
+                    vs.src = '';
+                };
+
+                btns[i].onclick = function (e) {
+                  var vs =  document.getElementById('pic');
+                    vs.src = 'images/hg.jpg';
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <input type="button" name="btn1" value="按钮1" />
+    <input type="button" name="btn1" value="按钮1" />
+    <input type="button" name="btn1" value="按钮1" />
+    <input type="button" name="btn1" value="按钮1" />
+    <input type="button" name="btn1" value="按钮1" />
+    <img id="pic" src=""  />
+
+</body>
+</html>

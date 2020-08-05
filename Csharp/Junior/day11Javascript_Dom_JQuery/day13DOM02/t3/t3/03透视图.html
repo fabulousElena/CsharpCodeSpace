@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script>
+        onload = function () {
+            //根据标签获取body元素
+            var body = document.getElementsByTagName('body')[0];
+            //规定初始值
+            var width = 500, height = 500, left = 10, top = 10;
+            //循环创建div
+            while (true) {
+                //创建div加入body中
+                var div1 = document.createElement('div');
+                div1.style.position = 'absolute';
+                div1.style.left = left + 'px';
+                div1.style.top = top + 'px';
+                div1.style.border = '1px solid blue';
+                div1.style.width = width + 'px';
+                div1.style.height = height + 'px';
+                body.appendChild(div1);
+                
+                //改写数值
+                left += 5;
+                top += 5;
+                width -= 10;
+                height -= 10;
+                
+                //当div的宽度<=0时，在页面上不会显示，所以退出循环
+                if (width <= 0) {
+                    break;
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+    <div style="position: absolute;left:10px;top:10px;width:500px;height:500px; border: 1px solid red;">
+        
+    </div>
+</body>
+</html>

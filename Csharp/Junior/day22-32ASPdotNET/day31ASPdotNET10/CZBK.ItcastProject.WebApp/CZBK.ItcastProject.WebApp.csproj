@@ -1,0 +1,842 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1E1D88DE-7974-4DB1-8451-01A102B0531C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CZBK.ItcastProject.WebApp</RootNamespace>
+    <AssemblyName>CZBK.ItcastProject.WebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="2015-5-27\FileUp.html" />
+    <Content Include="2015-5-29\AddUserInfo.aspx" />
+    <Content Include="2015-5-29\EditUser.aspx" />
+    <Content Include="2015-5-29\Login.html" />
+    <Content Include="2015-5-29\UserInfoList.aspx" />
+    <Content Include="2015-5-30\Child.aspx" />
+    <Content Include="2015-5-30\NewList.aspx" />
+    <Content Include="2015-5-30\ServerDemo.aspx" />
+    <Content Include="2015-5-30\ShowUrl.html" />
+    <Content Include="2015-5-30\UrlRefer.aspx" />
+    <Content Include="2015-5-30\ViewStateDemo.aspx" />
+    <Content Include="2015-5-30\WebDemos\flash\main_fla.swf" />
+    <Content Include="2015-5-30\WebDemos\flash\sub_fla.swf" />
+    <Content Include="2015-5-30\WebDemos\Html\News.html" />
+    <Content Include="2015-5-30\WebDemos\Html\Shownews.html" />
+    <Content Include="2015-5-30\WebDemos\images\bg_a_list_prd_dt.png" />
+    <Content Include="2015-5-30\WebDemos\images\bg_body.png" />
+    <Content Include="2015-5-30\WebDemos\images\bg_body_column.png" />
+    <Content Include="2015-5-30\WebDemos\images\bg_dotlightblue.gif" />
+    <Content Include="2015-5-30\WebDemos\images\bg_footer_column.png" />
+    <Content Include="2015-5-30\WebDemos\images\bg_header_Client.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\bg_header_company.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\bg_header_Contact.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\bg_header_Employment.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\bg_header_News.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\bg_header_Product.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\bg_header_Service.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\bg_main_column.gif" />
+    <Content Include="2015-5-30\WebDemos\images\bg_position.png" />
+    <Content Include="2015-5-30\WebDemos\images\bg_position_product.png" />
+    <Content Include="2015-5-30\WebDemos\images\bg_title_column.png" />
+    <Content Include="2015-5-30\WebDemos\images\bg_wrap_index.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\icon_dot_blue.png" />
+    <Content Include="2015-5-30\WebDemos\images\icon_dot_gray.gif" />
+    <Content Include="2015-5-30\WebDemos\images\icon_drgegray.png" />
+    <Content Include="2015-5-30\WebDemos\images\img_contact_sidebarcolumn.png" />
+    <Content Include="2015-5-30\WebDemos\images\img_copyright_column.png" />
+    <Content Include="2015-5-30\WebDemos\images\img_copyright_index.png" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_HousingSecurity.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_MaintenanceFunds.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_Mapping.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_NewHouse.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_Practitioners.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_ProjectManagement.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_Property.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_Statistics.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_StockHouse.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\img_prd_Transaction.jpg" />
+    <Content Include="2015-5-30\WebDemos\images\logo.png" />
+    <Content Include="2015-5-30\WebDemos\images\nav_column.png" />
+    <Content Include="2015-5-30\WebDemos\images\nav_index.png" />
+    <Content Include="2015-5-30\WebDemos\images\top-2.gif" />
+    <Content Include="2015-5-30\WebDemos\style\CommonStyle.css" />
+    <Content Include="2015-5-30\WebDemos\style\pageStyle.css" />
+    <Content Include="2015-5-30\WebDemos\style\style.css" />
+    <Content Include="2015-5-31\CookieDemo.aspx" />
+    <Content Include="2015-5-31\CookieDemo2.aspx" />
+    <Content Include="2015-5-31\Login.aspx" />
+    <Content Include="2015-5-31\SessionDemo.aspx" />
+    <Content Include="2015-5-31\Test.aspx" />
+    <Content Include="2015-5-31\UserInfoList.aspx" />
+    <Content Include="2015-5-31\UserLogin.aspx" />
+    <Content Include="2015-6-2\AjaxDemo.aspx" />
+    <Content Include="2015-6-2\AjaxPostDemo.aspx" />
+    <Content Include="2015-6-2\JqueryAjax.aspx" />
+    <Content Include="2015-6-2\Login.html" />
+    <Content Include="2015-6-2\Register.aspx" />
+    <Content Include="2015-6-2\ShowDate.aspx" />
+    <Content Include="2015-6-3\JsonDemo.html" />
+    <Content Include="2015-6-3\UserInfoList.html" />
+    <Content Include="2015-6-5\Index.aspx" />
+    <Content Include="2015-6-5\ListViewDemo.aspx" />
+    <Content Include="2015-6-5\RepeaterDemo.aspx" />
+    <Content Include="2015-6-5\WebForm1.aspx" />
+    <Content Include="2015-6-5\WebForm2.aspx" />
+    <Content Include="2015-6-5\WebForm3.aspx" />
+    <Content Include="2015-6-6\AjaxDemo.aspx" />
+    <Content Include="2015-6-6\CacheDemo.aspx" />
+    <Content Include="2015-6-6\File.txt" />
+    <Content Include="2015-6-6\FileCacheDep.aspx" />
+    <Content Include="2015-6-6\PageCacheDemo.aspx" />
+    <Content Include="2015-6-6\ReadSessionDemo.aspx" />
+    <Content Include="2015-6-6\SessionDemo.aspx" />
+    <Content Include="2015-6-6\ShOWDetail.aspx" />
+    <Content Include="2015-6-6\SqlCacheDep.aspx" />
+    <Content Include="2015-6-6\TestError.aspx" />
+    <Content Include="AddUserInfo.html" />
+    <Content Include="Admin\AddProduct.aspx" />
+    <Content Include="Css\pageBarStyle.css" />
+    <Content Include="Css\tableStyle.css" />
+    <Content Include="Css\themes\black\accordion.css" />
+    <Content Include="Css\themes\black\calendar.css" />
+    <Content Include="Css\themes\black\combo.css" />
+    <Content Include="Css\themes\black\combobox.css" />
+    <Content Include="Css\themes\black\datagrid.css" />
+    <Content Include="Css\themes\black\datebox.css" />
+    <Content Include="Css\themes\black\dialog.css" />
+    <Content Include="Css\themes\black\easyui.css" />
+    <Content Include="Css\themes\black\images\accordion_arrows.png" />
+    <Content Include="Css\themes\black\images\blank.gif" />
+    <Content Include="Css\themes\black\images\calendar_arrows.png" />
+    <Content Include="Css\themes\black\images\combo_arrow.png" />
+    <Content Include="Css\themes\black\images\datagrid_icons.png" />
+    <Content Include="Css\themes\black\images\datebox_arrow.png" />
+    <Content Include="Css\themes\black\images\layout_arrows.png" />
+    <Content Include="Css\themes\black\images\linkbutton_bg.png" />
+    <Content Include="Css\themes\black\images\loading.gif" />
+    <Content Include="Css\themes\black\images\menu_arrows.png" />
+    <Content Include="Css\themes\black\images\messager_icons.png" />
+    <Content Include="Css\themes\black\images\pagination_icons.png" />
+    <Content Include="Css\themes\black\images\panel_tools.png" />
+    <Content Include="Css\themes\black\images\searchbox_button.png" />
+    <Content Include="Css\themes\black\images\slider_handle.png" />
+    <Content Include="Css\themes\black\images\spinner_arrows.png" />
+    <Content Include="Css\themes\black\images\tabs_icons.png" />
+    <Content Include="Css\themes\black\images\tree_icons.png" />
+    <Content Include="Css\themes\black\images\validatebox_warning.png" />
+    <Content Include="Css\themes\black\layout.css" />
+    <Content Include="Css\themes\black\linkbutton.css" />
+    <Content Include="Css\themes\black\menu.css" />
+    <Content Include="Css\themes\black\menubutton.css" />
+    <Content Include="Css\themes\black\messager.css" />
+    <Content Include="Css\themes\black\numberbox.css" />
+    <Content Include="Css\themes\black\pagination.css" />
+    <Content Include="Css\themes\black\panel.css" />
+    <Content Include="Css\themes\black\progressbar.css" />
+    <Content Include="Css\themes\black\propertygrid.css" />
+    <Content Include="Css\themes\black\searchbox.css" />
+    <Content Include="Css\themes\black\slider.css" />
+    <Content Include="Css\themes\black\spinner.css" />
+    <Content Include="Css\themes\black\splitbutton.css" />
+    <Content Include="Css\themes\black\tabs.css" />
+    <Content Include="Css\themes\black\textbox.css" />
+    <Content Include="Css\themes\black\tooltip.css" />
+    <Content Include="Css\themes\black\tree.css" />
+    <Content Include="Css\themes\black\validatebox.css" />
+    <Content Include="Css\themes\black\window.css" />
+    <Content Include="Css\themes\bootstrap\accordion.css" />
+    <Content Include="Css\themes\bootstrap\calendar.css" />
+    <Content Include="Css\themes\bootstrap\combo.css" />
+    <Content Include="Css\themes\bootstrap\combobox.css" />
+    <Content Include="Css\themes\bootstrap\datagrid.css" />
+    <Content Include="Css\themes\bootstrap\datebox.css" />
+    <Content Include="Css\themes\bootstrap\dialog.css" />
+    <Content Include="Css\themes\bootstrap\easyui.css" />
+    <Content Include="Css\themes\bootstrap\images\accordion_arrows.png" />
+    <Content Include="Css\themes\bootstrap\images\blank.gif" />
+    <Content Include="Css\themes\bootstrap\images\calendar_arrows.png" />
+    <Content Include="Css\themes\bootstrap\images\combo_arrow.png" />
+    <Content Include="Css\themes\bootstrap\images\datagrid_icons.png" />
+    <Content Include="Css\themes\bootstrap\images\datebox_arrow.png" />
+    <Content Include="Css\themes\bootstrap\images\layout_arrows.png" />
+    <Content Include="Css\themes\bootstrap\images\linkbutton_bg.png" />
+    <Content Include="Css\themes\bootstrap\images\loading.gif" />
+    <Content Include="Css\themes\bootstrap\images\menu_arrows.png" />
+    <Content Include="Css\themes\bootstrap\images\messager_icons.png" />
+    <Content Include="Css\themes\bootstrap\images\pagination_icons.png" />
+    <Content Include="Css\themes\bootstrap\images\panel_tools.png" />
+    <Content Include="Css\themes\bootstrap\images\searchbox_button.png" />
+    <Content Include="Css\themes\bootstrap\images\slider_handle.png" />
+    <Content Include="Css\themes\bootstrap\images\spinner_arrows.png" />
+    <Content Include="Css\themes\bootstrap\images\tabs_icons.png" />
+    <Content Include="Css\themes\bootstrap\images\tree_icons.png" />
+    <Content Include="Css\themes\bootstrap\images\validatebox_warning.png" />
+    <Content Include="Css\themes\bootstrap\layout.css" />
+    <Content Include="Css\themes\bootstrap\linkbutton.css" />
+    <Content Include="Css\themes\bootstrap\menu.css" />
+    <Content Include="Css\themes\bootstrap\menubutton.css" />
+    <Content Include="Css\themes\bootstrap\messager.css" />
+    <Content Include="Css\themes\bootstrap\numberbox.css" />
+    <Content Include="Css\themes\bootstrap\pagination.css" />
+    <Content Include="Css\themes\bootstrap\panel.css" />
+    <Content Include="Css\themes\bootstrap\progressbar.css" />
+    <Content Include="Css\themes\bootstrap\propertygrid.css" />
+    <Content Include="Css\themes\bootstrap\searchbox.css" />
+    <Content Include="Css\themes\bootstrap\slider.css" />
+    <Content Include="Css\themes\bootstrap\spinner.css" />
+    <Content Include="Css\themes\bootstrap\splitbutton.css" />
+    <Content Include="Css\themes\bootstrap\tabs.css" />
+    <Content Include="Css\themes\bootstrap\textbox.css" />
+    <Content Include="Css\themes\bootstrap\tooltip.css" />
+    <Content Include="Css\themes\bootstrap\tree.css" />
+    <Content Include="Css\themes\bootstrap\validatebox.css" />
+    <Content Include="Css\themes\bootstrap\window.css" />
+    <Content Include="Css\themes\default\accordion.css" />
+    <Content Include="Css\themes\default\calendar.css" />
+    <Content Include="Css\themes\default\combo.css" />
+    <Content Include="Css\themes\default\combobox.css" />
+    <Content Include="Css\themes\default\datagrid.css" />
+    <Content Include="Css\themes\default\datebox.css" />
+    <Content Include="Css\themes\default\dialog.css" />
+    <Content Include="Css\themes\default\easyui.css" />
+    <Content Include="Css\themes\default\images\accordion_arrows.png" />
+    <Content Include="Css\themes\default\images\blank.gif" />
+    <Content Include="Css\themes\default\images\calendar_arrows.png" />
+    <Content Include="Css\themes\default\images\combo_arrow.png" />
+    <Content Include="Css\themes\default\images\datagrid_icons.png" />
+    <Content Include="Css\themes\default\images\datebox_arrow.png" />
+    <Content Include="Css\themes\default\images\layout_arrows.png" />
+    <Content Include="Css\themes\default\images\linkbutton_bg.png" />
+    <Content Include="Css\themes\default\images\loading.gif" />
+    <Content Include="Css\themes\default\images\menu_arrows.png" />
+    <Content Include="Css\themes\default\images\messager_icons.png" />
+    <Content Include="Css\themes\default\images\pagination_icons.png" />
+    <Content Include="Css\themes\default\images\panel_tools.png" />
+    <Content Include="Css\themes\default\images\searchbox_button.png" />
+    <Content Include="Css\themes\default\images\slider_handle.png" />
+    <Content Include="Css\themes\default\images\spinner_arrows.png" />
+    <Content Include="Css\themes\default\images\tabs_icons.png" />
+    <Content Include="Css\themes\default\images\tree_icons.png" />
+    <Content Include="Css\themes\default\images\validatebox_warning.png" />
+    <Content Include="Css\themes\default\layout.css" />
+    <Content Include="Css\themes\default\linkbutton.css" />
+    <Content Include="Css\themes\default\menu.css" />
+    <Content Include="Css\themes\default\menubutton.css" />
+    <Content Include="Css\themes\default\messager.css" />
+    <Content Include="Css\themes\default\numberbox.css" />
+    <Content Include="Css\themes\default\pagination.css" />
+    <Content Include="Css\themes\default\panel.css" />
+    <Content Include="Css\themes\default\progressbar.css" />
+    <Content Include="Css\themes\default\propertygrid.css" />
+    <Content Include="Css\themes\default\searchbox.css" />
+    <Content Include="Css\themes\default\slider.css" />
+    <Content Include="Css\themes\default\spinner.css" />
+    <Content Include="Css\themes\default\splitbutton.css" />
+    <Content Include="Css\themes\default\tabs.css" />
+    <Content Include="Css\themes\default\textbox.css" />
+    <Content Include="Css\themes\default\tooltip.css" />
+    <Content Include="Css\themes\default\tree.css" />
+    <Content Include="Css\themes\default\validatebox.css" />
+    <Content Include="Css\themes\default\window.css" />
+    <Content Include="Css\themes\gray\accordion.css" />
+    <Content Include="Css\themes\gray\calendar.css" />
+    <Content Include="Css\themes\gray\combo.css" />
+    <Content Include="Css\themes\gray\combobox.css" />
+    <Content Include="Css\themes\gray\datagrid.css" />
+    <Content Include="Css\themes\gray\datebox.css" />
+    <Content Include="Css\themes\gray\dialog.css" />
+    <Content Include="Css\themes\gray\easyui.css" />
+    <Content Include="Css\themes\gray\images\accordion_arrows.png" />
+    <Content Include="Css\themes\gray\images\blank.gif" />
+    <Content Include="Css\themes\gray\images\calendar_arrows.png" />
+    <Content Include="Css\themes\gray\images\combo_arrow.png" />
+    <Content Include="Css\themes\gray\images\datagrid_icons.png" />
+    <Content Include="Css\themes\gray\images\datebox_arrow.png" />
+    <Content Include="Css\themes\gray\images\layout_arrows.png" />
+    <Content Include="Css\themes\gray\images\linkbutton_bg.png" />
+    <Content Include="Css\themes\gray\images\loading.gif" />
+    <Content Include="Css\themes\gray\images\menu_arrows.png" />
+    <Content Include="Css\themes\gray\images\messager_icons.png" />
+    <Content Include="Css\themes\gray\images\pagination_icons.png" />
+    <Content Include="Css\themes\gray\images\panel_tools.png" />
+    <Content Include="Css\themes\gray\images\searchbox_button.png" />
+    <Content Include="Css\themes\gray\images\slider_handle.png" />
+    <Content Include="Css\themes\gray\images\spinner_arrows.png" />
+    <Content Include="Css\themes\gray\images\tabs_icons.png" />
+    <Content Include="Css\themes\gray\images\tree_icons.png" />
+    <Content Include="Css\themes\gray\images\validatebox_warning.png" />
+    <Content Include="Css\themes\gray\layout.css" />
+    <Content Include="Css\themes\gray\linkbutton.css" />
+    <Content Include="Css\themes\gray\menu.css" />
+    <Content Include="Css\themes\gray\menubutton.css" />
+    <Content Include="Css\themes\gray\messager.css" />
+    <Content Include="Css\themes\gray\numberbox.css" />
+    <Content Include="Css\themes\gray\pagination.css" />
+    <Content Include="Css\themes\gray\panel.css" />
+    <Content Include="Css\themes\gray\progressbar.css" />
+    <Content Include="Css\themes\gray\propertygrid.css" />
+    <Content Include="Css\themes\gray\searchbox.css" />
+    <Content Include="Css\themes\gray\slider.css" />
+    <Content Include="Css\themes\gray\spinner.css" />
+    <Content Include="Css\themes\gray\splitbutton.css" />
+    <Content Include="Css\themes\gray\tabs.css" />
+    <Content Include="Css\themes\gray\textbox.css" />
+    <Content Include="Css\themes\gray\tooltip.css" />
+    <Content Include="Css\themes\gray\tree.css" />
+    <Content Include="Css\themes\gray\validatebox.css" />
+    <Content Include="Css\themes\gray\window.css" />
+    <Content Include="Css\themes\icon.css" />
+    <Content Include="Css\themes\icons\back.png" />
+    <Content Include="Css\themes\icons\blank.gif" />
+    <Content Include="Css\themes\icons\cancel.png" />
+    <Content Include="Css\themes\icons\cut.png" />
+    <Content Include="Css\themes\icons\edit_add.png" />
+    <Content Include="Css\themes\icons\edit_remove.png" />
+    <Content Include="Css\themes\icons\filesave.png" />
+    <Content Include="Css\themes\icons\filter.png" />
+    <Content Include="Css\themes\icons\help.png" />
+    <Content Include="Css\themes\icons\large_chart.png" />
+    <Content Include="Css\themes\icons\large_clipart.png" />
+    <Content Include="Css\themes\icons\large_picture.png" />
+    <Content Include="Css\themes\icons\large_shapes.png" />
+    <Content Include="Css\themes\icons\large_smartart.png" />
+    <Content Include="Css\themes\icons\mini_add.png" />
+    <Content Include="Css\themes\icons\mini_edit.png" />
+    <Content Include="Css\themes\icons\mini_refresh.png" />
+    <Content Include="Css\themes\icons\no.png" />
+    <Content Include="Css\themes\icons\ok.png" />
+    <Content Include="Css\themes\icons\pencil.png" />
+    <Content Include="Css\themes\icons\print.png" />
+    <Content Include="Css\themes\icons\redo.png" />
+    <Content Include="Css\themes\icons\reload.png" />
+    <Content Include="Css\themes\icons\search.png" />
+    <Content Include="Css\themes\icons\sum.png" />
+    <Content Include="Css\themes\icons\tip.png" />
+    <Content Include="Css\themes\icons\undo.png" />
+    <Content Include="Css\themes\metro\accordion.css" />
+    <Content Include="Css\themes\metro\calendar.css" />
+    <Content Include="Css\themes\metro\combo.css" />
+    <Content Include="Css\themes\metro\combobox.css" />
+    <Content Include="Css\themes\metro\datagrid.css" />
+    <Content Include="Css\themes\metro\datebox.css" />
+    <Content Include="Css\themes\metro\dialog.css" />
+    <Content Include="Css\themes\metro\easyui.css" />
+    <Content Include="Css\themes\metro\images\accordion_arrows.png" />
+    <Content Include="Css\themes\metro\images\blank.gif" />
+    <Content Include="Css\themes\metro\images\calendar_arrows.png" />
+    <Content Include="Css\themes\metro\images\combo_arrow.png" />
+    <Content Include="Css\themes\metro\images\datagrid_icons.png" />
+    <Content Include="Css\themes\metro\images\datebox_arrow.png" />
+    <Content Include="Css\themes\metro\images\layout_arrows.png" />
+    <Content Include="Css\themes\metro\images\linkbutton_bg.png" />
+    <Content Include="Css\themes\metro\images\loading.gif" />
+    <Content Include="Css\themes\metro\images\menu_arrows.png" />
+    <Content Include="Css\themes\metro\images\messager_icons.png" />
+    <Content Include="Css\themes\metro\images\pagination_icons.png" />
+    <Content Include="Css\themes\metro\images\panel_tools.png" />
+    <Content Include="Css\themes\metro\images\searchbox_button.png" />
+    <Content Include="Css\themes\metro\images\slider_handle.png" />
+    <Content Include="Css\themes\metro\images\spinner_arrows.png" />
+    <Content Include="Css\themes\metro\images\tabs_icons.png" />
+    <Content Include="Css\themes\metro\images\tree_icons.png" />
+    <Content Include="Css\themes\metro\images\validatebox_warning.png" />
+    <Content Include="Css\themes\metro\layout.css" />
+    <Content Include="Css\themes\metro\linkbutton.css" />
+    <Content Include="Css\themes\metro\menu.css" />
+    <Content Include="Css\themes\metro\menubutton.css" />
+    <Content Include="Css\themes\metro\messager.css" />
+    <Content Include="Css\themes\metro\numberbox.css" />
+    <Content Include="Css\themes\metro\pagination.css" />
+    <Content Include="Css\themes\metro\panel.css" />
+    <Content Include="Css\themes\metro\progressbar.css" />
+    <Content Include="Css\themes\metro\propertygrid.css" />
+    <Content Include="Css\themes\metro\searchbox.css" />
+    <Content Include="Css\themes\metro\slider.css" />
+    <Content Include="Css\themes\metro\spinner.css" />
+    <Content Include="Css\themes\metro\splitbutton.css" />
+    <Content Include="Css\themes\metro\tabs.css" />
+    <Content Include="Css\themes\metro\textbox.css" />
+    <Content Include="Css\themes\metro\tooltip.css" />
+    <Content Include="Css\themes\metro\tree.css" />
+    <Content Include="Css\themes\metro\validatebox.css" />
+    <Content Include="Css\themes\metro\window.css" />
+    <Content Include="Detail.html" />
+    <Content Include="Error.html" />
+    <Content Include="FileNotFound.html" />
+    <Content Include="Js\easyui-lang-zh_CN.js" />
+    <Content Include="Js\jquery-1.7.1.js" />
+    <Content Include="Js\jquery.easyui.min.js" />
+    <Content Include="MyErrorPage.html" />
+    <Content Include="ShowEditUser.html" />
+    <Content Include="UserInfoList.html" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="2015-5-27\MakeImage.ashx.cs">
+      <DependentUpon>MakeImage.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-27\ProcessFileUp.ashx.cs">
+      <DependentUpon>ProcessFileUp.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-29\AddUserInfo.aspx.cs">
+      <DependentUpon>AddUserInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-29\AddUserInfo.aspx.designer.cs">
+      <DependentUpon>AddUserInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-29\Delete.ashx.cs">
+      <DependentUpon>Delete.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-29\EditUser.aspx.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-29\EditUser.aspx.designer.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-29\Thumb.ashx.cs">
+      <DependentUpon>Thumb.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-29\UserInfoList.aspx.cs">
+      <DependentUpon>UserInfoList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-29\UserInfoList.aspx.designer.cs">
+      <DependentUpon>UserInfoList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-29\ValidateImageCode.ashx.cs">
+      <DependentUpon>ValidateImageCode.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-30\Child.aspx.cs">
+      <DependentUpon>Child.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-30\Child.aspx.designer.cs">
+      <DependentUpon>Child.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-30\NewList.aspx.cs">
+      <DependentUpon>NewList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-30\NewList.aspx.designer.cs">
+      <DependentUpon>NewList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-30\ServerDemo.aspx.cs">
+      <DependentUpon>ServerDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-30\ServerDemo.aspx.designer.cs">
+      <DependentUpon>ServerDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-30\UrlRefer.aspx.cs">
+      <DependentUpon>UrlRefer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-30\UrlRefer.aspx.designer.cs">
+      <DependentUpon>UrlRefer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-30\ViewStateDemo.aspx.cs">
+      <DependentUpon>ViewStateDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-30\ViewStateDemo.aspx.designer.cs">
+      <DependentUpon>ViewStateDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-31\CookieDemo.aspx.cs">
+      <DependentUpon>CookieDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-31\CookieDemo.aspx.designer.cs">
+      <DependentUpon>CookieDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-31\CookieDemo2.aspx.cs">
+      <DependentUpon>CookieDemo2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-31\CookieDemo2.aspx.designer.cs">
+      <DependentUpon>CookieDemo2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-31\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-31\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-31\SessionDemo.aspx.cs">
+      <DependentUpon>SessionDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-31\SessionDemo.aspx.designer.cs">
+      <DependentUpon>SessionDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-31\Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-31\Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-31\UserInfoList.aspx.cs">
+      <DependentUpon>UserInfoList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-31\UserInfoList.aspx.designer.cs">
+      <DependentUpon>UserInfoList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-31\UserLogin.aspx.cs">
+      <DependentUpon>UserLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-5-31\UserLogin.aspx.designer.cs">
+      <DependentUpon>UserLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-5-31\ValidateImageCode.ashx.cs">
+      <DependentUpon>ValidateImageCode.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-2\AjaxDemo.aspx.cs">
+      <DependentUpon>AjaxDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-2\AjaxDemo.aspx.designer.cs">
+      <DependentUpon>AjaxDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-2\AjaxPostDemo.aspx.cs">
+      <DependentUpon>AjaxPostDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-2\AjaxPostDemo.aspx.designer.cs">
+      <DependentUpon>AjaxPostDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-2\CheckUserName.ashx.cs">
+      <DependentUpon>CheckUserName.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-2\GetDate.ashx.cs">
+      <DependentUpon>GetDate.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-2\JqueryAjax.aspx.cs">
+      <DependentUpon>JqueryAjax.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-2\JqueryAjax.aspx.designer.cs">
+      <DependentUpon>JqueryAjax.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-2\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-2\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-2\ShowDate.aspx.cs">
+      <DependentUpon>ShowDate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-2\ShowDate.aspx.designer.cs">
+      <DependentUpon>ShowDate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-2\UserLogin.ashx.cs">
+      <DependentUpon>UserLogin.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-3\AddUserInfo.ashx.cs">
+      <DependentUpon>AddUserInfo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-3\DeleteUser.ashx.cs">
+      <DependentUpon>DeleteUser.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-3\EditUserInfo.ashx.cs">
+      <DependentUpon>EditUserInfo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-3\GetJson.ashx.cs">
+      <DependentUpon>GetJson.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-3\ShowDetail.ashx.cs">
+      <DependentUpon>ShowDetail.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-3\UserInfoViewModel.cs" />
+    <Compile Include="2015-6-3\UserList.ashx.cs">
+      <DependentUpon>UserList.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-5\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-5\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-5\ListViewDemo.aspx.cs">
+      <DependentUpon>ListViewDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-5\ListViewDemo.aspx.designer.cs">
+      <DependentUpon>ListViewDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-5\MainMaster.Master.cs">
+      <DependentUpon>MainMaster.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-5\MainMaster.Master.designer.cs">
+      <DependentUpon>MainMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-5\RepeaterDemo.aspx.cs">
+      <DependentUpon>RepeaterDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-5\RepeaterDemo.aspx.designer.cs">
+      <DependentUpon>RepeaterDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-5\Site1.Master.cs">
+      <DependentUpon>Site1.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-5\Site1.Master.designer.cs">
+      <DependentUpon>Site1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-5\WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-5\WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-5\WebForm2.aspx.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-5\WebForm2.aspx.designer.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-5\WebForm3.aspx.cs">
+      <DependentUpon>WebForm3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-5\WebForm3.aspx.designer.cs">
+      <DependentUpon>WebForm3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-6\AjaxDemo.aspx.cs">
+      <DependentUpon>AjaxDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-6\AjaxDemo.aspx.designer.cs">
+      <DependentUpon>AjaxDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-6\CacheDemo.aspx.cs">
+      <DependentUpon>CacheDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-6\CacheDemo.aspx.designer.cs">
+      <DependentUpon>CacheDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-6\FileCacheDep.aspx.cs">
+      <DependentUpon>FileCacheDep.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-6\FileCacheDep.aspx.designer.cs">
+      <DependentUpon>FileCacheDep.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-6\PageCacheDemo.aspx.cs">
+      <DependentUpon>PageCacheDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-6\PageCacheDemo.aspx.designer.cs">
+      <DependentUpon>PageCacheDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-6\ReadSessionDemo.aspx.cs">
+      <DependentUpon>ReadSessionDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-6\ReadSessionDemo.aspx.designer.cs">
+      <DependentUpon>ReadSessionDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-6\SessionDemo.aspx.cs">
+      <DependentUpon>SessionDemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-6\SessionDemo.aspx.designer.cs">
+      <DependentUpon>SessionDemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-6\ShOWDetail.aspx.cs">
+      <DependentUpon>ShOWDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-6\ShOWDetail.aspx.designer.cs">
+      <DependentUpon>ShOWDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-6\SqlCacheDep.aspx.cs">
+      <DependentUpon>SqlCacheDep.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-6\SqlCacheDep.aspx.designer.cs">
+      <DependentUpon>SqlCacheDep.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="2015-6-6\TestError.aspx.cs">
+      <DependentUpon>TestError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="2015-6-6\TestError.aspx.designer.cs">
+      <DependentUpon>TestError.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddUser.ashx.cs">
+      <DependentUpon>AddUser.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AddProduct.aspx.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AddProduct.aspx.designer.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteUser.ashx.cs">
+      <DependentUpon>DeleteUser.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="EidtUser.ashx.cs">
+      <DependentUpon>EidtUser.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShowDetail.ashx.cs">
+      <DependentUpon>ShowDetail.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ShowEdit.ashx.cs">
+      <DependentUpon>ShowEdit.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="UserInfoList.ashx.cs">
+      <DependentUpon>UserInfoList.ashx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserInfoList.ashx" />
+    <Content Include="AddUser.ashx" />
+    <Content Include="DeleteUser.ashx" />
+    <Content Include="ShowDetail.ashx" />
+    <Content Include="ShowEdit.ashx" />
+    <Content Include="EidtUser.ashx" />
+    <Content Include="2015-5-27\ProcessFileUp.ashx" />
+    <Content Include="2015-5-27\MakeImage.ashx" />
+    <Content Include="2015-5-29\Thumb.ashx" />
+    <Content Include="2015-5-29\ValidateImageCode.ashx" />
+    <Content Include="2015-5-29\Delete.ashx" />
+    <Content Include="2015-5-31\ValidateImageCode.ashx" />
+    <Content Include="2015-6-2\GetDate.ashx" />
+    <Content Include="2015-6-2\CheckUserName.ashx" />
+    <Content Include="2015-6-2\UserLogin.ashx" />
+    <Content Include="2015-6-3\GetJson.ashx" />
+    <Content Include="2015-6-3\UserList.ashx" />
+    <Content Include="2015-6-3\ShowDetail.ashx" />
+    <Content Include="2015-6-3\DeleteUser.ashx" />
+    <Content Include="2015-6-3\AddUserInfo.ashx" />
+    <Content Include="2015-6-3\EditUserInfo.ashx" />
+    <Content Include="2015-6-5\Site1.Master" />
+    <Content Include="2015-6-5\MainMaster.Master" />
+    <None Include="Properties\PublishProfiles\aaa.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CZBK.ItcastProject.BLL\CZBK.ItcastProject.BLL.csproj">
+      <Project>{6711f160-aa64-47c8-84dc-7d632fc2aec4}</Project>
+      <Name>CZBK.ItcastProject.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CZBK.ItcastProject.Common\CZBK.ItcastProject.Common.csproj">
+      <Project>{0e7cf17f-0e54-4131-9822-d84328912651}</Project>
+      <Name>CZBK.ItcastProject.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CZBK.ItcastProject.DAL\CZBK.ItcastProject.DAL.csproj">
+      <Project>{9a420d51-e40c-4aca-983c-204f05209edf}</Project>
+      <Name>CZBK.ItcastProject.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CZBK.ItcastProject.Model\CZBK.ItcastProject.Model.csproj">
+      <Project>{d76a747b-09a2-419a-8c1e-c0870ddaf8f2}</Project>
+      <Name>CZBK.ItcastProject.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ImageUpload\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:6543/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
