@@ -16,13 +16,14 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
+            Form1.CheckForIllegalCrossThreadCalls = false;
             TextBox.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int a=0;
-            for (int i = 0; i < 600000000;i++ )
+            int a = 0;
+            for (int i = 0; i < 600000000; i++)
             {
                 a = i;
             }
@@ -33,13 +34,13 @@ namespace WindowsFormsApplication1
         {
             ThreadStart threadStart = new ThreadStart(StartCaul);
             Thread myThread = new Thread(threadStart);
-        //    myThread.Priority = ThreadPriority.Normal;//建议操作系统将创建的线程优先级设置为最高。
-           // myThread.Name = "";
-           // myThread.Abort();
+            //    myThread.Priority = ThreadPriority.Normal;//建议操作系统将创建的线程优先级设置为最高。
+            // myThread.Name = "";
+            // myThread.Abort();
             myThread.IsBackground = true;//设置为后台线程。
             myThread.Start();
-           // myThread.Join(1000);//阻塞主线程。
-           
+            // myThread.Join(1000);//阻塞主线程。
+
         }
         //bool isStop = false;
         private void StartCaul()
@@ -47,14 +48,14 @@ namespace WindowsFormsApplication1
             int a = 0;
             for (int i = 0; i < 600000000; i++)
             {
-               // if (!isStop)
-               // {
-                    a = i;
-               // }
-               // else
-               // {
-                  
-               // }
+                // if (!isStop)
+                // {
+                a = i;
+                // }
+                // else
+                // {
+
+                // }
             }
             //MessageBox.Show(a.ToString());
             this.textBox1.Text = a.ToString();
@@ -62,7 +63,7 @@ namespace WindowsFormsApplication1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            List<int> list = new List<int>() {1,2,3,4,5 };
+            List<int> list = new List<int>() { 1, 2, 3, 4, 5 };
             ParameterizedThreadStart parThreadStart = new
              ParameterizedThreadStart(Show);
             Thread thread1 = new Thread(parThreadStart);
@@ -93,9 +94,9 @@ namespace WindowsFormsApplication1
             int a = 0;
             for (int i = 0; i < 600000000; i++)
             {
-               
+
                 a = i;
-              
+
             }
             //MessageBox.Show(a.ToString());
             if (this.textBox1.InvokeRequired)//是否要对文本框进行跨线程访问。
@@ -109,7 +110,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void ShowTextBoxValue(TextBox txt,string value)
+        private void ShowTextBoxValue(TextBox txt, string value)
         {
             txt.Text = value;
 
@@ -117,7 +118,7 @@ namespace WindowsFormsApplication1
 
         private void button5_Click(object sender, EventArgs e)
         {
-          //  this.textBox1.Text = "safasdfd";
+            //  this.textBox1.Text = "safasdfd";
             Thread thread1 = new Thread(AddSum);
             thread1.IsBackground = true;
             thread1.Start();
@@ -126,14 +127,10 @@ namespace WindowsFormsApplication1
             thread2.IsBackground = true;
             thread2.Start();
         }
-
-
-
         private static readonly object obj = new object();
-
         private void AddSum()
         {
-            lock (obj)  
+            lock (obj)
             {
 
                 for (int i = 0; i < 2000; i++)
@@ -143,7 +140,7 @@ namespace WindowsFormsApplication1
                     this.textBox1.Text = a.ToString();
                 }
             }
-           
+
         }
     }
 }

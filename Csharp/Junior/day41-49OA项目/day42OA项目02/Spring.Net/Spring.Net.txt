@@ -1,0 +1,15 @@
+IoC：Inversion of Control
+控制翻转：就是创建对象的权利由开发人员自己控制New，转到了由容器来控制。
+
+DI:Dependency Injection
+It is a process whereby objects define their dependencies, that is, the other objects they work with, only through constructor arguments and properties that are set on the object instance after it is constructed. 
+依赖注入：就是在通过容器来创建对象的时候，在对象的初始化是可以给一些属性、构造方法的参数等注入默认值（可以是复杂的类型.
+
+
+Aop--权限校验--日志处理。Filter.
+
+
+
+
+Unity
+

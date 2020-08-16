@@ -1,0 +1,498 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0040)http://qingfeng825.iteye.com/blog/363283 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>权限管理设计一 - 女程序员的路…… - ITeye技术网站</title>
+    <meta name="description" content="应用程序权限设计   我们在开发系统的时候，经常会遇到系统需要权限控制，而权限的控制程度不同有不同的设计方案。     1.       基于角色的权限 ...">
+    <meta name="keywords" content="设计模式, 数据结构 权限管理设计一">
+    <link rel="shortcut icon" href="http://qingfeng825.iteye.com/images/favicon.ico" type="image/x-icon">
+    <link rel="search" type="application/opensearchdescription+xml" href="http://qingfeng825.iteye.com/open_search.xml" title="ITeye">
+    <link href="http://qingfeng825.iteye.com/rss" rel="alternate" title="女程序员的路……" type="application/rss+xml">
+    <link href="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/blog.css" media="screen" rel="stylesheet" type="text/css">
+<link href="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/red.css" media="screen" rel="stylesheet" type="text/css">
+    <script type="text/javascript" async="" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/ga.js"></script><script src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/application.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/SyntaxHighlighter.css" media="screen" rel="stylesheet" type="text/css">
+  <script src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/shCoreCommon.js" type="text/javascript"></script>
+<script src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/hotkey.js" type="text/javascript"></script>
+  <script src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/code_favorites.js" type="text/javascript"></script>
+<script src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/weiboshare.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="http://qingfeng825.iteye.com/blog/363283#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">招聘</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="http://qingfeng825.iteye.com/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="http://qingfeng825.iteye.com/login">登录</a>
+    <a href="http://qingfeng825.iteye.com/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="http://qingfeng825.iteye.com/">女程序员的路……</a></h1>
+        </div>
+        <div id="fd"></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class="blog_navbar_for"><a href="http://qingfeng825.iteye.com/"><strong>博客</strong></a></li>
+            <li><a href="http://qingfeng825.iteye.com/weibo">微博</a></li>
+            <li><a href="http://qingfeng825.iteye.com/album">相册</a></li>
+            <li><a href="http://qingfeng825.iteye.com/link">收藏</a></li>
+            <li><a href="http://qingfeng825.iteye.com/blog/guest_book">留言</a></li>
+            <li><a href="http://qingfeng825.iteye.com/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="http://qingfeng825.iteye.com/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="">
+              <input class="submit_search" type="submit" value="">
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style="display:none">
+  <a href="http://qingfeng825.iteye.com/" class="p-author" target="_blank">qingfeng825</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/权限管理设计一 - 女程序员的路…… - ITeye技术网站.htm">权限管理设计一</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class="blog_categories"><strong>博客分类：</strong> <li><a href="http://qingfeng825.iteye.com/category/61429">设计</a></li> </ul>
+        <div class="news_tag"><a href="http://www.iteye.com/blogs/tag/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">设计模式</a><a href="http://www.iteye.com/blogs/tag/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a>&nbsp;</div>
+  </div>
+
+  <div id="blog_content" class="blog_content">
+    <div class="postTitle"><a href="http://www.cnblogs.com/yukaizhao/archive/2007/04/15/user_role_action_permission.html" class="postTitle2">应用程序权限设计</a> </div>
+<p style="margin: 0cm 0cm 0pt;" class="MsoNormal"><span style="font-family: 宋体;">我们在开发系统的时候，经常会遇到系统需要权限控制，而权限的控制程度不同有不同的设计方案。</span></p>
+<p style="margin: 0cm 0cm 0pt;" class="MsoNormal"><span><span style="font-family: Calibri;">&nbsp;</span></span></p>
+<p style="" class="MsoListParagraph"><span style=""><span style=""><span style="font-family: Calibri;">1.</span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="font-family: 宋体;">基于角色的权限设计</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span style="font-family: 宋体;">这种方案是最常见也是比较简单的方案，不过通常有这种设计已经够了，所以微软就设计出这种方案的通用做法，这种方案对于每一个操作不做控制，只是在程序中根据角色对是否具有操作的权限进行控制；这里我们就不做详述<br><img border="0" alt="" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/userrole.png"></span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span style=""></span></p>
+<p style="" class="MsoListParagraph"><span style=""><span style=""><span style="font-family: Calibri;">2.</span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="font-family: 宋体;">基于操作的权限设计</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span style="font-family: 宋体;">这种模式下每一个操作都在数据库中有记录，用户是否拥有该操作的权限也在数据库中有记录，结构如下：</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph">&nbsp;</p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span style="font-family: 宋体;"><img border="0" alt="" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/useraction.png"><br>但是如果直接使用上面的设计，会导致数据库中的</span><span><span style="font-family: Calibri;">UserAction</span></span><span style="font-family: 宋体;">这张表数据量非常大，所以我们需要进一步设计提高效率，请看方案</span><span><span style="font-family: Calibri;">3</span></span></p>
+<p style="margin: 0cm 0cm 0pt;" class="MsoNormal"><span><span style="font-family: Calibri;">&nbsp;</span></span></p>
+<p style="" class="MsoListParagraph"><span style=""><span style=""><span style="font-family: Calibri;">3.</span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="font-family: 宋体;">基于角色和操作的权限设计</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt;" class="MsoNormal">&nbsp;</p>
+<p style="margin: 0cm 0cm 0pt 18pt;" class="MsoNormal"><span style="font-family: 宋体;"><img border="0" alt="" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/userroleaction.png"><br>如上图所示，我们在添加了</span><span><span style="font-family: Calibri;">Role</span></span><span style="font-family: 宋体;">，和</span><span><span style="font-family: Calibri;">Role<span style="">Action</span></span></span><span style="font-family: 宋体;">表，这样子就可以减少</span><span style=""><span style="font-family: Calibri;">UserAction</span></span><span style="font-family: 宋体;">中的记录，并且使设计更灵活一点。</span><span style=""></span></p>
+<p style="margin: 0cm 0cm 0pt 18pt;" class="MsoNormal"><span style="font-family: 宋体;">但是这种方案在用户需求的考验之下也可能显得不够灵活够用，例如当用户要求临时给某位普通员工某操作权限时，我们就需要新增加一种新的用户角色，但是这种用户角色是不必要的，因为它只是一种临时的角色，如果添加一种角色还需要在收回此普通员工权限时删除此角色，我们需要设计一种更合适的结构来满足用户对权限设置的要求。</span><span style=""></span></p>
+<p style="margin: 0cm 0cm 0pt 18pt;" class="MsoNormal"><span style=""><span style="font-family: Calibri;">&nbsp;</span></span></p>
+<p style="" class="MsoListParagraph"><span style=""><span style=""><span style="font-family: Calibri;">4.</span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span><span style="font-family: Calibri;">2,3</span></span><span style="font-family: 宋体;">组合的权限设计，其结构如下：</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph">&nbsp;</p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span style="font-family: 宋体;"><img border="0" alt="" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/userroleaction1.png"><br>我们可以看到在上图中添加了</span><span><span style="font-family: Calibri;">UserAction</span></span><span style="font-family: 宋体;">表，使用此表来添加特殊用户的权限，改表中有一个字段</span><span><span style="font-family: Calibri;">HasPermission</span></span><span style="font-family: 宋体;">可以决定用户是否有某种操作的权限，改表中记录的权限的优先级要高于</span><span><span style="font-family: Calibri;">UserRole</span></span><span style="font-family: 宋体;">中记录的用户权限。这样在应用程序中我们就需要通过</span><span><span style="font-family: Calibri;">UserRole</span></span><span style="font-family: 宋体;">和</span><span><span style="font-family: Calibri;">UserAction</span></span><span style="font-family: 宋体;">两张表中的记录判断权限。</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span style="font-family: 宋体;">到这儿呢并不算完，有可能用户还会给出这样的需求：对于某一种</span><span><span style="font-family: Calibri;">action</span></span><span style="font-family: 宋体;">所操作的对象某一些记录会有权限，而对于其他的记录没有权限，比如说一个内容管理系统，对于某一些频道某个用户有修改的权限，而对于另外一些频道没有修改的权限，这时候我们需要设计更复杂的权限机制。</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span><span style="font-family: Calibri;">&nbsp;</span></span></p>
+<p style="" class="MsoListParagraph"><span style=""><span style=""><span style="font-family: Calibri;">5.</span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="font-family: 宋体;">对于同一种实体（资源）用户可以对一部分记录有权限，而对于另外一些记录没有权限的权限设计：</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph">&nbsp;</p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span style="font-family: 宋体;"><img border="0" alt="" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/useractionresource.png"><br>对于这样的需求我们就需要对每一种不同的资源创建一张权限表，在上图中对</span><span><span style="font-family: Calibri;">Content</span></span><span style="font-family: 宋体;">和</span><span><span style="font-family: Calibri;">Channel</span></span><span style="font-family: 宋体;">两种资源分别创建了</span><span><span style="font-family: Calibri;">UserActionContent</span></span><span style="font-family: 宋体;">和</span><span><span style="font-family: Calibri;">UserActionChannel</span></span><span style="font-family: 宋体;">表用来定义用户对某条记录是否有权限；这种设计是可以满足用户需求的但是不是很经济，</span><span><span style="font-family: Calibri;">UserActionChannel</span></span><span style="font-family: 宋体;">和</span><span><span style="font-family: Calibri;">UserActionContent</span></span><span style="font-family: 宋体;">中的记录会很多，而在实际的应用中并非需要记录所有的记录的权限信息，有时候可能只是一种规则，比如说对于根</span><span><span style="font-family: Calibri;">Channel</span></span><span style="font-family: 宋体;">什么级别的人有权限；这时候呢我们就可以定义些规则来判断用户权限，下面就是这种设计。</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span><span style="font-family: Calibri;">&nbsp;</span></span></p>
+<p style="" class="MsoListParagraph"><span style=""><span style=""><span style="font-family: Calibri;">6.</span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span style="font-family: 宋体;">涉及资源，权限和规则的权限设计</span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph">&nbsp;</p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span style="font-family: 宋体;"><img border="0" alt="" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/useractionrule.png"><br>在这种设计下角色的概念已经没有了，只需要</span><span><span style="font-family: Calibri;">Rule</span></span><span style="font-family: 宋体;">在程序中的类中定义用户是否有操作某种对象的权限。<br></span></p>
+<p style="margin: 0cm 0cm 0pt 18pt; text-indent: 0cm;" class="MsoListParagraph"><span style="font-family: 宋体;">以上只是分析思路，如果有不对的地方，请大家指正。</span>
+</p><div>
+<p>请尊重作者的劳动，转载请保留链接&nbsp;<a href="http://www.cnblogs.com/yukaizhao/">玉开的技术博客</a> &nbsp; </p>
+</div>
+<p></p>
+  </div>
+
+  
+
+
+  
+  
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type="sina" href="javascript:;" title="分享到新浪微博"><img src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/sina.jpg"></a>
+      <a data-type="qq" href="javascript:;" title="分享到腾讯微博"><img src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="http://qingfeng825.iteye.com/blog/363393" class="next" title="权限管理设计二">权限管理设计二</a>
+      |
+      <a href="http://qingfeng825.iteye.com/blog/356021" class="pre" title="09年03月27日--request 之 getParameterMap">09年03月27日--request 之 getParameterMap</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2009-04-08 10:37</li>
+      <li>浏览 10378</li>
+      <li><a href="http://qingfeng825.iteye.com/blog/363283#comments">评论(4)</a></li>
+      
+      
+            
+      <li class="last"><a href="http://www.iteye.com/wiki/blog/363283" target="_blank" class="more">相关推荐</a></li>
+    </ul>
+  </div>
+
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc2234257">
+  <div class="comment_title">
+    4 楼
+    <a href="http://liuyun885.iteye.com/" target="_blank" title="liuyun885">liuyun885</a>
+    2011-12-08&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">唉，权限，正在被整……</div>
+</div>
+
+<div id="bc2208697">
+  <div class="comment_title">
+    3 楼
+    <a href="http://nikytwo.iteye.com/" target="_blank" title="nikytwo">nikytwo</a>
+    2011-08-03&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">第6没说完的吧？</div>
+</div>
+
+<div id="bc1097706">
+  <div class="comment_title">
+    2 楼
+    <a href="http://spaceflysky-163-com.iteye.com/" target="_blank" title="spacefly">spacefly</a>
+    2009-07-21&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">很不错。。。</div>
+</div>
+
+<div id="bc960386">
+  <div class="comment_title">
+    1 楼
+    <a href="http://lucane.iteye.com/" target="_blank" title="lucane">lucane</a>
+    2009-04-09&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">权限都把人给整疯了。。。</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="http://qingfeng825.iteye.com/login" style="background-color:white;"> <img src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/login_icon.png" style="vertical-align:middle; margin-right: 10px;"></a><a href="http://qingfeng825.iteye.com/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 363283;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', '权限管理设计一');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', '权限管理设计一');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href="http://qingfeng825.iteye.com/"><img alt="qingfeng825的博客" class="logo" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/199bcc03-e6e1-448e-aa2f-f68da6ca1f66.gif" title="qingfeng825的博客: 女程序员的路……"></a></div>
+  <div id="blog_owner_name">qingfeng825</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 289730 次</li>
+              <li>性别: <img alt="Icon_minigender_2" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/icon_minigender_2.gif" title="女"></li>
+              <li>来自: 北京</li>
+              <li><img src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/offline.gif"></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style="font-weight:normal;font-size:12px;padding-left:30px;"><a href="http://qingfeng825.iteye.com/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://dylinshi126.iteye.com/" target="_blank"><img alt="dylinshi126的博客" class="logo" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/user-logo-thumb.gif" title="dylinshi126的博客: "></a></div>
+                <div class="left"><a href="http://dylinshi126.iteye.com/" target="_blank" title="dylinshi126">dylinshi126</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://redhead.iteye.com/" target="_blank"><img alt="Redhead的博客" class="logo" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/user-logo-thumb.gif" title="Redhead的博客: Redhead"></a></div>
+                <div class="left"><a href="http://redhead.iteye.com/" target="_blank" title="Redhead">Redhead</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://zhuyuehua.iteye.com/" target="_blank"><img alt="liulanghan110的博客" class="logo" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/87db2685-b25b-3e69-befc-8712a4f2dd97-thumb.jpg" title="liulanghan110的博客: 水墨江南"></a></div>
+                <div class="left"><a href="http://zhuyuehua.iteye.com/" target="_blank" title="liulanghan110">liulanghan110</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href="http://parrox.iteye.com/" target="_blank"><img alt="parrox的博客" class="logo" src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/user-logo-thumb.gif" title="parrox的博客: "></a></div>
+                <div class="left"><a href="http://parrox.iteye.com/" target="_blank" title="parrox">parrox</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="http://qingfeng825.iteye.com/">全部博客 (230)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/23028">ssh (17)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/23027">webservice (8)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/23029">java基础 (37)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/23467">j2EE方方面面 (17)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/23345">随意涂鸭!呵呵 (2)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/24382">数据库 (22)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/27312">work (4)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/29676">XML与XML解析 (9)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/29680">测试 (1)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/30703">sso (1)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/31384">ldap (6)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/34684">java 模板技术 (4)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/36680">版本管理 (1)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/37985">每日小点滴 (19)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/41318">javascript (25)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/48735">Jakarta Commons (2)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/52246">css (6)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/61429">设计 (3)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/65381">Eclipse插件开发 (3)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/66253">BAP (3)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/103865">web控件 (2)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/104750">java加密解密 (3)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/105769">调优 (6)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/125375">界面技术 (3)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/263435">java多线程 (5)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/218122">互联网 (1)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/268389">日志管理 (4)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/268390">java调度 (3)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/274238">aa (0)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/286647">Python (2)</a></li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/category/309061">mobile (2)</a></li>
+                
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="http://qingfeng825.iteye.com/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="http://qingfeng825.iteye.com/blog/post">我的论坛</a> (47)
+                </li>
+                <li><a href="http://qingfeng825.iteye.com/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="http://qingfeng825.iteye.com/blog/monthblog/2014-05">2014-05</a> (1)</li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/blog/monthblog/2014-04">2014-04</a> (1)</li>
+                
+                  <li><a href="http://qingfeng825.iteye.com/blog/monthblog/2014-03">2014-03</a> (1)</li>
+                
+                <li><a href="http://qingfeng825.iteye.com/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+              <div id="comments_top">
+                <h5>评论排行榜</h5>
+                <ul>
+                  
+                    <li><a href="http://qingfeng825.iteye.com/blog/1913024" title="Python-读取文件:API介绍">Python-读取文件:API介绍</a></li>
+                  
+                </ul>
+              </div>
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href="http://zhuyuehua.iteye.com/" target="_blank" title="liulanghan110">liulanghan110</a>： 
+                  -Xss 别人都是几百K,你搞个45m 。。。<br>
+                  <a href="http://qingfeng825.iteye.com/blog/1873297#bc2349559">jvm调优：能生成的线程数</a>
+                </li>
+                
+                <li>
+                  <a href="http://lucien-zzy.iteye.com/" target="_blank" title="lucien_zzy">lucien_zzy</a>： 
+                  IE下好像不管用，一直返回true<br>
+                  <a href="http://qingfeng825.iteye.com/blog/236791#bc2346682">20080904--判断表单中的元素值是否改变了</a>
+                </li>
+                
+                <li>
+                  <a href="http://lx8598.iteye.com/" target="_blank" title="lx8598">lx8598</a>： 
+                  &lt;%
+	ErpVoucherScope scope =  ...<br>
+                  <a href="http://qingfeng825.iteye.com/blog/461504#bc2346615">java导出txt</a>
+                </li>
+                
+                <li>
+                  <a href="http://lx8598.iteye.com/" target="_blank" title="lx8598">lx8598</a>： 
+                  第一种方法有个问题。
+导出的txt文件里有12行空行。 有啥么 ...<br>
+                  <a href="http://qingfeng825.iteye.com/blog/461504#bc2346614">java导出txt</a>
+                </li>
+                
+                <li>
+                  <a href="http://anderic.iteye.com/" target="_blank" title="anderic">anderic</a>： 
+                  ? 的目的是给于后来的人创建类型的自由度，当你想好了类型后（比 ...<br>
+                  <a href="http://qingfeng825.iteye.com/blog/1184497#bc2346587">java泛型学习三：受限制的通配符以及泛型方法</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br>
+          © 2003-2014 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script><img src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/saved_resource" width="0" height="0">
+
+<script src="./权限管理设计一 - 女程序员的路…… - ITeye技术网站_files/tracking.js" type="text/javascript"></script>
+
+    
+    
+  
+
+</body></html>

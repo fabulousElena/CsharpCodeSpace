@@ -1,0 +1,467 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0062)http://www.cnblogs.com/usharei/archive/2012/04/18/2454967.html -->
+<HTML><HEAD><META content="IE=8.0000" http-equiv="X-UA-Compatible">
+<TITLE>Json.Net系列教程 1.Json.Net介绍及实例 - usharei - 博客园</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type><LINK 
+rel=stylesheet type=text/css 
+href="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/common.css"><LINK 
+id=MainCss rel=stylesheet type=text/css 
+href="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/style.css"><LINK 
+rel=stylesheet type=text/css 
+href="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/common2.css"><LINK 
+rel=stylesheet type=text/css 
+href="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/shStyle.css"><LINK 
+title=RSS rel=alternate type=application/rss+xml 
+href="http://www.cnblogs.com/usharei/rss"><LINK title=RSD rel=EditURI 
+type=application/rsd+xml href="http://www.cnblogs.com/usharei/rsd.xml"><LINK 
+rel=wlwmanifest type=application/wlwmanifest+xml 
+href="http://www.cnblogs.com/usharei/wlwmanifest.xml">
+<SCRIPT type=text/javascript 
+src="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+var currentBlogApp = 'usharei';
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name=GENERATOR content="MSHTML 8.00.7600.17267"></HEAD>
+<BODY><A name=top></A>
+<H1><A id=Header1_HeaderTitle class=headermaintitle 
+href="http://www.cnblogs.com/usharei/">usharei</A></H1>
+<P id=tagline></P>
+<DIV id=rigthtag>&nbsp;</DIV>
+<DIV id=main>
+<DIV class=post>
+<H2><A id=cb_post_title_url 
+href="http://www.cnblogs.com/usharei/archive/2012/04/18/2454967.html">Json.Net系列教程 
+1.Json.Net介绍及实例</A> </H2>
+<DIV id=cnblogs_post_body>
+<P>本系列教程假设读者已经对Json有一定的了解,关于Json在这里不多说.本系列教程希望能对读者开发涉及到Json的.Net项目有一定的帮助.本系列教程是根据官方文档资料和自己项目应用汇总而成.如果觉得本系列对你有用,望多多关注.本人还只是个未毕业的学生,水平有限,尽请指正.</P>
+<DIV 
+style="PADDING-BOTTOM: 10px; BACKGROUND-COLOR: #999999; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"><SPAN 
+style="COLOR: black"><STRONG><SPAN 
+style="FONT-SIZE: 17px">一<SPAN>.Json.Net有什么用?</SPAN></SPAN></STRONG></SPAN></DIV>
+<P>　　Json.Net是一个读写Json效率比较高的.Net框架.Json.Net 使得在.Net环境下使用Json更加简单。通过Linq To 
+JSON可以快速的读写Json，通过JsonSerializer可以序列化你的.Net对象。让你轻松实现.Net中所有类型(对象,基本数据类型等)和Json的转换.</P>
+<P>　　Json.Net目前的版本是4.5&nbsp;<A href="http://json.codeplex.com/" 
+target=_blank>下载</A></P>
+<DIV 
+style="PADDING-BOTTOM: 10px; BACKGROUND-COLOR: #999999; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"><SPAN 
+style="FONT-SIZE: 17px"><STRONG>二.为什么要用Json.Net?</STRONG></SPAN></DIV>
+<P>　　我们知道在.Net中内置了读写Json的对象(<STRONG>DataContractJsonSerializer,<STRONG>JavaScriptSerializer)</STRONG></STRONG>,为什么我们还要用Json.Net呢?<BR>　　功能对比：　</P>
+<TABLE style="MARGIN-LEFT: 23px" class=cnblogs_Highlighter border=0 
+  align=left><TBODY>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">特性</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">Json.Net</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">DataContractJsonSerializer</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">JavaScriptSerializer</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">Json</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">Bson</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">Json Schema</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">.Net 2.0</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">.Net 3.5</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">.Net 4.0</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">Silverlight</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">Windows Phone</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">Windows 8 Metro</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">Linq to Json</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">Indented Json(有换行格式的Json)</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">Json和XML转换</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">序列化ＤataTable和DataSet</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">序列化Entity Framework</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">不支持</SPAN></TD></TR></TBODY></TABLE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;　性能对比:</P>
+<P style="MARGIN-LEFT: 20px"><IMG alt="" 
+src="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/2012041810241371.png"></P>
+<DIV 
+style="PADDING-BOTTOM: 10px; BACKGROUND-COLOR: #999999; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px"><SPAN 
+style="FONT-SIZE: 17px"><STRONG>三.实例</STRONG></SPAN></DIV>
+<P>下面通过一个实例来展示它在项目的应用.下面的例子是通过Ajax和Json显示所有用户的列表信息.<BR>准备: 
+创建一个Web项目,本应用程序是通过VS2010创建的.并添加引用Newtonsoft.Json.dll</P>
+<P>1.首先创建一个<SPAN style="COLOR: #ff99cc">Person</SPAN>对象</P>
+<DIV class=cnblogs_code><PRE>    <SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;summary&gt;</SPAN>
+    <SPAN style="COLOR: #808080">///</SPAN><SPAN style="COLOR: #008000"> 包含用户的基本信息
+    </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;/summary&gt;</SPAN>
+    <SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">class</SPAN><SPAN style="COLOR: #000000"> Person
+    {
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;summary&gt;</SPAN>
+        <SPAN style="COLOR: #808080">///</SPAN><SPAN style="COLOR: #008000"> 获取或设置用户名
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;/summary&gt;</SPAN>
+        <SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">string</SPAN> Name { <SPAN style="COLOR: #0000ff">get</SPAN>; <SPAN style="COLOR: #0000ff">set</SPAN><SPAN style="COLOR: #000000">; }
+
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;summary&gt;</SPAN>
+        <SPAN style="COLOR: #808080">///</SPAN><SPAN style="COLOR: #008000"> 获取或设置用户年龄
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;/summary&gt;</SPAN>
+        <SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">int</SPAN> Age { <SPAN style="COLOR: #0000ff">get</SPAN>; <SPAN style="COLOR: #0000ff">set</SPAN><SPAN style="COLOR: #000000">; }
+
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;summary&gt;</SPAN>
+        <SPAN style="COLOR: #808080">///</SPAN><SPAN style="COLOR: #008000"> 获取或设置用户性别
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;/summary&gt;</SPAN>
+        <SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">string</SPAN> Gender { <SPAN style="COLOR: #0000ff">get</SPAN>; <SPAN style="COLOR: #0000ff">set</SPAN><SPAN style="COLOR: #000000">; }
+
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;summary&gt;</SPAN>
+        <SPAN style="COLOR: #808080">///</SPAN><SPAN style="COLOR: #008000"> 获取或设置用户国籍
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;/summary&gt;</SPAN>
+        <SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">string</SPAN> Country { <SPAN style="COLOR: #0000ff">get</SPAN>; <SPAN style="COLOR: #0000ff">set</SPAN><SPAN style="COLOR: #000000">; }
+
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;summary&gt;</SPAN>
+        <SPAN style="COLOR: #808080">///</SPAN><SPAN style="COLOR: #008000"> 获取或设置用户电子邮箱
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;/summary&gt;</SPAN>
+        <SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">string</SPAN> Email { <SPAN style="COLOR: #0000ff">get</SPAN>; <SPAN style="COLOR: #0000ff">set</SPAN><SPAN style="COLOR: #000000">; }
+    }</SPAN></PRE></DIV>
+<P>2.创建用户操作类<SPAN style="COLOR: #2b91af">PersonRepository<SPAN 
+style="COLOR: #000000">,用来对<SPAN 
+style="COLOR: #ff99cc">Person</SPAN>的操作,本例中仅仅用来获取<SPAN 
+style="COLOR: #ff99cc">Person</SPAN>对象列表</SPAN></SPAN></P>
+<DIV class=cnblogs_code><PRE>    <SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;summary&gt;</SPAN>
+    <SPAN style="COLOR: #808080">///</SPAN><SPAN style="COLOR: #008000"> 用户操作类
+    </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;/summary&gt;</SPAN>
+    <SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">class</SPAN><SPAN style="COLOR: #000000"> PersonRepository
+    {
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;summary&gt;</SPAN>
+        <SPAN style="COLOR: #808080">///</SPAN><SPAN style="COLOR: #008000"> 获取用户列表
+        </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;/summary&gt;</SPAN>
+        <SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;returns&gt;</SPAN><SPAN style="COLOR: #008000">所有用户信息</SPAN><SPAN style="COLOR: #808080">&lt;/returns&gt;</SPAN>
+        <SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">static</SPAN> List&lt;Person&gt;<SPAN style="COLOR: #000000"> GetPersons()
+        {
+            List</SPAN>&lt;Person&gt; ps = <SPAN style="COLOR: #0000ff">new</SPAN> List&lt;Person&gt;<SPAN style="COLOR: #000000">();
+            Person p1 </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN> Person { Name = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Tom</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Age = <SPAN style="COLOR: #800080">32</SPAN>, Country = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">US</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Gender = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Male</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Email = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">tom@gmail.com</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000"> };
+            Person p2 </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN> Person { Name = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Jack</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Age = <SPAN style="COLOR: #800080">23</SPAN>, Country = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">UK</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Gender = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Male</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Email = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">jack@gmail.com</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000"> };
+            Person p3 </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN> Person { Name = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Eden</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Age = <SPAN style="COLOR: #800080">25</SPAN>, Country = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Canada</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Gender = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Female</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Email = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">eden@gmail.com</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000"> };
+            Person p4 </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN> Person { Name = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Li Hua</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Age = <SPAN style="COLOR: #800080">29</SPAN>, Country = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">China</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Gender = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Male</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Email = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">lihui@163.com</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000"> };
+            Person p5 </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN> Person { Name = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Lvo</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Age = <SPAN style="COLOR: #800080">40</SPAN>, Country = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">US</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Gender = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Male</SPAN><SPAN style="COLOR: #800000">"</SPAN>, Email = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">lvo@gmail.com</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000"> };
+            ps.Add(p1);
+            ps.Add(p2);
+            ps.Add(p3);
+            ps.Add(p4);
+            ps.Add(p5);
+            </SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000"> ps;
+        }
+    }</SPAN></PRE></DIV>
+<P>3.添加一个一般处理程序,我将其命名为<SPAN 
+style="COLOR: #ff99cc">PersonHandler.ashx</SPAN>,引入命名空间"<SPAN 
+style="COLOR: #ff99cc">using Newtonsoft.Json</SPAN>",修改<SPAN 
+style="COLOR: #ff99cc">ProcessRequest</SPAN>函数中的代码如下:</P>
+<DIV class=cnblogs_code><PRE>    <SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;summary&gt;</SPAN>
+    <SPAN style="COLOR: #808080">///</SPAN><SPAN style="COLOR: #008000"> 处理用户类的请求
+    </SPAN><SPAN style="COLOR: #808080">///</SPAN> <SPAN style="COLOR: #808080">&lt;/summary&gt;</SPAN>
+    <SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">class</SPAN><SPAN style="COLOR: #000000"> PersonHandler : IHttpHandler
+    {
+
+        </SPAN><SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">void</SPAN><SPAN style="COLOR: #000000"> ProcessRequest(HttpContext context)
+        {
+            List</SPAN>&lt;Person&gt; persons =<SPAN style="COLOR: #000000"> PersonRepository.GetPersons();
+            </SPAN><SPAN style="COLOR: #0000ff">string</SPAN> json =<SPAN style="COLOR: #000000"> JsonConvert.SerializeObject(persons);
+            context.Response.Write(json);
+        }
+
+        </SPAN><SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">bool</SPAN><SPAN style="COLOR: #000000"> IsReusable
+        {
+            </SPAN><SPAN style="COLOR: #0000ff">get</SPAN><SPAN style="COLOR: #000000">
+            {
+                </SPAN><SPAN style="COLOR: #0000ff">return</SPAN> <SPAN style="COLOR: #0000ff">false</SPAN><SPAN style="COLOR: #000000">;
+            }
+        }
+    }</SPAN></PRE></DIV>
+<P>通过Json.Net来序列化对象,可以通过</P>
+<TABLE class=cnblogs_Highlighter border=0 align=left>
+  <TBODY>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px"><SPAN 
+      style="COLOR: #0000ff">string</SPAN> json =<SPAN style="COLOR: #000000"> 
+      JsonConvert.SerializeObject(Object obj);</SPAN></SPAN></TD></TR></TBODY></TABLE>
+<P><SPAN style="COLOR: #000000"></SPAN>&nbsp;</P>
+<P>还可以通过JsonSerializer来实现</P>
+<DIV class=cnblogs_code><PRE>              JsonSerializer serializer = <SPAN style="COLOR: #0000ff">new</SPAN><SPAN style="COLOR: #000000"> JsonSerializer();
+            StringBuilder sb </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN><SPAN style="COLOR: #000000"> StringBuilder();
+            StringWriter sw </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN><SPAN style="COLOR: #000000"> StringWriter(sb);
+            JsonWriter writer </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN><SPAN style="COLOR: #000000"> JsonTextWriter(sw);
+            serializer.Serialize(writer, persons);
+            </SPAN><SPAN style="COLOR: #0000ff">string</SPAN> json = sb.ToString();</PRE></DIV>
+<P>这两种方式有什么联系和区别呢?<BR>实际上,JsonConvert.SerializerObject内部就是通过JsonSerializer来实现的.</P>
+<DIV class=cnblogs_code><PRE><SPAN style="COLOR: #0000ff">public</SPAN> <SPAN style="COLOR: #0000ff">static</SPAN> <SPAN style="COLOR: #0000ff">string</SPAN> SerializeObject(<SPAN style="COLOR: #0000ff">object</SPAN><SPAN style="COLOR: #000000"> value, Formatting formatting, JsonSerializerSettings settings)
+{
+    JsonSerializer jsonSerializer </SPAN>=<SPAN style="COLOR: #000000"> JsonSerializer.Create(settings);
+    StringBuilder sb </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN> StringBuilder(<SPAN style="COLOR: #800080">0x100</SPAN><SPAN style="COLOR: #000000">);
+    StringWriter sw </SPAN>= <SPAN style="COLOR: #0000ff">new</SPAN><SPAN style="COLOR: #000000"> StringWriter(sb, CultureInfo.InvariantCulture);
+    </SPAN><SPAN style="COLOR: #0000ff">using</SPAN> (JsonTextWriter jsonWriter = <SPAN style="COLOR: #0000ff">new</SPAN><SPAN style="COLOR: #000000"> JsonTextWriter(sw))
+    {
+        jsonWriter.Formatting </SPAN>=<SPAN style="COLOR: #000000"> formatting;
+        jsonSerializer.Serialize(jsonWriter, value);
+    }
+    </SPAN><SPAN style="COLOR: #0000ff">return</SPAN><SPAN style="COLOR: #000000"> sw.ToString();
+}
+
+ </SPAN></PRE></DIV>
+<P>区别在于JsonSerializer序列化时,你可以选择用JsonWriter也可以选择TextWriter.而JsonConvert只是默认使用JsonTextWriter.&nbsp;</P>
+<P>4.添加一个Html网页,网页的内容仅仅用来显示用户的基本信息</P>
+<DIV class=cnblogs_code><PRE>    &lt;div&gt;
+        &lt;table border=<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">1</SPAN><SPAN style="COLOR: #800000">"</SPAN>&gt;
+            &lt;thead&gt;
+                &lt;tr&gt;
+                 &lt;td&gt;<SPAN style="COLOR: #000000">
+                        用户名
+                    </SPAN>&lt;/td&gt;
+                 &lt;td&gt;<SPAN style="COLOR: #000000">
+                        年龄
+                    </SPAN>&lt;/td&gt;
+                 &lt;td&gt;<SPAN style="COLOR: #000000">
+                        性别
+                    </SPAN>&lt;/td&gt;
+                 &lt;td&gt;<SPAN style="COLOR: #000000">
+                        国籍
+                    </SPAN>&lt;/td&gt;
+                 &lt;td&gt;<SPAN style="COLOR: #000000">
+                        电子邮箱
+                    </SPAN>&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody id=<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">personBody</SPAN><SPAN style="COLOR: #800000">"</SPAN>&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;</PRE></DIV>
+<P>5.添加<SPAN style="COLOR: #ff99cc">javascript</SPAN>代码,实现<SPAN 
+style="COLOR: #ff99cc">Ajax</SPAN>请求.首先要在头文件中引入<SPAN 
+style="COLOR: #ff99cc">JQuery</SPAN></P>
+<DIV class=cnblogs_code><PRE>    &lt;script src=<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">Scripts/jquery-1.4.1.min.js</SPAN><SPAN style="COLOR: #800000">"</SPAN> type=<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">text/javascript</SPAN><SPAN style="COLOR: #800000">"</SPAN>&gt;&lt;/script&gt;
+    &lt;script type=<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">text/javascript</SPAN><SPAN style="COLOR: #800000">"</SPAN>&gt;<SPAN style="COLOR: #000000">
+        $(function () {
+            $.getJSON(</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">PersonHandler.ashx</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000">, function (data, status) {
+                </SPAN><SPAN style="COLOR: #0000ff">if</SPAN> (status == <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">success</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000">) {
+                    $.each(data, function (index, item) {
+                        </SPAN><SPAN style="COLOR: #0000ff">var</SPAN> beginTag = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">&lt;tr&gt;&lt;td&gt;</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000">;
+                        </SPAN><SPAN style="COLOR: #0000ff">var</SPAN> endTag = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">&lt;/td&gt;&lt;/tr&gt;</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000">;
+                        </SPAN><SPAN style="COLOR: #0000ff">var</SPAN> tag = <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">&lt;/td&gt;&lt;td&gt;</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000">;
+                        $(</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">#personBody</SPAN><SPAN style="COLOR: #800000">"</SPAN>).append($(beginTag + item.Name + tag + item.Age + tag + item.Gender +<SPAN style="COLOR: #000000"> tag
+                        </SPAN>+ item.Country + tag + item.Email +<SPAN style="COLOR: #000000"> endTag));
+                    });
+                }
+            });
+        });
+    </SPAN>&lt;/script&gt;</PRE></DIV>
+<P>$.getJSON可以进行异步Ajax请求,并可以直接返回JSON对象</P>
+<TABLE class=cnblogs_Highlighter border=0 align=left>
+  <TBODY>
+  <TR>
+    <TD>&nbsp; <SPAN 
+      style="FONT-SIZE: 15px">jQuery.getJSON(<EM>url</EM>,<EM>data</EM>,<EM>success(data,status,xhr)</EM>)&nbsp;&nbsp;</SPAN>&nbsp;</TD></TR></TBODY></TABLE>
+<P>&nbsp;</P>
+<P>参数说明</P>
+<TABLE class=cnblogs_Highlighter border=0 align=left>
+  <TBODY>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px">参数</SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">描述</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px"><EM>url</EM></SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">必需。规定将请求发送的哪个 URL。</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN style="FONT-SIZE: 15px"><EM>data</EM></SPAN></TD>
+    <TD><SPAN style="FONT-SIZE: 15px">可选。规定连同请求发送到服务器的数据。</SPAN></TD></TR>
+  <TR>
+    <TD><SPAN 
+    style="FONT-SIZE: 15px"><EM>success(data,status,xhr)</EM></SPAN></TD>
+    <TD>
+      <P><SPAN style="FONT-SIZE: 15px">可选。规定当请求成功时运行的函数。</SPAN></P>
+      <P><SPAN style="FONT-SIZE: 15px">额外的参数：</SPAN></P>
+      <UL class=listintable>
+        <LI><SPAN style="FONT-SIZE: 15px"><EM>response</EM> - 
+        包含来自请求的结果数据</SPAN></LI>
+        <LI><SPAN style="FONT-SIZE: 15px"><EM>status</EM> - 包含请求的状态</SPAN></LI>
+        <LI><SPAN style="FONT-SIZE: 15px"><EM>xhr</EM> - 包含 XMLHttpRequest 
+        对象</SPAN></LI></UL></TD></TR></TBODY></TABLE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>运行效果:</P>
+<P><IMG alt="" 
+src="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/2012041815230618.jpg"></P>
+<P>&nbsp;</P></DIV>
+<DIV id=MySignature></DIV>
+<SCRIPT type=text/javascript>
+var isLogined = false;
+var cb_blogId = 113048;
+var cb_entryId = 2454967;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "48ce430f-1f55-e111-aa3f-842b2b196315";
+var cb_entryCreatedDate = '2012/4/18 16:34:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV class=clear></DIV>
+<DIV id=blog_post_info_block>
+<DIV id=blog_post_info></DIV>
+<DIV class=clear></DIV>
+<DIV id=post_next_prev></DIV></DIV>
+<SCRIPT type=text/javascript>
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {  
+        loadViewCount(cb_entryId);
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+
+<P class=postfoot>posted on <SPAN id=post-date>2012-04-18 16:34</SPAN> <A 
+href="http://www.cnblogs.com/usharei/">usharei</A> 阅读(<SPAN 
+id=post_view_count>...</SPAN>) 评论(<SPAN id=post_comment_count>...</SPAN>) <A 
+href="http://www.cnblogs.com/usharei/admin/EditPosts.aspx?postid=2454967" 
+rel=nofollow>编辑</A> <A onclick="AddToWz(2454967);return false;" 
+href="http://www.cnblogs.com/usharei/archive/2012/04/18/2454967.html#">收藏</A> 
+</P></DIV>
+<SCRIPT type=text/javascript 
+src="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/2454967"></SCRIPT>
+
+<DIV id=blog-comments-placeholder></DIV>
+<SCRIPT type=text/javascript>var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+
+<DIV id=comment_form class=commentform>
+<DIV id=divCommentShow></DIV>
+<DIV id=comment_nav><SPAN id=span_refresh_tips></SPAN><A id=lnk_RefreshComments 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" 
+href="http://www.cnblogs.com/usharei/archive/2012/04/18/2454967.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/usharei/archive/2012/04/18/2454967.html#top">返回顶部</A></DIV>
+<DIV id=comment_form_container></DIV>
+<SCRIPT type=text/javascript>
+    if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id=ad_text_under_commentbox class=ad_text_commentbox></DIV>
+<DIV id=site_nav_under><A title=程序员的网上家园 href="http://www.cnblogs.com/" 
+target=_blank>博客园首页</A><A title=程序员问答社区 href="http://q.cnblogs.com/" 
+target=_blank>博问</A><A title=IT新闻 href="http://news.cnblogs.com/" 
+target=_blank>新闻</A><A href="http://home.cnblogs.com/ing/" 
+target=_blank>闪存</A><A href="http://job.cnblogs.com/" target=_blank>程序员招聘</A><A 
+href="http://kb.cnblogs.com/" target=_blank>知识库</A></DIV>
+<DIV id=ad_under_post_holder></DIV>
+<DIV id=HistoryToday class=c_ad_block></DIV></DIV></DIV>
+<DIV id=rightmenu>
+<H3>导航</H3>
+<UL>
+  <LI><A id=MyLinks1_HomeLink href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A id=MyLinks1_MyHomeLink 
+  href="http://www.cnblogs.com/usharei/">首页</A></LI>
+  <LI><A id=MyLinks1_NewPostLink 
+  href="http://www.cnblogs.com/usharei/admin/EditPosts.aspx?opt=1" 
+  rel=nofollow>新随笔</A></LI>
+  <LI><A accessKey=9 id=MyLinks1_ContactLink 
+  href="http://space.cnblogs.com/msg/send/usharei" rel=nofollow>联系</A></LI>
+  <LI><A id=MyLinks1_Syndication 
+  href="http://www.cnblogs.com/usharei/rss">订阅</A><A id=MyLinks1_XMLLink 
+  href="http://www.cnblogs.com/usharei/rss"><IMG alt=订阅 
+  src="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/xml.gif"></A> 
+  </LI>
+  <LI><A id=MyLinks1_Admin 
+  href="http://www.cnblogs.com/usharei/admin/EditPosts.aspx" 
+  rel=nofollow>管理</A></LI></UL>
+<H3>统计</H3>
+<UL>
+  <LI>随笔 - 7 </LI>
+  <LI>文章 - 0 </LI>
+  <LI>评论 - 47 </LI>
+  <LI>引用 - 0 </LI></UL>
+<DIV class=newsItem>
+<H3>公告</H3>
+<DIV id=blog-news></DIV></DIV>
+<DIV id=blog-sidecolumn></DIV></DIV>
+<P id=footer>Powered by: <BR><A style="FONT-FAMILY: Verdana; FONT-SIZE: 12px" 
+id=Footer1_Hyperlink3 href="http://www.cnblogs.com/" name=Hyperlink1>博客园</A> 
+<BR>Copyright © usharei </P>
+<SCRIPT type=text/javascript 
+src="Json_Net系列教程%201_Json_Net介绍及实例%20-%20usharei%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

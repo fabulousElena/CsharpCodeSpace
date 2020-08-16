@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- saved from url=(0078)http://blog.csdn.net/common/ad.html?t=12&containerId=ad_commend&frmId=ad_frm_1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>CSDN Ad</title>
+    <style type="text/css">
+        body { margin:0px; padding:0px;}
+    </style>
+     <script src="jquery.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="div1"><style type="text/css">
+ul { margin:0px; padding:0 4px 0 0; }
+ul, x:-moz-any-link, x:default { width:90%; }
+ul li { padding:3px 0px;}
+a { font-size:12px; text-decoration:none; color:#006699; }
+a:hover { color:#000; }
+</style>
+
+<ul>
+
+<li><a href="http://blog.csdn.net/hitwhylz/article/details/37825177" target="_blank">* 美女图片采集器 (源码+解析)</a></li>
+
+<li><a href="http://blog.csdn.net/bendanban/article/details/37830495" target="_blank">* C/C++与Matlab混合编程初探</a></li>
+
+<li><a href="http://blog.csdn.net/foruok/article/details/37740583" target="_blank">* Qt Quick 图像处理实例之美图秀秀（附源码下载）</a></li>
+
+<li><a href="http://blog.csdn.net/star530/article/details/37834689" target="_blank">* Cocos2dx 3.0 过渡篇（三十一）ValueVector和Vector不得不说的故事</a></li>
+
+<li><a href="http://blog.csdn.net/dawanganban/article/details/37740755" target="_blank">* 是男人就下100层【第四层】——Crazy贪吃蛇（3）</a></li>
+
+<li><a href="http://blog.csdn.net/tonny_guan/article/details/37743007" target="_blank">* Cocos2d-x开发实例介绍特效演示</a></li>
+</ul></div>
+<script type="text/javascript">
+    window.onload = function () {
+        if (document.domain != 'blog.csdn.net') {
+            document.domain = "csdn.net";
+        }
+        //这种给广告区域赋值的方式，对于有些JS广告不能完美的显示
+        //top.document.getElementById('ad_commend').innerHTML = document.getElementById('div1').innerHTML;
+
+        var h = document.body.offsetHeight + 2;
+        setTimeout(function () {
+            if (h > 800) h = document.getElementById('div1').offsetHeight + 4;
+            try { top.document.getElementById('ad_frm_1').style.height = h + 'px'; }
+            catch (err) { }
+        }, 100);
+    };
+    $(function() {
+        $("#div1 a").click(function() {
+            top._gaq.push(['_trackEvent', 'function', 'onclick', 'blog_articles_tuijianwenzhang']);
+        });
+    });
+</script>
+
+
+</body></html>

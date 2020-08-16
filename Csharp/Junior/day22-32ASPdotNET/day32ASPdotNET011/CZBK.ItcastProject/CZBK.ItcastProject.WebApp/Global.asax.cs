@@ -50,9 +50,9 @@ namespace CZBK.ItcastProject.WebApp
         protected void Application_Error(object sender, EventArgs e)
         {
             //Exception ex = HttpContext.Current.Server.GetLastError();
-            ///ex.Message
-            ///写到日志中。
-                //Log4Net
+            //ex.Message
+            //写到日志中。
+            //Log4Net
         }
         /// <summary>
         /// 会话结束

@@ -1,0 +1,763 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0063)http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" type="text/javascript" src="./权限设计 - 小风 - 博客园_files/gpt.js"></script>
+
+<title>权限设计 - 小风 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./权限设计 - 小风 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./权限设计 - 小风 - 博客园_files/style.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/couhujia/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/couhujia/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/couhujia/wlwmanifest.xml">
+<script src="./权限设计 - 小风 - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'couhujia', cb_enable_mathjax=false;</script>
+<script src="./权限设计 - 小风 - 博客园_files/blog-common.js" type="text/javascript"></script>
+<script async="" type="text/javascript" src="./权限设计 - 小风 - 博客园_files/pubads_impl_40.js"></script><script type="text/javascript" src="./权限设计 - 小风 - 博客园_files/osd.js"></script></head>
+<body>
+<a name="top"></a>
+<!--PageBeginHtml Block Begin-->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff03923abada8ac4917edee2c9d817a71' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./权限设计 - 小风 - 博客园_files/h.js" type="text/javascript"></script>
+<!--PageBeginHtml Block End-->
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/couhujia/">清风飘过</a></div>
+<div class="subtitle">专注C++
+静下心慢慢做</div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/couhujia/">首页</a></li>
+<li id="nav_q"><a class="menu" href="http://q.cnblogs.com/">博问</a></li>
+<li id="nav_ing"><a class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+<li id="nav_newpost"><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/%e5%b0%8f%e9%a3%8e">联系</a></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/couhujia/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/couhujia/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-83&nbsp;
+文章-0&nbsp;
+评论-542&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="./权限设计 - 小风 - 博客园_files/权限设计 - 小风 - 博客园.htm">权限设计</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>　　笔者不才看了园子里面很多园友写关于权限设计这块内容，那么笔者也在添一笔。这个是笔者在上完软件工程课程后，上交的一篇笔者论文，这里分享给大家交流，当然笔者经验尚浅，若内容有误，请大家指点出来，若大家有什么更好的想法，请提出来共同学习。</p>
+<h2>一．引言</h2>
+<p>　　在软件开发中， 从操作系统到一个仅仅能够发布文章的网站，都要涉及到权限的管理。在Windows 操作系统中，存在用户、组的概念。当一个用户从属于Administrators 组的时候，他就能够进行操作系统的设置与修改以及安装应用程序、修改注册表等，而当一个用户从属于Guest 组的时候，就只能浏览被允许浏览的文件和运行系统管理员允许其他运行的软件。权限系统的设计在软件中普遍存在， 但现阶段世界中并没有十分完善的权限设计方法， 只有针对具体的软件需求设计出适合的权限系统。像IBM 等世界计算机巨头都在进行权限设计方面的理论研究， 虽有一些研究成果面向大型软件公司出售，但价格十分昂贵，一般消费者难以承受。本文结合一些作者自身软件开发经验总结出一种相对比较通用点的权限设计方法，它能解决相当数量软件系统的权限设计问题。</p>
+<h2>二．&nbsp;权限介绍</h2>
+<p>　　其实由于权限这个设计真正做到绝对通用，还是比较困难的，这个工作量很大可能需要一个团队或者一个公司来设计完成。另外一个原因不同的客户总是会提出他们自己特殊的权限需求。那么作为软件设计者，又会想法设法去完成这个需求，然而可能对于另外一个客户，又提出了一个与前者相悖的需求，那么就要去掉先前的工作，又重新设计。个人理解通用权限概括为最基本的权限，满足客户最基本的权限需求，但是也是随时随地的可以扩展。个人认为权限就是一个不断发展的过程，就像软件发展一样，是一个积累，无止境的。</p>
+<p><b>1.</b><b>权限的需求</b><b></b></p>
+<p>　　这里将权限的需求做一个最基本的归纳:对资源有浏览和数据的管理。数据管理分：增加数据，删除数据，修改数据，查询数据。</p>
+<p>每个软件都应该有这种最基本的需求。比如管理员能对数据进行增，删，查，改操作，对资源可以任意的浏览，而普通用户只能浏览限制资源，查询数据等功能。这些都包含在基本的需求当中。当然如果特殊的用户可以下载数据等这些特殊操作，这些就不在本文考虑范围之内，这都是一些可扩展工作。</p>
+<p><b>2.</b><b>用户</b><b></b></p>
+<p>　　用户就是软件的使用者，凡是使用到该软件的都可以定义成用户。它应该有一些基本信息。</p>
+<p><b>3.</b><b>角色</b><b></b></p>
+<p>　　角色就是软件使用者的身份，就像一个政府机构一样，什么样的身份，就有什么样的权利，而这里角色也就代表这用户的权限。</p>
+<p><b>4.</b><b>权限</b><b></b></p>
+<p>　　权限就是对某一个资源是否有浏览的权利，或者对某一个数据是否有操作的权利。</p>
+<p><b>5.</b><b>用户组</b><b></b></p>
+<p>　　本文中用户组就是为角色的大体类，就像社会中人的分类一样，有公务员，工人，农民，对用户更粗像的分类。除非一个系统角色很多，否则一般不会用到用户组。</p>
+<h2>三.权限设计</h2>
+<p>　　一般容易想得到的权限设计模式通常有两种</p>
+<p><strong>　　第一种基于角色的权限设计</strong></p>
+<p>　　这种方案是最常见也是比较简单的方案，不过通常有这种设计已经够了，所以微软就设计出这种方案的通用做法，可以看到微软在asp.net2.0中，可以直接创建用户角色及用户，它不对每一个数据操作进行权限控制，而是对角色资源访问进行控制。可以指定那些角色不能访问哪些资源等，而这些权限控制配置在web.config中。可以看到这种设计方案肯定不是通用的，因为需求完全可能提出对数据的控制。例如:销售人员不能增加商品，但是可以查询修改数据。</p>
+<p>　　用户可以有多个角色，一个角色对应着多个用户，所以用户和角色之间对应关系式多对多的关系。以下是pd的CDM图</p>
+<p><img src="./权限设计 - 小风 - 博客园_files/2010091222121242.jpg"></p>
+<p><strong>　　第二种就是基于操作的权限设计</strong></p>
+<p>　　这种模式下每一个操作都在数据库中有记录，用户是否拥有该操作的权限也在数据库中有记录。但是这样存在一个问题：存放这个权限记录的数据库表数据量比较大，对用户每个操作都要查询数据库，这样效率很低。</p>
+<p>　　一个用户可以拥有多种权限，一种权限也对应多个用户，所以权限与数据库之间关系式多对多的关系。</p>
+<p><img src="./权限设计 - 小风 - 博客园_files/2010091222220816.jpg"></p>
+<p>　　<strong>本文权限设计</strong></p>
+<p>　　那么作者就集合前两种的优点，创建一种通用权限，一个用户可以拥有多个角色，一个角色可以拥有多个用户，它们之间对应关系是多对多的关系，一个角色可以拥有多个用户组，用户组的权限被角色所继承。一个用户组都有多个角色，角色和用户组的之间对应关系也是多对多的关系。首先用户组包含多个权限，不同用户组包含不同权限，用户组合权限之间关系也是多对多关系，用户组的权限的关系被用户组所属的角色所继承，那么角色与权限之间的关系也是多对多的关系。这样做数据库记录表数据量也不会很大。如果这里用户群体分类很少的话，可以将用户组去掉。</p>
+<p><img src="./权限设计 - 小风 - 博客园_files/2010091222241156.jpg"></p>
+<p><b>逻辑流程</b></p>
+<p><b></b>&nbsp;<img src="./权限设计 - 小风 - 博客园_files/2010091222262764.jpg"></p>
+<p>　　权限作用的实现举例，一个用户是新闻发布者的角色，登录系统，系统会根据他账号读取他的信息，查询出他所拥有的角色，并查询角色所拥有的权限。那么这里新闻发布着角色就会查询到的权利就有新闻浏览，新闻添加，新闻查询，新闻修改。开始查询该角色是否有权利浏览新闻发布这个页面，如果没有则直接告之没有浏览权利，如果有生成该页面给其浏览，等到用户发布一条新闻时就查询用户角色是否有含有权限内容为“新闻添加”。有该权限就执行该操作，如果没有就提示该用户没有新闻发布的权限。那么查询，修改，删除都是跟增加一条新闻一样的，检查是否有权限，在看是否执行</p>
+<p>权限存储形式:</p>
+<table cellpadding="0" cellspacing="0" border="1">
+<tbody>
+<tr>
+<td width="189" valign="top">
+<p align="center">权限ID</p>
+</td>
+<td width="189" valign="top">
+<p align="center">权限名称</p>
+</td>
+<td width="189" valign="top">
+<p align="center">权限内容</p>
+</td>
+</tr>
+<tr>
+<td width="189" valign="top">
+<p align="center">1</p>
+</td>
+<td width="189" valign="top">
+<p align="center">新闻浏览</p>
+</td>
+<td width="189" valign="top">
+<p align="center">新闻浏览</p>
+</td>
+</tr>
+<tr>
+<td width="189" valign="top">
+<p align="center">2</p>
+</td>
+<td width="189" valign="top">
+<p align="center">新闻添加</p>
+</td>
+<td width="189" valign="top">
+<p align="center">新闻添加</p>
+</td>
+</tr>
+<tr>
+<td width="189" valign="top">
+<p align="center">…</p>
+</td>
+<td width="189" valign="top">
+<p align="center">…</p>
+</td>
+<td width="189" valign="top">
+<p align="center">…</p>
+</td>
+</tr>
+<tr>
+<td width="189" valign="top">
+<p align="center">…</p>
+</td>
+<td width="189" valign="top">
+<p align="center">…</p>
+</td>
+<td width="189" valign="top">
+<p align="center">…</p>
+</td>
+</tr>
+<tr>
+<td width="189" valign="top">
+<p align="center">50</p>
+</td>
+<td width="189" valign="top">
+<p align="center">用户添加</p>
+</td>
+<td width="189" valign="top">
+<p align="center">用户添加</p>
+</td>
+</tr>
+<tr>
+<td width="189" valign="top">
+<p align="center">51</p>
+</td>
+<td width="189" valign="top">
+<p align="center">用户删除</p>
+</td>
+<td width="189" valign="top">
+<p align="center">用户删除</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h2>四.权限开发</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 怎么开用权限，就是如何将用户数据，角色数据，用户组数据，以及权限数据添加到数据库中去。一般做法是做个相应的管理界面，由用户输入。权限数据到底包括什么，不做太复杂的考虑，就是一般最基础的权限要求，对一个资源是否有浏览权限以及对数据的操作权限，那么权限可以简单的归纳为：可浏览，增，删，查，改。那么通用的权限，那么只要开发界面管理用户，角色，以及用户组。那么对应的三个界面：用户管理界面，角色管理界面，用户组管理界面。</p>
+<p><img src="./权限设计 - 小风 - 博客园_files/2010091222290443.jpg"></p>
+<p>所有界面都应该有数据查看以及对数据的增加，修改，删除，查询等操作。具体界面看图即可。</p>
+<p>这里个人使用一个超级管理员的角色，具有角色管理页面的浏览权利，以及增加，删除，修改，查询权利。</p>
+<p>操作增加一个角色，打开页面点击增加，输入相应的角色名称，选择管理员用户组，此时会自动将新闻这一排权限加上，然后点击添加，就会按上述的存储方式存储数据。</p>
+<p><img src="./权限设计 - 小风 - 博客园_files/2010091222300757.jpg"></p>
+<p>操作删除一个角色，打开页面选中一个角色，删除按钮变为可以点击状态，然后点击删除即可删除。</p>
+<p>操作修改一个角色，打开页面选中一个角色，修改按钮变为可以点击状态，然后点击修改即可修改</p>
+<p>操作查询数据，打开页面点击查询，查询区域就显示出来，然后输入关键字即可查询了。</p>
+<p>&nbsp;<img src="./权限设计 - 小风 - 博客园_files/2010091222304415.jpg"></p>
+<h2>五.总结</h2>
+<p>　　权限是软件中必须要有的，如果没有权限，那么软件将会乱套，谁都可以随便操作数据，浏览资源。权限既然是开发软件必须的，我们可以从每次开发当中吸取通用的一部分，这样下次开发一个新软件时，只用稍加修改，即可满足要求。</p>
+<p>　　这里没有绝对通用的权限，只有基础权限，可以在上面进行稍加修改就可以达到客户提出的权限需求，其实每个公司，每个团队，甚至个人都可能会有自己的一套通用权限。而这些都是经验的积累或者是开发的总结。有了一个通用权限以后，大家开发的周期可以减少许多，也提高了开发软件的效率，所以拥有一个自己通用权限对软件的开发，会有不少的提高。</p>
+<p>&nbsp;&nbsp;&nbsp; 另外一个是自己项目经验太少，以及接触到权限需求也很少，无法再短时间内设计出一个比较完整大型的通用权限系统，只能设计出比较基本的通用权限系统。也明显感觉到权限在不断的发展，客户对权限的需求在不断的提高，权限也要求分的越来越细。</p>
+<h3>六.展望</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 还需要不断的学习，以及项目的开发，了解更多的权限需求，制定更详细的权限操作，例如以后可以实现复制粘贴，上传下载，导入/导出Excel表格，备份数据等等更相详细的权限操作。设计出更合理的权限数据库。</p>
+<p>&nbsp;</p>
+<p>参考文献:1.赵玉开-<a href="http://www.cnblogs.com/yukaizhao/archive/2007/04/15/user_role_action_permission.html" class="postTitle2" id="ctl04_TitleUrl">应用程序权限设计</a></p>
+<p>　　　　 2.<a href="http://www.cnblogs.com/jyk/" class="headermaintitle" id="Header1_HeaderTitle">金色海洋</a>博客权限的思想</p></div><div id="MySignature"><br><br><p><span style="color: red"><a href="http://www.cnblogs.com/couhujia/">知识是一点一点积累起来的&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--小风</a></span></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<!-- cnblogs 336 280 --><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-2876867208357149" data-ad-slot="5427941423" data-adsbygoogle-status="done"><ins style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe width="336" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;"></iframe></ins></ins></ins></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="blog_post_info"><div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/couhujia/category/210286.html">asp.net</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/couhujia/tag/%E6%9D%83%E9%99%90/">权限</a></div>
+<div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(cb_entryId,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/%e5%b0%8f%e9%a3%8e" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./权限设计 - 小风 - 博客园_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="digg_block">
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/couhujia/" target="_blank"><img src="./权限设计 - 小风 - 博客园_files/u32873.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/couhujia/">小风</a><br>
+<a href="http://home.cnblogs.com/u/couhujia/followees">关注 - 5</a><br>
+<a href="http://home.cnblogs.com/u/couhujia/followers">粉丝 - 113</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+<a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+	<div class="diggit" onclick="votePost(cb_entryId,&#39;Digg&#39;)"> 
+		<span class="diggnum" id="digg_count">7</span>
+	</div>
+	<div class="buryit" onclick="votePost(cb_entryId,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/03/1816440.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/couhujia/archive/2010/09/03/1816440.html" title="发布于2010-09-03 08:27">Asp.net中文件的压缩与解压</a><br><a href="http://www.cnblogs.com/couhujia/archive/2010/11/17/1878840.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/couhujia/archive/2010/11/17/1878840.html" title="发布于2010-11-17 08:32">ASP.NET调用.sql文件</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2010-09-13 08:36</span> <a href="http://www.cnblogs.com/couhujia/">小风</a> 阅读(<span id="post_view_count">13192</span>) 评论(<span id="post_comment_count">16</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=1824605" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#" onclick="AddToWz(1824605);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=36433,cb_entryId=1824605,cb_blogApp=currentBlogApp,cb_blogUserGuid='cb37420b-63cf-dd11-9e4d-001cf0cd104b',cb_entryCreatedDate='2010/9/13 8:36:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+<a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915080" class="layer">#1楼</a><a name="1915080" id="comment_anchor_1915080"></a>  <span class="comment_date">2010-09-13 09:04</span> <a id="a_comment_author_1915080" href="http://www.cnblogs.com/Richet/" target="_blank">Richet</a> <a href="http://space.cnblogs.com/msg/send/Richet" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915080" class="blog_comment_body">权限应该细分一下，控制到资源比较合理，<br>比如控制某一个控件的显示，某一个模块的权限等等<br><br>可以参考金色海洋的一些文章</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915080,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915080,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1915080_avatar" style="display:none;">http://pic.cnitblog.com/face/u23638.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915139" class="layer">#2楼</a><a name="1915139" id="comment_anchor_1915139"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2010-09-13 09:58</span> <a id="a_comment_author_1915139" href="http://www.cnblogs.com/couhujia/" target="_blank">小风</a> <a href="http://space.cnblogs.com/msg/send/%e5%b0%8f%e9%a3%8e" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915139" class="blog_comment_body"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915080" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1915080);">@</a>Richet<br>呵呵，恩，我下一步是准备看怎么将权限细分比较合适</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915139,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915139,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1915139_avatar" style="display:none;">http://pic.cnitblog.com/face/u32873.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915153" class="layer">#3楼</a><a name="1915153" id="comment_anchor_1915153"></a>  <span class="comment_date">2010-09-13 10:14</span> <a id="a_comment_author_1915153" href="http://www.cnblogs.com/jirigala/" target="_blank">吉日嘎拉 不仅权限管理</a> <a href="http://space.cnblogs.com/msg/send/%e5%90%89%e6%97%a5%e5%98%8e%e6%8b%89+%e4%b8%8d%e4%bb%85%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915153" class="blog_comment_body">写得不错，推荐一下</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915153,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915153,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1915153_avatar" style="display:none;">http://pic.cnitblog.com/face/u35584.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915333" class="layer">#4楼</a><a name="1915333" id="comment_anchor_1915333"></a>  <span class="comment_date">2010-09-13 13:04</span> <a id="a_comment_author_1915333" href="http://www.cnblogs.com/jyk/" target="_blank">金色海洋（jyk）</a> <a href="http://space.cnblogs.com/msg/send/%e9%87%91%e8%89%b2%e6%b5%b7%e6%b4%8b%ef%bc%88jyk%ef%bc%89" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915333" class="blog_comment_body">谢谢，把我的博客带上了。<br><br>我觉得还可以更多的参考一下的。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915333,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915333,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1915333_avatar" style="display:none;">http://pic.cnitblog.com/face/u17148.jpg?id=03051207</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915410" class="layer">#5楼</a><a name="1915410" id="comment_anchor_1915410"></a>  <span class="comment_date">2010-09-13 14:48</span> <a id="a_comment_author_1915410" href="http://www.cnblogs.com/chenlulouis/" target="_blank">chenlulouis</a> <a href="http://space.cnblogs.com/msg/send/chenlulouis" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915410" class="blog_comment_body">楼主分析的很好，但是少了2张表！<br>这里我补充下，权限设计一般分2种<br>1.角色控制（粗粒度）<br>2.权限点控制，也就是你说的操作控制（细粒度）<br><br>楼主的权限表其实是一张关系表，  资源表 和 操作表 是多对多关系，它们的关系表就叫权限表</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915410,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915410,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1915410_avatar" style="display:none;">http://pic.cnitblog.com/face/u35057.jpg?id=09111526</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915411" class="layer">#6楼</a><a name="1915411" id="comment_anchor_1915411"></a>  <span class="comment_date">2010-09-13 14:48</span> <a id="a_comment_author_1915411" href="http://www.cnblogs.com/neverlost/" target="_blank">neverlost</a> <a href="http://space.cnblogs.com/msg/send/neverlost" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915411" class="blog_comment_body">有一些应用场景是把用户也就是具体的人在不同的组织机构下具有不同的身份,当然这个就要扩展你现在的设计了,把人关联上去把组织机构关联上去.</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915411,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915411,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915566" class="layer">#7楼</a><a name="1915566" id="comment_anchor_1915566"></a>  <span class="comment_date">2010-09-13 17:33</span> <a id="a_comment_author_1915566" href="http://www.cnblogs.com/tzy080112/" target="_blank">大侠酷裤马路</a> <a href="http://space.cnblogs.com/msg/send/%e5%a4%a7%e4%be%a0%e9%85%b7%e8%a3%a4%e9%a9%ac%e8%b7%af" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915566" class="blog_comment_body">恩，和我的类似，几乎一样，不过我是把角色和用户组看成一个东西来处理，但是这种方法还是有个缺点，如果某个页面没有添加 删除 修改这样的权限点，在权限设置的时候却还是现实出来了这些权限点编辑，不太好，可以改进</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915566,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915566,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1915566_avatar" style="display:none;">http://pic.cnitblog.com/face/43724/20131021223602.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915609" class="layer">#8楼</a><a name="1915609" id="comment_anchor_1915609"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2010-09-13 18:32</span> <a id="a_comment_author_1915609" href="http://www.cnblogs.com/couhujia/" target="_blank">小风</a> <a href="http://space.cnblogs.com/msg/send/%e5%b0%8f%e9%a3%8e" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915609" class="blog_comment_body"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915566" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1915566);">@</a>大侠酷裤马路<br>恩，我就是想有个自己的权限，然后不断就完善</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915609,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915609,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1915609_avatar" style="display:none;">http://pic.cnitblog.com/face/u32873.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915610" class="layer">#9楼</a><a name="1915610" id="comment_anchor_1915610"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2010-09-13 18:33</span> <a id="a_comment_author_1915610" href="http://www.cnblogs.com/couhujia/" target="_blank">小风</a> <a href="http://space.cnblogs.com/msg/send/%e5%b0%8f%e9%a3%8e" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915610" class="blog_comment_body"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915411" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1915411);">@</a>neverlost<br>对，现在嘛就弄个基础的，以后不断扩展</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915610,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915610,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1915610_avatar" style="display:none;">http://pic.cnitblog.com/face/u32873.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915695" class="layer">#10楼</a><a name="1915695" id="comment_anchor_1915695"></a>  <span class="comment_date">2010-09-13 21:50</span> <a id="a_comment_author_1915695" href="http://home.cnblogs.com/u/74430/" target="_blank">蒙奇Boy</a> <a href="http://space.cnblogs.com/msg/send/%e8%92%99%e5%a5%87Boy" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915695" class="blog_comment_body">帅哥，能发个demo我邮箱吗？871167868@qq.com</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915695,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915695,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915700" class="layer">#11楼</a><a name="1915700" id="comment_anchor_1915700"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2010-09-13 21:57</span> <a id="a_comment_author_1915700" href="http://www.cnblogs.com/couhujia/" target="_blank">小风</a> <a href="http://space.cnblogs.com/msg/send/%e5%b0%8f%e9%a3%8e" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915700" class="blog_comment_body"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915695" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1915695);">@</a>蒙奇Boy<br>重要的是思想，我只想说明每个人都有自己的权限设计，要代码有何用呢？</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915700,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915700,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1915700_avatar" style="display:none;">http://pic.cnitblog.com/face/u32873.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1915776" class="layer">#12楼</a><a name="1915776" id="comment_anchor_1915776"></a>  <span class="comment_date">2010-09-14 07:53</span> <a id="a_comment_author_1915776" href="http://www.cnblogs.com/pinpkm/" target="_blank">个人知识管理</a> <a href="http://space.cnblogs.com/msg/send/%e4%b8%aa%e4%ba%ba%e7%9f%a5%e8%af%86%e7%ae%a1%e7%90%86" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1915776" class="blog_comment_body">有意思！两大权限高手齐聚。<br><br>#3楼2010-09-13 10:14 | 吉日嘎拉 不仅权限管理       <br>写得不错，推荐一下<br><br>#4楼2010-09-13 13:04 | 金色海洋（jyk）       <br>谢谢，把我的博客带上了。<br><br>我觉得还可以更多的参考一下的。<br><br></div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1915776,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1915776,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1916362" class="layer">#13楼</a><a name="1916362" id="comment_anchor_1916362"></a>  <span class="comment_date">2010-09-14 15:10</span> <a id="a_comment_author_1916362" href="http://www.cnblogs.com/yudis/" target="_blank">yudis</a> <a href="http://space.cnblogs.com/msg/send/yudis" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1916362" class="blog_comment_body">不错，模块一对一权限，比较灵活</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1916362,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1916362,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1916362_avatar" style="display:none;">http://pic.cnitblog.com/face/u32845.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1916555" class="layer">#14楼</a><a name="1916555" id="comment_anchor_1916555"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2010-09-14 18:35</span> <a id="a_comment_author_1916555" href="http://www.cnblogs.com/couhujia/" target="_blank">小风</a> <a href="http://space.cnblogs.com/msg/send/%e5%b0%8f%e9%a3%8e" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1916555" class="blog_comment_body"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#1916362" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1916362);">@</a>yudis<br>谢谢支持</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1916555,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1916555,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1916555_avatar" style="display:none;">http://pic.cnitblog.com/face/u32873.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#2520595" class="layer">#15楼</a><a name="2520595" id="comment_anchor_2520595"></a>  <span class="comment_date">2012-10-31 11:57</span> <a id="a_comment_author_2520595" href="http://www.cnblogs.com/fitel/" target="_blank">分享技术、分享生活</a> <a href="http://space.cnblogs.com/msg/send/%e5%88%86%e4%ba%ab%e6%8a%80%e6%9c%af%e3%80%81%e5%88%86%e4%ba%ab%e7%94%9f%e6%b4%bb" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2520595" class="blog_comment_body">其实，简单期间可以直接以页面做为权限，估计可以满足80%要求。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2520595,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2520595,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#2586182" class="layer">#16楼</a><a name="2586182" id="comment_anchor_2586182"></a><span id="comment-maxId" style="display:none;">2586182</span><span id="comment-maxDate" style="display:none;">2012/12/25 17:14:05</span>  <span class="comment_date">2012-12-25 17:14</span> <a id="a_comment_author_2586182" href="http://www.cnblogs.com/AlbertFei/" target="_blank">Albert Fei</a> <a href="http://space.cnblogs.com/msg/send/Albert+Fei" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2586182" class="blog_comment_body">缺少”资源表“<br>可以基于角色权限管理粗粒度的资源，基于操作权限管理细粒度的资源。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2586182,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2586182,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2586182_avatar" style="display:none;">http://pic.cnitblog.com/face/u82443.jpg?id=18153212</span>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/couhujia/archive/2010/09/13/1824605.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="程序员的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="ad_under_post_holder">
+
+<div id="google_ad_c1" class="c_ad_block">
+    <!-- cnblogs_blogpost_C1_sitehome -->
+    <div id="div-gpt-ad-1346480159711-0" style="width:300px; height:250px;">
+    
+    <div id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom;"></iframe></div><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" width="0" height="0" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom; visibility: hidden; display: none;"></iframe></div>
+</div>
+<div id="blog_news_kb"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/209350/" target="_blank">微软发布声明称腾讯微信全面封杀群聊机器人小冰</a><br> ·  <a href="http://news.cnblogs.com/n/209349/" target="_blank">苹果宣布梅斯特里出任CFO 接替奥本海默</a><br> ·  <a href="http://news.cnblogs.com/n/209348/" target="_blank">扎克伯格华裔妻子首度亮相电视节目畅谈情史</a><br> ·  <a href="http://news.cnblogs.com/n/209347/" target="_blank">iPhone 6现身WWDC大会Keynote 或将提前发布</a><br> ·  <a href="http://news.cnblogs.com/n/209346/" target="_blank">掰指关节会导致关节炎吗？</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/209189/" target="_blank">软件开发中的“瑞士军刀综合症”</a><br> ·  <a href="http://kb.cnblogs.com/page/209101/" target="_blank">TCP 的那些事儿（下）</a><br> ·  <a href="http://kb.cnblogs.com/page/209100/" target="_blank">TCP 的那些事儿（上）</a><br> ·  <a href="http://kb.cnblogs.com/page/208896/" target="_blank">「我只是认真」——聊聊工匠情怀</a><br> ·  <a href="http://kb.cnblogs.com/page/208307/" target="_blank">什么是互联网思维？给你最全面的解释</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div></div>
+<script type="text/javascript">
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+fixPostBodyFormat();
+loadAdUnderPost();
+</script>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+loadBlogSignature();
+LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+</script>
+<script type="text/javascript">
+    $.ajax({ url: 'http://counter.cnblogs.com/blog/post/' + cb_entryId, type: 'get', dataType: 'script', cache: true });
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><p><font><span style="color: #000000">姓名:胡&nbsp; 佳</span></font></p>
+<p><font><span style="color: #000000">联系方式:couhujia@163.com</span></font></p>
+<p><font><span style="color:#000000">转载文章请注明源地址</span></font></p> 
+<a href="http://s05.flagcounter.com/more/fPV"><img src="./权限设计 - 小风 - 博客园_files/saved_resource" alt="free counters" border="0"></a><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/couhujia/">小风</a><br>园龄：<a href="http://home.cnblogs.com/u/couhujia/" title="入园时间：2008-04-23">6年1个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/couhujia/followers/">113</a><br>关注：<a href="http://home.cnblogs.com/u/couhujia/followees/">5</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;cb37420b-63cf-dd11-9e4d-001cf0cd104b&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="日历">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2010/08/01&#39;);return false;">&lt;</a></td><td align="center">2010年9月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2010/10/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/02.html"><u>2</u></a></td><td align="center"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/03.html"><u>3</u></a></td><td class="CalWeekendDay" align="center">4</td></tr><tr><td class="CalWeekendDay" align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center">10</td><td class="CalWeekendDay" align="center">11</td></tr><tr><td class="CalWeekendDay" align="center">12</td><td align="center"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/13.html"><u>13</u></a></td><td align="center">14</td><td align="center">15</td><td align="center">16</td><td align="center">17</td><td class="CalWeekendDay" align="center">18</td></tr><tr><td class="CalWeekendDay" align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td align="center">23</td><td align="center">24</td><td class="CalWeekendDay" align="center">25</td></tr><tr><td class="CalWeekendDay" align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td align="center">30</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td></tr><tr><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+
+<div class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+
+</div>
+
+
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_0" href="http://www.cnblogs.com/couhujia/p/">我的随笔</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_1" href="http://www.cnblogs.com/couhujia/MyComments.html">我的评论</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_2" title="我发表过评论的随笔" href="http://www.cnblogs.com/couhujia/OtherPosts.html">我的参与</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_3" href="http://www.cnblogs.com/couhujia/RecentComments.html">最新评论</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_4" href="http://www.cnblogs.com/couhujia/tag/">我的标签</a></li>
+	
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+<div class="catListEssay">
+<h3 class="catListTitle">最新随笔</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/20/2824861.html">1. decorator pattern -- 装饰模式</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/19/2823706.html">2. composite pattern -- 组合模式</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/18/2822451.html">3. bridge pattern -- 桥接模式</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/16/2821092.html">4. adapter pattern--适配器模式</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/14/2817238.html">5. prototype pattern--原型模式</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/13/2815626.html">6. builder pattern--建造者模式</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/12/2813960.html">7. abstract factory pattern--抽象工厂模式</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/11/2812233.html">8. factory mothed pattern--工厂方法模式</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/10/2810576.html">9. singleton pattern--单件模式</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/12/07/2806446.html">10. 临时对象的来源</a></li>
+</ul>
+</div>
+
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/couhujia/tag/C%2B%2B/">C++</a>(13)</li><li><a href="http://www.cnblogs.com/couhujia/tag/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a>(9)</li><li><a href="http://www.cnblogs.com/couhujia/tag/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>(9)</li><li><a href="http://www.cnblogs.com/couhujia/tag/CLR/">CLR</a>(6)</li><li><a href="http://www.cnblogs.com/couhujia/tag/%E7%AE%97%E6%B3%95/">算法</a>(4)</li><li><a href="http://www.cnblogs.com/couhujia/tag/SQL/">SQL</a>(4)</li><li><a href="http://www.cnblogs.com/couhujia/tag/asp.net/">asp.net</a>(3)</li><li><a href="http://www.cnblogs.com/couhujia/tag/%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/">异步操作</a>(3)</li><li><a href="http://www.cnblogs.com/couhujia/tag/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">生命周期</a>(2)</li><li><a href="http://www.cnblogs.com/couhujia/tag/asp.net%E9%A1%B5%E9%9D%A2/">asp.net页面</a>(2)</li><li><a href="http://www.cnblogs.com/couhujia/tag/">更多</a></li>
+</ul>
+</div>
+<div class="catListPostCategory">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/couhujia/category/210286.html">asp.net(37)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/couhujia/category/214900.html">asp.net ajax(7)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/couhujia/category/289240.html">C++(14)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/couhujia/category/219125.html">CLR(6)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/couhujia/category/321295.html">HTML5(1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/couhujia/category/223421.html">SQL(3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/couhujia/category/255101.html">Unity3D(1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/couhujia/category/252659.html">WPF(2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/couhujia/category/251562.html">代码规范(1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/couhujia/category/210292.html">其他</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/couhujia/category/210287.html">人工智能(1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/couhujia/category/210288.html">软件设计(1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/couhujia/category/436525.html">设计模式(9)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/couhujia/category/289241.html">算法(4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/couhujia/category/210291.html">问题解决(2)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/couhujia/archive/2012/12.html">2012年12月 (10)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/couhujia/archive/2012/11.html">2012年11月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/couhujia/archive/2012/10.html">2012年10月 (5)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/couhujia/archive/2012/07.html">2012年7月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/couhujia/archive/2011/09.html">2011年9月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/couhujia/archive/2011/04.html">2011年4月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/couhujia/archive/2011/03.html">2011年3月 (3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/couhujia/archive/2010/11.html">2010年11月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/couhujia/archive/2010/09.html">2010年9月 (3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/couhujia/archive/2010/08.html">2010年8月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/couhujia/archive/2010/07.html">2010年7月 (3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/couhujia/archive/2010/05.html">2010年5月 (4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/couhujia/archive/2010/04.html">2010年4月 (8)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/couhujia/archive/2010/03.html">2010年3月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/couhujia/archive/2009/12.html">2009年12月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/couhujia/archive/2009/11.html">2009年11月 (10)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/couhujia/archive/2009/10.html">2009年10月 (10)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/couhujia/archive/2009/09.html">2009年9月 (13)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/couhujia/archive/2009/04.html">2009年4月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catList">
+<h3 class="catListTitle">好友</h3>
+
+<ul>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_0" rel="nofollow" href="http://hi.baidu.com/tongjiaqing87/home">T++</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_1" rel="nofollow" href="http://www.cnblogs.com/yangxiaoluck/">杨晓云</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catList">
+<h3 class="catListTitle">网站</h3>
+
+<ul>
+
+</ul>
+
+</div>
+
+
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	127559
+	</li>
+	<li class="liRank">
+		排名 -	995
+	</li>
+</ul>
+</div>
+
+
+
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/couhujia/archive/2009/10/24/1589275.html#2953579">1. Re:学习Forms身份验证</a></li>
+    <li class="recent_comment_body">你好,你上面写的第二种需要手动去配置Ticket需要给cookie加上时间,但是你自己的代码中缺没有设置时间,我觉得应该存在问题</li>
+    <li class="recent_comment_author">--小徐的博客园</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/couhujia/archive/2009/10/28/1590897.html#2935638">2. Re:GridView分页的实现</a></li>
+    <li class="recent_comment_body">谢谢，很实用！</li>
+    <li class="recent_comment_author">--栾洪同</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/couhujia/archive/2012/12/13/2815626.html#2880684">3. Re:builder pattern--建造者模式</a></li>
+    <li class="recent_comment_body">代码有很多语法错误以及逻辑错误，我已经修改了，保存到我自己空间了！</li>
+    <li class="recent_comment_author">--天涯情结</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/couhujia/archive/2012/12/12/2813960.html#2879936">4. Re:abstract factory pattern--抽象工厂模式</a></li>
+    <li class="recent_comment_body">Car * BenzIphoneFactory::createCar( ) 83 { 84 return new createCar( ); 85 } 86 Phone * BenzIphoneFactory::createPhone( ) 87 { 88 retur......</li>
+    <li class="recent_comment_author">--天涯情结</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/couhujia/archive/2010/09/03/1816440.html#2804643">5. Re:Asp.net中文件的压缩与解压</a></li>
+    <li class="recent_comment_body">解压不完整啊。</li>
+    <li class="recent_comment_author">--Deng_Wu</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/couhujia/archive/2012/11/02/2750204.html#2748952">6. Re:C++继承</a></li>
+    <li class="recent_comment_body">你在头文件声明中加入两句话：#include &lt;string&gt; <br>                                       using namespace std;<br>你就可以将main函数中的std：：都去掉，这样就不会报错了。</li>
+    <li class="recent_comment_author">--华工一个铭</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/couhujia/archive/2009/10/28/1590897.html#2726011">7. Re:GridView分页的实现</a></li>
+    <li class="recent_comment_body">转到第几页那里，输入页数后，点GO按钮，为什么一直都是显示的当前页？</li>
+    <li class="recent_comment_author">--行至迷途</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/couhujia/archive/2012/11/01/2748535.html#2716215">8. Re:C++文件依存关系</a></li>
+    <li class="recent_comment_body">C++文件依存关系，谢谢分享。</li>
+    <li class="recent_comment_author">--xchsp</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/couhujia/archive/2009/09/23/1572683.html#2695382">9. Re:常用Web Service汇总（天气预报、时刻表等）(转)</a></li>
+    <li class="recent_comment_body">好东西。<br><br>不过 那个QQ检测貌似不太准。</li>
+    <li class="recent_comment_author">--亻尔 女未 哟!!!</li>
+</ul>
+</div>
+</div>
+
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/couhujia/archive/2009/10/28/1590897.html">1. GridView分页的实现(37079)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/04/28/1445610.html">2. 解决“服务没有及时响应启动或控制请求”(27603)</a></li><li><a href="./权限设计 - 小风 - 博客园_files/权限设计 - 小风 - 博客园.htm">3. 权限设计(13193)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/11/02/2750204.html">4. C++继承(10302)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/04/27/1721756.html">5. 两个账号同时登录，后登录的账号将前一个账号挤掉(7312)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2011/03/23/1991110.html">6. 编程基本算法（一）(7150)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/07/27/1785856.html">7. 3D模型在网页上显示(4920)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/11/17/1878840.html">8. ASP.NET调用.sql文件(4652)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/09/03/1816440.html">9. Asp.net中文件的压缩与解压(4538)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2011/03/24/1993373.html">10. 编程基本算法（二）(4373)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/09/02/1815312.html">11. 概括ADO.NET数据库连接的所有形式(基础）(3656)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/11/16/1604059.html">12. 电子商务之框架分析（一）(3562)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/07/28/1787103.html">13. 3DMax模型输入到WPF中运行(3386)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/12/14/1623986.html">14. SQL注入（一）(3321)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/11/17/1604117.html">15. 电子商务之数据库分析（二）(3303)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/03/23/1692586.html">16. 深入理解.net服务器控件(3264)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2011/03/25/1994996.html">17. 编程基本算法（三）(3184)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/12/16/1624066.html">18. SQL注入（二）(3126)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2011/09/07/2169408.html">19. 对Html5 Web App 的背景调查研究(3076)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/04/23/1718405.html">20. ASP.NET页面揭秘之页面生命周期(3063)</a></li></ul></div>
+</div>
+
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/couhujia/archive/2010/04/27/1721756.html">1. 两个账号同时登录，后登录的账号将前一个账号挤掉(55)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/11/17/1878840.html">2. ASP.NET调用.sql文件(47)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/09/02/1815312.html">3. 概括ADO.NET数据库连接的所有形式(基础）(33)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/11/17/1604117.html">4. 电子商务之数据库分析（二）(33)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/11/18/1605350.html">5. 电子商务之Common类库分析（三）(19)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/12/16/1624066.html">6. SQL注入（二）(19)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/09/03/1816440.html">7. Asp.net中文件的压缩与解压(19)</a></li><li><a href="./权限设计 - 小风 - 博客园_files/权限设计 - 小风 - 博客园.htm">8. 权限设计(16)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/11/16/1604059.html">9. 电子商务之框架分析（一）(15)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/07/27/1785856.html">10. 3D模型在网页上显示(15)</a></li></ul></div>
+</div>
+
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/couhujia/archive/2010/11/17/1878840.html">1. ASP.NET调用.sql文件(12)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2011/09/07/2169408.html">2. 对Html5 Web App 的背景调查研究(10)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/10/31/2745202.html">3. C++你最好不要做的(9)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/10/29/2744293.html">4. C++你可能不知道地方(9)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/03/23/1692586.html">5. 深入理解.net服务器控件(9)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/11/01/2748535.html">6. C++文件依存关系(7)</a></li><li><a href="./权限设计 - 小风 - 博客园_files/权限设计 - 小风 - 博客园.htm">7. 权限设计(7)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/07/28/1787103.html">8. 3DMax模型输入到WPF中运行(7)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/10/28/1590897.html">9. GridView分页的实现(7)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2011/03/25/1994996.html">10. 编程基本算法（三）(7)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2011/03/24/1993373.html">11. 编程基本算法（二）(6)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/11/26/1888052.html">12. ASP.NET调用.sql文件（二）(6)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/09/03/1816440.html">13. Asp.net中文件的压缩与解压(6)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/04/23/1718405.html">14. ASP.NET页面揭秘之页面生命周期(6)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2012/11/02/2750204.html">15. C++继承(6)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2009/12/16/1624066.html">16. SQL注入（二）(6)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/04/29/1723709.html">17. 浏览器刷新问题解决方案(5)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/04/27/1721756.html">18. 两个账号同时登录，后登录的账号将前一个账号挤掉(5)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/09/02/1815312.html">19. 概括ADO.NET数据库连接的所有形式(基础）(5)</a></li><li><a href="http://www.cnblogs.com/couhujia/archive/2010/08/13/1799141.html">20. Meta标签——网站中必不可少的一部分(5)</a></li></ul></div>
+</div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2014 小风
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+<iframe id="google_osd_static_frame_2911442196927" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body></html>

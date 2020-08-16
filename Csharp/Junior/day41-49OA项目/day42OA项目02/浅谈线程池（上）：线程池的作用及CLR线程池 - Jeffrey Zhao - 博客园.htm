@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<!-- saved from url=(0106)http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html# -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" type="text/javascript" src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/gpt.js"></script>
+<meta charset="utf-8">
+<title>浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/style.css">
+<link type="text/css" rel="stylesheet" href="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/12973.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/JeffreyZhao/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/JeffreyZhao/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/JeffreyZhao/wlwmanifest.xml">
+<script src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'JeffreyZhao', cb_enable_mathjax=false;</script>
+<script src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/blog-common.js" type="text/javascript"></script>
+<script src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/skin.js" language="javascript" type="text/javascript"></script>
+<script async="" type="text/javascript" src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/pubads_impl_40.js"></script><script type="text/javascript" src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/osd.js"></script></head>
+<body>
+<a name="top"></a>
+<!--PageBeginHtml Block Begin-->
+<!--[if IE 6]>
+<script language="javascript" type="text/javascript">
+var url1 = window.location.toString();
+window.location = "http://files.cnblogs.com/JeffreyZhao/no-ie6.xml?r=" + Math.random().toString() + "&from=" + encodeURIComponent(url1);
+</script>
+<![endif]-->
+
+<!--[if IE]>
+<style>
+div.post div.entry h1 {
+	padding-top: 8px;
+}
+</style>
+<![endif]-->
+
+
+<script language="javascript" type="text/javascript" src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/blog_hacks.js"></script>
+
+<script language="javascript" type="text/javascript">
+// window._rr_ = [1605749,1605155,1604058,1603574,1602458,1602330,1601298,1600892,1599566,1600101,1599419,1598811,1594901,1594014,1593673,1592538,1591663,1591122,1590921,1590321,1589686,1589474,1588400,1587207,1586223,1585723,1584760,1584728,1584102,1583815,1583683,1583234,1582962,1582450,1582237,1581712,1581083,1580804,1579964,1587781];
+// window._rrCount_ = 2;
+// window.__ic = 6;
+
+function __removeCommentArea() {
+
+var myLocation  = window.location.toString();
+if (myLocation.indexOf("/two-job-descriptions.html") > 0) return;
+
+$("div#comment_form p").remove();
+// $("div#ctl07_divCommentPannel p").remove();
+$("div#comment_form div.commentbox_title").remove();
+
+var path = window.location.pathname.replace(/\/jeffreyzhao\/archive/gi, '').replace(/(\d{4}\/\d{2})\/\d{2}/gi, '$1').replace(/_/gi, '-').toLowerCase();
+var url = "http://blog.zhaojie.me" + path;
+var html = '<p style="font-size:20px; margin:50px 0 50px 0;"><strong style="color:red;">请注意：</strong>该博文已<a href="' + url + '">迁移至此</a>，请前去我的新博客发表评论，谢谢！:)</p>';
+
+$("textarea#tbCommentBody").replaceWith($(html));
+}
+
+$(document).ready(__removeCommentArea);
+</script>
+
+<script language="javascript" type="text/javascript">
+function __showAndHide(toShow, toHide)
+{
+    document.getElementById(toShow).style.display = "block";
+    document.getElementById(toHide).style.display = "none";
+}
+</script>
+
+<!--PageBeginHtml Block End-->
+
+
+<div id="container">
+    <a class="minyx" href="http://www.cnblogs.com/">www.cnblogs.com</a>
+    <ul id="topMnu">
+        <!-- 统计数据 -->
+        <li>
+            
+                
+Posts - 619, 
+Articles - 5, 
+Comments - 30569
+<!---->
+            
+        </li>
+        <!-- 这边可以增加一些链接 -->
+        <!-- 博客园 -->
+        <li><a href="http://www.cnblogs.com/">Cnblogs</a></li>
+        <!-- 管理 -->
+        <li id="topMnu-dashboard">
+            <a id="lnkDashboard" href="http://www.cnblogs.com/JeffreyZhao/admin/EditPosts.aspx">Dashboard</a></li>
+        <li>
+            <a id="lnkLogin" href="http://passport.cnblogs.com/login.aspx?ReturnUrl=http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html">Login</a></li>
+    </ul>
+
+    <script type="text/javascript">
+        var m = window.__blog.topMenuRendered;
+        if (m) { m(__$("topMnu")); }
+    </script>
+
+    <div id="header">
+        <ul id="menu">
+            <!-- 首页，当前section加上current类 -->
+            <li id="menu-home" class="current">
+                <a id="lnkHome" href="http://www.cnblogs.com/JeffreyZhao/">Home</a></li>
+            <!-- 联系 -->
+            <li id="menu-contact">
+                <a id="lnkContact" href="http://space.cnblogs.com/msg/send/Jeffrey+Zhao">Contact</a></li>
+            <!-- 相册 -->
+            <li id="menu-gallary">
+                <a id="lnkGallery" href="http://www.cnblogs.com/JeffreyZhao/gallery.html">Gallery</a></li>
+            <!-- Rss订阅 -->
+            <li id="rss">
+                <a id="lnkRss" href="http://www.cnblogs.com/JeffreyZhao/rss">RSS</a></li>
+        </ul>
+        <div id="newmsg"></div>
+        <h1>
+            <!-- 主标题 -->
+            <a id="lnkBlogTitle" href="http://www.cnblogs.com/JeffreyZhao/">老赵点滴 - 追求编程之美</a>
+            <!-- 子标题 -->
+            <small>
+                先做人，再做技术人员，最后做程序员。打造国内最好的.NET技术博客。</small>
+        </h1>
+    </div>
+
+    <script type="text/javascript">
+        var m = window.__blog.headerRendered;
+        if (m) { m(__$("header")); }
+    </script>
+
+    <div id="wrapper">
+        <div id="content" style="width: 839px;">
+            <script type="text/javascript">
+                var m = window.__blog.preRenderPosts;
+                if (m) { m(); }
+            </script>
+            
+
+<div class="post" id="post">
+    <a name="top"></a>
+    <h2>
+        <a id="cb_post_title_url" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html">浅谈线程池（上）：线程池的作用及CLR线程池</a></h2>
+    <small>
+        2009-07-22 09:01
+        by
+        Jeffrey Zhao,
+        <span id="post_view_count">16951</span>
+        阅读,
+        <span id="post-comment-count">
+            <span id="post_comment_count">54</span></span>
+        评论,
+        <a href="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园.htm" onclick="PutInWz();return false;">收藏</a>,
+        <a id="ctl01_lnkEdit" href="http://i.cnblogs.com/EditPosts.aspx?postid=1528303">编辑</a></small>
+    <div class="entry">
+        <div id="cnblogs_post_body"><p>线程池是一个重要的概念。不过我发现，关于这个话题的讨论似乎还缺少了点什么。作为资料的补充，以及今后文章所需要的引用，我在这里再完整而又简单地谈一下有关线程池，还有.NET中各种线程池的基础。更详细的内容就不多作展开了，有机会我们再详细讨论这方面的细节。这次，还是一个“概述”性质的，希望可以说明白这方面问题的一些概念。</p> <h1>线程池的作用</h1> <p>其实“线程池”就是用来存放“线程”的对象池。</p> <p>在程序中，如果某个创建某种对象所需要的代价太高，同时这个对象又可以反复使用，那么我们往往就会准备一个容器，用来保存一批这样的对象。于是乎，我们想要用这种对象时，就不需要每次去创建一个，而直接从容器中取出一个现成的对象就可以了。由于节省了创建对象的开销，程序性能自然就上升了。这个容器就是“池”。很容易理解的是，因为有了对象池，因此在用完对象之后必须有一个“归还”的动作，这样便可以把对象放回池中，下次需要的时候就可以再次拿出来使用了。</p> <p>例如，我们在使用ADO.NET连接SQL Server时，.NET框架就会自动帮我们维护一个连接池，这就是因为重新创建一个连接的代价相对比较高昂，“复用”就显得比较划算了。不过有些朋友可能会说，我们明明是每次都创建一个SqlConnection对象，哪里有“复用”啊？这是因为.NET框架中把“连接池”做透明了，对于程序员完全隐藏了这个概念。每次我们虽然创建的是新的SqlConnection对象，但是这个对象内部占用的“数据库连接”还是会复用的。为什么总是强调用完SqlConnection对象后要及时“关闭”（Dispose或Close）呢？其实这里并没有断开数据库连接，只是把这个连接放回了连接池。等到下次创建新的SqlConnection对象时，这个连接又可以拿出来用了。</p> <p>既然我们每次都是从池中获取对象，那么这些对象是由谁来创建，又是什么时候创建的呢？这个就要根据不同情况由各对象池来自行实现了。例如，可以在创建对象池的时候指定池内对象数量，并且一下子全部创建好，当然您也可以在得到请求时，如果发现池中已经没有剩余对象时创建。您也可以“事前”先准备一部分，“事中”根据需要再继续补充。还可以做得“智能”一些，例如，根据实际情况添加或删除一些对象，甚至对需求“走势”进行“预测”，在空闲时便创建更多的对象以备“不时之需”。各中变化难以言尽。</p> <p>当然，它们的原理和目的是类似的。相信上面这段文字也已经讲清了“线程池”的作用：因为创建一个线程的代价较高，因此我们使用线程池设法复用线程。就是这么简单。</p> <h1>CLR线程池</h1> <p>在.NET中，CLR线程和操作系统线程对应，您可以简单地认为.NET中的Thread对象便封装了一个操作系统线程，并附带一些托管环境下所需要的数据（如GC Handle）<sup>1</sup>。而CLR线程池便是存放这些CLR线程的对象池。</p> <p>我们在编写程序的时候，可以使用ThreadPool类的两个静态方法：QueueUserWorkItem和UnsafeUserQueueWorkItem向CLR线程池中添加任务（一个WorkCallback委托对象），这两个方法的区别，在于前者会收集调用方的ExecutionContext，也就是保留了的当前线程的执行信息（如认证或语言文化等），使任务最终会在“创建”时刻的环境中执行<sup>2</sup>——后者就不会。因此，如果比较两个方法的绝对性能，Unsafe方法会略胜一筹。但是平时还是建议使用QueueUserWorkItem方法，因为保留执行上下文会避免很多麻烦事情，且这点性能损耗其实算不上什么。</p> <p>CLR线程池在.NET框架中的作用很大，除了让程序员使用之外，其他一些功能也会依赖CLR线程池。如ThreadPool.RegisterWaitForSingleObject方法，或是System.Threading.Timer组件——还有更重要可能也是更隐藏的：ASP.NET在得到一个请求后，也会将这个请求处理的任务交由CLR线程池去执行——请注意，它们最多只是添加任务而已，并不表示任务会立即执行。所有添加到CLR线程池的任务都会在合适的时候得以执行——可能马上，也可能要稍等片刻，甚至更久。</p> <p>向CLR线程池添加任务时，任务会被临时放到一个队列中，并在合适的时候执行。那么怎么样才算是“合适的时候”？简单的概括说来，便是线程池内有空闲的线程，或线程池所管理的线程数量还没有达到上限的时候。如果有空闲的线程，线程池就会立即让它领取一个任务执行。如果是第二种情况，线程池便会创建新的Thread对象。由于让操作系统管理太多线程反而会造成性能下降，因此CLR线程池会有一个上限。不同的托管环境会设置不同的上限。如在.NET 2.0 SP1之后，普通的Windows应用程序（如控制台或WinForm/WPF），会将其设置为“处理器数 * 250”。也就是说，如果您的机器为2个2核CPU，那么CLR线程池的容量默认上限便是1000，也就是说，它最多可以管理1000个线程同时运行——很多情况下这已经是一个很可怕的数字了，如果您觉得这还不够，那么就应该考虑一下您的实现方式是否可以改进了。</p> <p>对于ASP.NET应用程序来说，CLR线程池容量代表了应用程序最多可以同时执行的请求数量。对于托管在IIS上的ASP.NET执行环境来说，这个值由全局配置决定。这个配置在machine.config文件中system.web/processModel节点中，为maxWorkerThreads属性，它决定了为单个处理器分配的线程数。如果这个值为40，且机器上拥有4个处理器（2 * 2CPU），那么这台机器目前的配置表示在同一时刻，ASP.NET可以同时处理160个请求。某些参考资料建议您将其修改为每处理器80-100个线程，这时您只要修改相应的属性值就可以了。</p> <p>既然有最大值，也就相应有了最小值，它代表了CLR线程池“总是会保留”的最少线程数量。由于线程会占用资源，如在默认情况下，每个线程将获得1MB大小的栈空间<sup>3</sup>。所以如果在系统中保留太多空闲线程对资源也是一种浪费。因此，CLR线程池在使用大量线程处理完大量任务之后，也会逐步地释放线程，直至到达最小值。CLR线程池的最小线程数量确保了在任务数量较少的情况下，新来的任务可以立即执行，从而省去了创建新线程的时间。在普通应用程序中这个值为“处理器数 * 1”，而在ASP.NET应用程序中这个值配置在machine.config文件中system.web/processModel节点的minWorkerThreads属性中<sup>4</sup>。</p> <p>在某些时候可能会遇到这样的情况：在一个瞬间忽然来大量任务，每个任务的执行时间说长不长说短不短，不过足以导致线程池快速分配数百个线程。如果这个峰值之后就一片平静，那么势必造成大量空闲的线程，这种开销对性能的损耗也非常明显。因此，CLR线程池限制了线程的创建速度不超过每秒2个。这样，即使在某个瞬时获得了大量的任务，CLR线程池也可以使用相对较少的线程来完成所有工作<sup>5</sup>。</p> <p>但是，还有一种情况也值得考虑。例如，对于一个比较繁忙的Web应用程序来说，一打开便会涌入大量的连接。由于线程的创建速度有限，因此可以执行的请求数量也只能慢慢增加。对于这种您预料到会产生大量线程，而且忙碌状况会持续一段时间的情况，限制线程的创建速度反而会带来损伤效率。这时，您就可以手动设置CLR线程池的最小线程数量。如果此时CLR线程池中拥有的线程数量较少，那么系统就会立即创建一定数量的线程来达到这个最小值。设置和获取CLR线程池最小线程数量的接口为：</p><pre class="code"><span style="color: blue">public static class </span><span style="color: #2b91af">ThreadPool</span>
+{
+    <span style="color: blue">public static void </span>GetMinThreads(<span style="color: blue">out int </span>workerThreads, <span style="color: blue">out int </span>completionPortThreads);
+    <span style="color: blue">public static bool </span>SetMinThreads(<span style="color: blue">int </span>workerThreads, <span style="color: blue">int </span>completionPortThreads);
+}</pre>
+<p>这两个接口的作用和使用方式应该足够明显了（不理解的话可以查阅MSDN），其中workerThreads参数便是CLR线程池的最小线程数，而completionPortThreads涉及到我们下次要讨论IO线程池，在此就不多作展开了。除了设置和读取CLR最小线程数的方法之外，ThreadPool还包含这些接口：</p><pre class="code"><span style="color: blue">public static class </span><span style="color: #2b91af">ThreadPool</span>
+{
+    <span style="color: blue">public static void </span>GetMaxThreads(<span style="color: blue">out int </span>workerThreads, <span style="color: blue">out int </span>completionPortThreads);
+    <span style="color: blue">public static bool </span>SetMaxThreads(<span style="color: blue">int </span>workerThreads, <span style="color: blue">int </span>completionPortThreads);
+    <span style="color: blue">public static void </span>GetAvailableThreads(<span style="color: blue">out int </span>workerThreads, <span style="color: blue">out int </span>completionPortThreads);
+}</pre>
+<p>值得注意的是，无论是设置还是获取到的这些数值，都与处理器数量没有任何关系了。也就是说，在一台2 * 2CPU的机器上运行一个普通的.NET应用程序时：</p>
+<ul>
+<li>调用GetMaxThreads方法将获得1000，表示CLR线程池最大容量为1000（250 * 4），而不是250。</li>
+<li>调用SetMinThreads并传入100，表示CLR线程池所拥有的最小线程数量为100，而不是400（100 * 4）。</li></ul>
+<p>对于CLR线程池的简单描述就暂时先到这里了。如果您还有什么疑问请提出，我会加以补充。</p>
+<h1>相关文章</h1>
+<ul>
+<li>浅谈线程池（上）：线程池的作用及CLR线程池</li>
+<li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/24/thread-pool-2-dedicate-pool-and-io-pool.html">浅谈线程池（中）：独立线程池的作用及IO线程池</a></li>
+<li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/10/20/thread-pool-3-lab.html">浅谈线程池（下）：相关试验及注意事项</a></li></ul>
+<p>&nbsp;</p>
+<p><strong>注1：</strong>严格说来，Thread对象和系统线程对应关系还有些细节上的考虑。例如，Thread对象只有当真正Start了之后，CLR才会创建一个操作系统线程与它绑定。</p>
+<p><strong>注2：</strong>ExecutionContext是个很重要且很有用的对象，例如，WinForms或WPF的异步任务中操作界面元素抛出异常该怎么办呢？</p>
+<p><strong>注3：</strong>使用Windows API或Thread类创建线程时可以指定它的栈空间大小，但是CLR线程池中的线程只能使用默认值——不过这个默认值也和托管环境有关，如普通应用程序默认为1MB，而ASP.NET为250KB，这意味着ASP.NET应用程序相对更容易产生Stack Overflow异常。</p>
+<p><strong>注4：</strong>可惜的是，对于processModel节点的数据，ASP.NET只会读取machine.config中的全局配置信息，这意味着我们不能使用web.config为不同应用程序配置不同的参数。如果我们要实现应用程序级别的配置，那么必须使用ThreadPool类中提供的API进行设置，这点稍后便会提到。</p>
+<p><strong>注5：</strong>对于这点，您不妨来做一个算术题：线程池内一下子涌入了500个任务，每个任务阻塞或暂停5秒，每个线程占用1MB内存，假设线程池目前为空，且有着足够的容量，此外线程创建速度也足够快，那么在限制及不限制线程创建速度的情况下，完成这些任务需要多少时间和内存空间？</p></div><div id="MySignature"></div>
+        
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="blog_post_info"><div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/JeffreyZhao/category/76656.html">09. 并行处理</a>, <a href="http://www.cnblogs.com/JeffreyZhao/category/117017.html">02. ASP.NET</a>, <a href="http://www.cnblogs.com/JeffreyZhao/category/129812.html">01. DotNet框架</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/JeffreyZhao/tag/%E6%80%A7%E8%83%BD/">性能</a>, <a href="http://www.cnblogs.com/JeffreyZhao/tag/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">线程池</a>, <a href="http://www.cnblogs.com/JeffreyZhao/tag/%E5%B9%B6%E8%A1%8C%E5%A4%84%E7%90%86/">并行处理</a>, <a href="http://www.cnblogs.com/JeffreyZhao/tag/CLR/">CLR</a></div>
+<div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(cb_entryId,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/Jeffrey+Zhao" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="digg_block">
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/JeffreyZhao/" target="_blank"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/u9419.png" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/JeffreyZhao/">Jeffrey Zhao</a><br>
+<a href="http://home.cnblogs.com/u/JeffreyZhao/followees">关注 - 5</a><br>
+<a href="http://home.cnblogs.com/u/JeffreyZhao/followers">粉丝 - 2000</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+<a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+	<div class="diggit" onclick="votePost(cb_entryId,&#39;Digg&#39;)"> 
+		<span class="diggnum" id="digg_count">19</span>
+	</div>
+	<div class="buryit" onclick="votePost(cb_entryId,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">2</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/20/1526805.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/20/1526805.html" title="发布于2009-07-20 09:19">适合C# Actor的消息执行方式（4）：阶段性总结</a><br><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/24/1529859.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/24/1529859.html" title="发布于2009-07-24 09:21">浅谈线程池（中）：独立线程池的作用及IO线程池</a><br></div>
+</div>
+
+
+    </div>
+    <ul class="postmetadata">
+        <li id="ctl01_liCate" class="icon_cat"><strong>Categories: </strong>
+            <a href="http://www.cnblogs.com/JeffreyZhao/category/76656.html">09. 并行处理</a>, <a href="http://www.cnblogs.com/JeffreyZhao/category/117017.html">02. ASP.NET</a>, <a href="http://www.cnblogs.com/JeffreyZhao/category/129812.html">01. DotNet框架</a>
+        </li>
+        <li id="ctl01_liTag" class="icon_bullet"><strong>Tags: </strong>
+            <a href="http://www.cnblogs.com/JeffreyZhao/tag/%e6%80%a7%e8%83%bd/">性能</a>, <a href="http://www.cnblogs.com/JeffreyZhao/tag/%e7%ba%bf%e7%a8%8b%e6%b1%a0/">线程池</a>, <a href="http://www.cnblogs.com/JeffreyZhao/tag/%e5%b9%b6%e8%a1%8c%e5%a4%84%e7%90%86/">并行处理</a>, <a href="http://www.cnblogs.com/JeffreyZhao/tag/CLR/">CLR</a>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=12973,cb_entryId=1528303,cb_blogApp=currentBlogApp,cb_blogUserGuid='8da1310b-63cf-dd11-9e4d-001cf0cd104b',cb_entryCreatedDate='2009/7/22 9:01:00';loadViewCount(cb_entryId);</script>
+<script type="text/javascript">
+    var m = window.__blog.postRendered;
+    if (m) { m(__$("post")); }
+</script>
+
+<script type="text/javascript">
+    var m = window.__blog.postRenderPosts;
+    if (m) { m(); }
+</script><div id="license_information"><a rel="license" href="http://creativecommons.org/licenses/by/2.5/cn/" target="_blank"><img alt="Creative Commons License" style="border-width:0;" src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/88x31.png" align="left"></a><p>本文基于<a href="http://creativecommons.org/licenses/by/2.5/cn/" title="Creative Commons Attribution 2.5 China Mainland License" target="_blank">署名 2.5 中国大陆</a>许可协议发布，欢迎转载，演绎或用于商业目的，但是必须保留本文的署名<a href="http://www.cnblogs.com/JeffreyZhao/">赵劼</a>（包含链接），具体操作方式可<a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/25/it168-thief.html" target="_blank;" title="转载须知">参考此处</a>。如您有任何疑问或者授权方面的协商，请<a href="http://space.cnblogs.com/msg/send/Jeffrey+Zhao" target="_blank">给我留言</a>。</p></div>
+<a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"><div class="pager"><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#!comments" onclick="commentManager.renderComments(1,50);return false;">&lt; Prev</a><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#!comments" onclick="commentManager.renderComments(1,50);return false;">1</a><span class="current">2</span></div></div>
+<a class="addcomment" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#comment_tip">Add your comment</a>
+<h3 id="comments"></h3>
+<div class="feedbackNoItems"></div>
+
+
+<ol class="commentlist" id="commentList">	
+
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#1593952" class="layer">#51楼</a><a name="1593952" id="comment_anchor_1593952"></a></cite> <a id="a_comment_author_1593952" href="http://www.cnblogs.com/edfg5233/" target="_blank">为了梦想</a> <a href="http://space.cnblogs.com/msg/send/%e4%b8%ba%e4%ba%86%e6%a2%a6%e6%83%b3" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2009-07-23 22:05</span></small>
+			</h5>
+			<div id="comment_body_1593952" class="blog_comment_body">基本的概念对于我们这些刚开始学的太重要了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1593952,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1593952,&#39;Bury&#39;,this)">反对(0)</a></div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#1614754" class="layer">#52楼</a><a name="1614754" id="comment_anchor_1614754"></a></cite> <a id="ctl00_CommentList_NameLink_1" target="_blank">Hello JeffreyZhao[未注册用户]</a><small> <span class="comment_date">2009-08-14 14:34</span></small>
+			</h5>
+			<div id="comment_body_1614754" class="blog_comment_body">CLR Via C# 2nd上讲每个CPU的最大工作线程数量是25个，你的250是不是写错了</div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#1614767" class="layer">#53楼</a><a name="1614767" id="comment_anchor_1614767"></a>[<span class="louzhu">楼主</span>]</cite> <a id="a_comment_author_1614767" href="http://www.cnblogs.com/JeffreyZhao/" target="_blank">Jeffrey Zhao</a> <a href="http://space.cnblogs.com/msg/send/Jeffrey+Zhao" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2009-08-14 14:40</span></small>
+			</h5>
+			<div id="comment_body_1614767" class="blog_comment_body"><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#1614754" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1614754);">@</a>Hello JeffreyZhao<br>打过.NET 3.5 SP1就变成250了，.NET 2.0是25。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1614767,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1614767,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_1614767_avatar" style="display:none;">http://pic.cnitblog.com/face/u9419.png</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#1676717" class="layer">#54楼</a><a name="1676717" id="comment_anchor_1676717"></a><span id="comment-maxId" style="display:none;">1676717</span><span id="comment-maxDate" style="display:none;">2009/10/20 15:23:27</span></cite> <a id="a_comment_author_1676717" href="http://www.cnblogs.com/HuiFeiDeJian/" target="_blank">会飞的剑</a> <a href="http://space.cnblogs.com/msg/send/%e4%bc%9a%e9%a3%9e%e7%9a%84%e5%89%91" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2009-10-20 15:23</span></small>
+			</h5>
+			<div id="comment_body_1676717" class="blog_comment_body">获益良多！！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1676717,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1676717,&#39;Bury&#39;,this)">反对(0)</a></div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+</ol>
+
+<div id="comments_pager_bottom"><div class="pager"><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#!comments" onclick="commentManager.renderComments(1,50);return false;">&lt; Prev</a><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#!comments" onclick="commentManager.renderComments(1,50);return false;">1</a><span class="current">2</span></div></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园.htm" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="程序员的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="ad_under_post_holder">
+
+<div id="google_ad_c1" class="c_ad_block">
+    <!-- cnblogs_blogpost_C1_sitehome -->
+    <div id="div-gpt-ad-1346480159711-0" style="width:300px; height:250px;">
+    
+    <div id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom;"></iframe><object type="application/x-shockwave-flash" data="http://www.gstatic.com/osd/hbe.swf?id=0~0" width="1" height="1" style="visibility: hidden; opacity: 0; z-index: -999999; position: fixed; left: 170px; top: 4741px;"><param name="movie" value="//www.gstatic.com/osd/hbe.swf?id=0~0"><param name="allowscriptaccess" value="always"><param name="wmode" value="opaque"></object></div><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" width="0" height="0" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom; visibility: hidden; display: none;"></iframe></div>
+</div>
+<div id="blog_news_kb"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/209345/" target="_blank">主宰全球的10大算法</a><br> ·  <a href="http://news.cnblogs.com/n/209344/" target="_blank">新手学编程，从哪里开始？</a><br> ·  <a href="http://news.cnblogs.com/n/209343/" target="_blank">Windows Phone 8.1 官方文件管理器 Files 发布</a><br> ·  <a href="http://news.cnblogs.com/n/209342/" target="_blank">诺基亚 Lumia 应用发布商已改为微软移动</a><br> ·  <a href="http://news.cnblogs.com/n/209341/" target="_blank">全球仅一台：兰博基尼发布复古限量超跑</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/209189/" target="_blank">软件开发中的“瑞士军刀综合症”</a><br> ·  <a href="http://kb.cnblogs.com/page/209101/" target="_blank">TCP 的那些事儿（下）</a><br> ·  <a href="http://kb.cnblogs.com/page/209100/" target="_blank">TCP 的那些事儿（上）</a><br> ·  <a href="http://kb.cnblogs.com/page/208896/" target="_blank">「我只是认真」——聊聊工匠情怀</a><br> ·  <a href="http://kb.cnblogs.com/page/208307/" target="_blank">什么是互联网思维？给你最全面的解释</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div></div>
+<script type="text/javascript">
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+fixPostBodyFormat();
+loadAdUnderPost();
+</script>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+loadBlogSignature();
+LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+</script>
+<script type="text/javascript">
+    $.ajax({ url: 'http://counter.cnblogs.com/blog/post/' + cb_entryId, type: 'get', dataType: 'script', cache: true });
+</script>
+</div>
+
+        </div>
+
+        <script type="text/javascript">
+            var m = window.__blog.contentRendered;
+            if (m) { m(__$("content")); }
+        </script>
+
+        <div id="sidebar">
+            
+<div id="about">
+<div>
+<h2 id="about_title">About</h2>
+<div id="about_body">
+<div id="blog-news"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/o_blog_me_a.png" width="150px" align="left" style="margin-right: 10px; margin-top: 2px;">
+<p><strong>赵劼</strong>，网名<strong>老赵</strong>，洋名<strong>Jeffrey Zhao</strong>，目前就职于盛大创新院产品开发部，研究员。</p>
+<p>InfoQ中文站编辑，多次受邀于微软TechED，MSDN WebCast及各微软官方或社区会议中担任技术议题讲师。</p>
+<p>关注前沿技术，并致力于开源社区与微软平台的组合优化。对函数式编程，并行程序开发，代码之美以及程序员能力与修养等相关问题也有着浓厚的兴趣，同时非常希望能够写程序到60岁。</p>
+<p>希望可以给初学者以合适引导。坚定的北大青鸟反对者，强烈愤慨恶劣的培训机构对于处于懵懂期的初学者以误导，强烈抵制各种虚假广告给业界带来的不良影响，强烈建议有理想有抱负的从业青年放弃北大青鸟，不要做冤大头。</p>
+<div class="jeffz_seo">
+<a rel="license" href="http://creativecommons.org/licenses/by/2.5/cn/"><img alt="Creative Commons License" style="border-width:0;margin-right: 10px;" src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/88x31.png" align="left"></a><p style="font-size:10px; line-height: 140%;">This work by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.cnblogs.com/JeffreyZhao/" property="cc:attributionName" rel="cc:attributionURL">赵劼</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/2.5/cn/">Creative Commons Attribution 2.5 China Mainland License</a>.</p>
+</div>
+<div style="clear:both; height: 0px; font-size: 0px; margin-bottom:-23px;">&nbsp;</div>
+<div class="jeffz_seo" id="hidden_book_recommendation">
+<div style=""><table cellspacing="0" cellpadding="4" style="&gt;&lt;tr align=" center"=""><tbody><tr><td style=""><a href="http://book.douban.com/subject/3073403/" title="The Productive Programmer
+
+" target="_blank"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/s3088117.jpg" border="0"></a></td><td style=""><a href="http://book.douban.com/subject/1440219/" title="Extreme Programming Explained
+
+" target="_blank"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/s4308677.jpg" border="0"></a></td></tr><tr align="center"><td style=""><a href="http://book.douban.com/subject/1854516/" title="Applying Domain-Driven Design and Patterns
+
+" target="_blank"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/s1783009.jpg" border="0"></a></td><td style=""><a href="http://book.douban.com/subject/1418618/" title="Domain-Driven Design
+
+" target="_blank"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/s4252297.jpg" border="0"></a></td></tr><tr align="center"><td style=""><a href="http://book.douban.com/subject/3012828/" title="JAVASCRIPT语言精髓与编程实践
+
+" target="_blank"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/s2970031.jpg" border="0"></a></td><td style=""><a href="http://book.douban.com/subject/1547071/" title="CLR via C#, Second Edition (Pro Developer)
+
+" target="_blank"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/s4093175.jpg" border="0"></a></td></tr></tbody></table></div>
+</div><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/JeffreyZhao/">Jeffrey Zhao</a><br>园龄：<a href="http://home.cnblogs.com/u/JeffreyZhao/" title="入园时间：2005-07-30">8年10个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/JeffreyZhao/followers/">2000</a><br>关注：<a href="http://home.cnblogs.com/u/JeffreyZhao/followees/">5</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;8da1310b-63cf-dd11-9e4d-001cf0cd104b&#39;)">+加关注</a></div></div></div>
+<script type="text/javascript">loadBlogNews();</script>
+</div>
+</div>
+</div>
+
+            <script type="text/javascript">
+                var m = window.__blog.aboutRendered;
+                if (m) { m(__$("about")); }
+            </script>
+            
+<script type="text/javascript">
+function zzk_go()
+{
+	var blogapp = 'JeffreyZhao';
+	var keystr = encodeURIComponent("blog:"+blogapp+" "+document.getElementById('q').value);
+    window.location = "http://zzk.cnblogs.com/s?w="+keystr;
+}
+function zzk_go_enter(event)
+{
+	if(event.keyCode == 13)
+	{
+	    zzk_go();
+	    return false;
+	}
+}
+</script>
+
+<div id="mySearchWrapper">
+    <div id="mySearch">
+        <input type="image" src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/btnsearch.gif" id="btnZzk" class="submit" onclick="zzk_go();return false;">
+        <label class="lb_search"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="keyword"></label>
+    </div>
+</div>
+
+            <script type="text/javascript">
+                var m = window.__blog.searchFormRendered;
+                if (m) { m(__$("searchform")); }
+            </script>
+            <div id="sideMain">
+            <div id="side-more-contacts"><h2>保持联系</h2><div style="padding: 10px;"><table border="0" width="100%" style="text-align: center"><tbody><tr><td><a href="http://www.cnblogs.com/JeffreyZhao/rss" target="_blank" title="RSS"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/o_rss-round-red.png" alt="RSS"></a></td><td><a href="https://twitter.com/jeffz_cn" target="_blank" title="follow me"><img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/o_twitter-follow-me.png" alt="follow me"></a></td></tr></tbody></table></div></div></div>
+            <div id="sideRight">
+            <div id="side-recent-comments">
+        <h2>最新评论</h2>
+        
+    <marquee direction="up" behavior="scroll" scrollamount="2" scrolldelay="40" style="width:100%; height:700px;" onmouseover="this.stop()" onmouseout="this.start()"><ul class="voice">
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/06/01/my-view-of-il-1-il-and-asm.html#2946863">Re:老赵谈IL（1）：IL是什么，它又不是什么？那么汇编呢？</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/06/01/my-view-of-il-1-il-and-asm.html#2946863">
+                        讲的好，得之若饴。
+                        -- 咖啡进行时
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/18/aspnet-php-benchmark-and-more.html#2942436">Re:从ASP.NET的PHP执行速度比较谈起</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/18/aspnet-php-benchmark-and-more.html#2942436">
+                        老赵又出精品文章了。
+                        -- 蓝天精灵
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/10/29/several-ways-of-generating-url.html#2916269">Re:浅谈URL生成方式的演变</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/10/29/several-ways-of-generating-url.html#2916269">
+                        不知道赵哥还玩不玩博客了。。。没有找到routeDomain方法，好伤心。自己写不出来，更伤心。。。
+                        -- dbl之恋
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/03/09/sharding-by-id-characteristic.html#2892647">Re:一种以ID特征为依据的数据分片（Sharding）策略</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2010/03/09/sharding-by-id-characteristic.html#2892647">
+                        很难看到类似有水平的文章了，顶！我现在有个问题，现在NoSQL都用分片部署，以MongoDB为例吧，每个shard的数据是整个集合数据的一部分，每个shard也有自己的副本集（而没有其他shard的副本），那么如果某个shard所在的机器挂掉（比如网线断了）了，那么整个集群不就算挂了吗？求解释，谢谢......
+                        -- 李克华
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/02/23/mvc-unit-test-best-practices.html#2874260">Re:ASP.NET MVC单元测试最佳实践</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/02/23/mvc-unit-test-best-practices.html#2874260">
+                        没看到有东西下载呀？？？
+                        -- sportdog
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06/22/two-job-descriptions.html#2864487">Re:两则.NET高级技术人员的招聘信息</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06/22/two-job-descriptions.html#2864487">
+                        还要人么？盛大那个
+                        -- 南昌炒粉
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/03/05/LINQ-to-SQL-Batch-Delete-Extension.html#2852783">Re:扩展LINQ to SQL：使用Lambda Expression批量删除数据</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2008/03/05/LINQ-to-SQL-Batch-Delete-Extension.html#2852783">
+                        您好老赵： 前一阵子根据此扩展实现自己的业务发现了一个弱弱的问题。 你的核心思想是把linq 语句 经过解析变成sql 语句，然后执行sql 语句。这时需要两个参数，第一个参数好解决，只需要根据实体得到数据库的表名。第二个参数要求是不定项的条件，而不是指定好的条件。 这时就需要另外一个linq拓展......
+                        -- Feil
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/05/talk-about-page-statilization.html#2845696">Re:谈*静态页*（或网页*静态化*）的时候，请区分一些概念</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/05/talk-about-page-statilization.html#2845696">
+                        </a><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/22/thread-pool-1-the-goal-and-the-clr-thread-pool.html#1575736" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,1575736);">@</a><br>为啥你的网址点不开呢。。。
+                        -- Ruth/Christy
+                    
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06/22/two-job-descriptions.html#2843111">Re:两则.NET高级技术人员的招聘信息</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06/22/two-job-descriptions.html#2843111">
+                        @烤地瓜香港很重要，深有同感 能不能具体说说好在哪里 房子贵 拥挤 我就在广州 到香港很方便。。...
+                        -- yufold
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/02/07/0-bug-and-sjtu-acm-champion.html#2832660">Re:总结：0 bug事件、交大ACM夺冠</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2010/02/07/0-bug-and-sjtu-acm-champion.html#2832660">
+                        不知楼主有没有51js的邀请码，希望能发一枚给我，看《推荐一本JavaScript新书》这个帖子发现这个论坛还是有很多严谨的引路人，邮箱：jrftsy@163.com
+                        -- 峰笙水崎
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06/22/two-job-descriptions.html#2804692">Re:两则.NET高级技术人员的招聘信息</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06/22/two-job-descriptions.html#2804692">
+                        感觉要求很高 很牛逼的样子
+                        -- llllboy
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/10/29/how-to-learn.html#2803305">Re:我们到底该怎么学技术？如何成为一个优秀的技术人员？</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2007/10/29/how-to-learn.html#2803305">
+                        个人认为学习技术还是先广再精比较好以JS为例，大家都认为是一门比较简陋的语言，但是只要能精通，也能成为大神一样 的人，入门的化还是去W3C school比较好；如： 看书的话可能会慢点，还是要多动手，学得差不多了，可以订阅一些JS技术的周刊最后学习一下最新的前端框架如jQuery, bootstra......
+                        -- c52u
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/04/29/custom-view-helpers-1.html#2785486">Re:为视图自定义辅助方法（上）</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/04/29/custom-view-helpers-1.html#2785486">
+                        这种没有服务器端验证，需要在服务器端再写一份重复的验证逻辑，不过思路不错，顶！
+                        -- 自由的生活
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/18/aspnet-php-benchmark-and-more.html#2780753">Re:从ASP.NET的PHP执行速度比较谈起</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/18/aspnet-php-benchmark-and-more.html#2780753">
+                        顶一个，我支持你
+                        -- pamxy
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/07/02/1769605.html#2770890">Re:单链表与List&amp;lt;T&amp;gt;究竟哪个遍历速度快？</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2010/07/02/1769605.html#2770890">
+                        mark
+                        -- 夏雪冬日
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/12/04/jquery-validate-remote-bug.html#2757625">Re:jQuery Validation插件remote验证方式的Bug</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/12/04/jquery-validate-remote-bug.html#2757625">
+                        @LeoLWang引用jQuery Validation Plugin - v1.10.0在remote: function()源代码中的$.ajax()提交是用了$.extend（true,{默认值},param）最后param是会扩展ajax参数的，所以官方代码没有问题，正常情况下的提交应该是/......
+                        -- 寒@鹏
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/03/26/tail-recursion-and-continuation.html#2756315">Re:尾递归与Continuation</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/03/26/tail-recursion-and-continuation.html#2756315">
+                        尾调用和尾递归是看懂了，但是最后那求斐波那契数列和遍历二叉树例子没完全明白。<br>没学过ｃ＃。<br>如果能够理解的话，对于理解递归也会很有好处！
+                        -- 柳qing
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/12/25/my-view-of-il-4-how-to-learn-il.html#2751858">Re:老赵谈IL（4）：什么时候应该学IL，该怎么学IL</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/12/25/my-view-of-il-4-how-to-learn-il.html#2751858">
+                        @Jeffrey Zhao引用这个系列终于写完了……呼……老赵我问下，比如一个很简单的序列化和反序列化功能，一定需要用到反射字段，取值赋值之类的操作。这个操作用反射来做和IL来做性能相差有十几二十几倍。是否意味着应该从“重新构造实体对象实现入手，而不应该从反射优化到IL入手”？...
+                        -- 冰麟轻武
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/16/where-does-aspnet-page-render-to.html#2749261">Re:ASP.NET WebForm页面内容输出方式</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/16/where-does-aspnet-page-render-to.html#2749261">
+                        @AthrunCodeBehind="index.aspx.cs 这句当然是需要的，在发布我们网站的时候，页面后台代码都存在Dll中，页面的驱动就是靠的当前这句话来寻找dll中的方法...
+                        -- 丁仔很忙
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/15/specification-pattern-in-csharp-practice.html#2746244">Re:趣味编程：C#中Specification模式的实现</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/15/specification-pattern-in-csharp-practice.html#2746244">
+                        orm和linq时代这个模式可以不用了
+                        -- 刘标才
+                    </a>
+                </li>
+        </ul></marquee></div><div id="side-archives">
+        <h2>随笔档案</h2>
+        <ul class="date">
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06.html">2011年6月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/05.html">2011年5月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/04.html">2011年4月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/02.html">2011年2月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/01.html">2011年1月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/12.html">2010年12月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/11.html">2010年11月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/09.html">2010年9月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/08.html">2010年8月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/07.html">2010年7月(3)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/06.html">2010年6月(4)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/05.html">2010年5月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/04.html">2010年4月(13)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/03.html">2010年3月(10)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/02.html">2010年2月(10)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/01.html">2010年1月(19)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/12.html">2009年12月(29)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/11.html">2009年11月(23)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/10.html">2009年10月(29)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09.html">2009年9月(46)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/08.html">2009年8月(30)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07.html">2009年7月(14)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/06.html">2009年6月(11)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/05.html">2009年5月(14)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/04.html">2009年4月(11)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/03.html">2009年3月(21)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/02.html">2009年2月(13)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/01.html">2009年1月(9)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/12.html">2008年12月(4)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/11.html">2008年11月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/08.html">2008年8月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/07.html">2008年7月(3)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/06.html">2008年6月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/05.html">2008年5月(3)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/04.html">2008年4月(4)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/03.html">2008年3月(4)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/02.html">2008年2月(6)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/01.html">2008年1月(8)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/12.html">2007年12月(6)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/11.html">2007年11月(11)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/10.html">2007年10月(4)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/07.html">2007年7月(7)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/06.html">2007年6月(13)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/04.html">2007年4月(13)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/03.html">2007年3月(22)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/02.html">2007年2月(17)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/01.html">2007年1月(16)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2006/12.html">2006年12月(43)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2006/11.html">2006年11月(38)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2006/10.html">2006年10月(54)</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2006/09.html">2006年9月(14)</a></li>
+        </ul>
+    </div><div id="side-link-219549">
+            <h2>视频资源</h2>
+            <ul class="chain">
+                        <li>
+                            <a href="http://www.youku.com/playlist_show/id_3941461.html" target="_self">C9 Lectures: Dr. Erik Meijer - Functional Programming Fundamentals</a>
+                        </li>
+                        <li>
+                            <a href="http://www.youku.com/playlist_show/id_3956181.html" target="_self">Channel 9: Expert to Expert</a>
+                        </li>
+                        <li>
+                            <a href="http://www.youku.com/playlist_show/id_3963343.html" target="_self">Channel 9: The Visual Studio Documentary</a>
+                        </li>
+                        <li>
+                            <a href="http://www.youku.com/playlist_show/id_3940564.html" target="_self">MIT 6.00 - Introduction to Computer Science and Programming</a>
+                        </li>
+                        <li>
+                            <a href="http://www.youku.com/playlist_show/id_3967477.html" target="_self">MIT 6.001 - Structure and Interpretation of Computer Programs</a>
+                        </li>
+                        <li>
+                            <a href="http://www.youku.com/playlist_show/id_1803099.html" target="_self">MIT 6.046 - Introduction to Algorithms</a>
+                        </li>
+                        <li>
+                            <a href="http://www.youku.com/playlist_show/id_3963354.html" target="_self">The Channel 9 Highlights</a>
+                        </li>
+                        <li>
+                            <a href="http://www.youku.com/playlist_show/id_3763991.html" target="_self">UC Berkeley: Data Structures</a>
+                        </li>
+            </ul>
+        </div><div id="side-link-196739">
+            <h2>英文博客</h2>
+            <ul class="chain">
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/Carnage4Life">Rss</a>                             <a href="http://www.25hoursaday.com/weblog/default.aspx" target="_self">Dare Obasanjo</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/RuminationsOfAProgrammer">Rss</a>                             <a href="http://debasishg.blogspot.com/" target="_self">Debasish Ghosh</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/codinghorror">Rss</a>                             <a href="http://www.codinghorror.com/blog/" target="_self">Jeff Atwood</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.bluebytesoftware.com/blog/SyndicationService.asmx/GetRss">Rss</a>                             <a href="http://www.bluebytesoftware.com/blog/Default.aspx" target="_self">Joe Duffy</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://misfitgeek.com/feed/">Rss</a>                             <a href="http://misfitgeek.com/" target="_self">Joe Stagner</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.joelonsoftware.com/rss.xml">Rss</a>                             <a href="http://www.joelonsoftware.com/" target="_self">Joel Spolsky</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.threeriversinstitute.org/blog/?feed=rss2">Rss</a>                             <a href="http://www.threeriversinstitute.org/blog/" target="_self">Kent Beck</a>
+                        </li>
+                        <li>
+                            <a href="http://www.markhneedham.com/" target="_self">Mark Needham</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/MatthewPodwysocki">Rss</a>                             <a href="http://codebetter.com/blogs/matthew.podwysocki/default.aspx" target="_self">Matthew Podwysocki</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.nikhilk.net/Rss.ashx">Rss</a>                             <a href="http://www.nikhilk.net/" target="_self">Nikhil Kothari</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/AyendeRahien">Rss</a>                             <a href="http://ayende.com/Blog/" target="_self">Oren Eini</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.haacked.com/haacked">Rss</a>                             <a href="http://haacked.com/" target="_self">Phil Haack</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feedproxy.google.com/rickstrahl">Rss</a>                             <a href="http://www.west-wind.com/Weblog/default.aspx" target="_self">Rick Strahl</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://blogs.msdn.com/ricom/rss.xml">Rss</a>                             <a href="http://blogs.msdn.com/ricom/" target="_self">Rico Mariani</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/wekeroad/EeKc">Rss</a>                             <a href="http://blog.wekeroad.com/" target="_self">Rob Conery</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/RobertPickeringsStrangeBlog">Rss</a>                             <a href="http://strangelights.com/" target="_self">Robert Pickering</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/ScottHanselman">Rss</a>                             <a href="http://www.hanselman.com/blog/" target="_self">Scott Hanselman</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds2.feedburner.com/stephansblog">Rss</a>                             <a href="http://www.codemonkeyism.com/" target="_self">Stephan Schmidt</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.stevenharman.net/stevenharman">Rss</a>                             <a href="http://stevenharman.net/" target="_self">Steven Harman</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://tomasp.net/blog/rss.aspx">Rss</a>                             <a href="http://tomasp.net/" target="_self">Tomas Petricek</a>
+                        </li>
+            </ul>
+        </div><div id="side-link-196909">
+            <h2>英文资源</h2>
+            <ul class="chain">
+                        <li>
+ <a class="mini_rss" href="http://blogs.msdn.com/pfxteam/rss.xml">Rss</a>                             <a href="http://blogs.msdn.com/pfxteam/" target="_self">.NET Parallel Fx Team</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/netRocksFullMp3Downloads">Rss</a>                             <a href="http://www.dotnetrocks.com/default.aspx" target="_self">.NET Rocks!</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://queue.acm.org/rssfeeds.cfm">Rss</a>                             <a href="http://queue.acm.org/" target="_self">ACM Queue</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://channel9.msdn.com/Feeds/RSS/">Rss</a>                             <a href="http://channel9.msdn.com/" target="_self">Channel 9</a>
+                        </li>
+                        <li>
+                            <a href="http://dddstepbystep.com/" target="_self">DDD Step By Step</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.dzone.com/zones/refcardz">Rss</a>                             <a href="http://refcardz.dzone.com/" target="_self">DZone Refcardz</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.facebook.com/feeds/notes.php?id=9445547199&viewer=754545229&key=845ce92db8&format=rss20">Rss</a>                             <a href="http://www.facebook.com/Engineering" target="_self">Facebook Engineering</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/HanselminutesCompleteMP3">Rss</a>                             <a href="http://www.hanselminutes.com/" target="_self">Hanselminutes</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://highscalability.com/rss.xml">Rss</a>                             <a href="http://highscalability.com/" target="_self">High Scalability</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.infoq.com/rss/rss.action?token=50A6WXWaUEwKbggNe2ub2pnqyd67vJiD">Rss</a>                             <a href="http://www.infoq.com/" target="_self">InfoQ</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://lambda-the-ultimate.org/rss.xml">Rss</a>                             <a href="http://lambda-the-ultimate.org/" target="_self">Lambda the Ultimate</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/lostechies">Rss</a>                             <a href="http://www.lostechies.com/" target="_self">Los Techies</a>
+                        </li>
+                        <li>
+                            <a href="http://msdn.microsoft.com/en-us/magazine/default.aspx" target="_self">MSDN Magazine</a>
+                        </li>
+                        <li>
+                            <a href="http://pragprog.com/magazines" target="_self">Pragmatic Magazines</a>
+                        </li>
+                        <li>
+                            <a href="http://www.refactoring.com/" target="_self">Refactoring</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/tedtalks_video">Rss</a>                             <a href="http://www.ted.com/" target="_self">TED</a>
+                        </li>
+            </ul>
+        </div><div id="side-link-199011">
+            <h2>中文资源</h2>
+            <ul class="chain">
+                        <li>
+ <a class="mini_rss" href="http://www.infoq.com/cn/rss/rss.action?token=50A6WXWaUEwKbggNe2ub2pnqyd67vJiD">Rss</a>                             <a href="http://www.infoq.com/cn" target="_self">InfoQ中文站</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feed.feedsky.com/innobook">Rss</a>                             <a href="http://www.innobook.cn/" target="_self">Innobook</a>
+                        </li>
+                        <li>
+                            <a href="http://www.tektalk.cn/" target="_self">弯曲评论</a>
+                        </li>
+            </ul>
+        </div><div id="side-link-233664">
+            <h2>资源下载</h2>
+            <ul class="chain">
+                        <li>
+                            <a href="http://gigapedia.com/" target="_self">Gigapedia</a>
+                        </li>
+                        <li>
+                            <a href="http://www.wowebook.com/" target="_self">Wow! eBook</a>
+                        </li>
+            </ul>
+        </div></div>
+            <div id="sideLeft">
+            <div id="side-recent-posts">
+        <h2>最新随笔</h2>
+        <ul class="bullet">
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06/22/two-job-descriptions.html">两则.NET高级技术人员的招聘信息</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/05/16/jscex-write-sexy-javascript-slide.html">上周末Jscex项目介绍的幻灯片</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/04/22/jscex-released-under-bsd-license.html">Jscex使用BSD授权协议正式发布</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/04/15/jscex-status-uglifyjs-parser-and-aot-compiler.html">Jscex项目现状：UglifyJS解析器及AOT编译器</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/02/10/piano-life-and-interests-driven-practice.html">我们不是牛人，所以还是老老实实跟着兴趣走吧</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/01/14/be-clear-with-language-spec-and-platform-implementation-dotnet-cross-platform.html">分清“语言/规范”以及“平台/实现”，以及跨平台.NET开发</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/01/11/paid-for-app-hub-membership.html">“花钱”购买App Hub Membership终于成功了</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/12/21/3rd-nbazaar-meeting-sign-up.html">第三届nBazaar技术交流会开始报名</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/11/05/silverlight-and-microsoft-technology-2-microsoft-technology-and-how-to-learn.html">Silverlight与微软技术（下）：微软技术与技术学习</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/11/02/silverlight-and-microsoft-technology-1-is-silverlight-dead.html">Silverlight与微软技术（上）：微软抛弃Silverlight了么？</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/09/25/things-about-padding-oracle-vulnerability-in-asp-net.html">浅谈这次ASP.NET的Padding Oracle Attack相关内容</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/08/30/1812515.html">综述：编程语言的发展趋势及未来方向</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/08/16/2nd-snda-dotnet-conference-sign-up.html">盛大创新院赞助第二届.NET技术交流会开始报名了！</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/07/13/ndc-2010-videos.html">NDC 2010视频下载：看看其他微软平台程序员们都在做什么</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/07/02/1769803.html">关于using及foreach的一点看法，及其他</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/07/02/1769605.html">单链表与List&amp;lt;T&amp;gt;究竟哪个遍历速度快？</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/06/24/first-snda-dotnet-conference-videos.html">盛大创新院赞助首届.NET技术交流会 - 演讲录像及下载</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/06/17/first-snda-dotnet-conference-is-coming.html">盛大创新院赞助首届.NET技术交流会即将召开</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/06/07/first-version-of-lambda-and-closures-in-java-7.html">浅谈Java 7的闭包与Lambda表达式之优劣</a></li>
+                <li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/06/01/1749045.html">通知：正式迁移至新博客</a></li>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+        </ul>
+    </div><div id="side-categories">
+        <h2>随笔分类</h2>
+        <ul class="folder">
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/178398.html">00. 重中之重(17)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/129812.html">01. DotNet框架(103)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/117017.html">02. ASP.NET(204)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/72919.html">03. 语言编程(102)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/73433.html">04. 前端表现(183)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/177896.html">05. 实践优化(166)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/77507.html">06. 项目扩展(37)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/76696.html">07. 翻译引进(49)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/76656.html">09. 并行处理(23)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/178306.html">10. 架构设计(9)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/178307.html">11. 思考讨论(52)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/73067.html">12. 技术尝鲜(22)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/73066.html">13. 生活心情(56)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/73244.html">14. 新闻信息(118)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/73825.html">15. 培训演讲(40)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/JeffreyZhao/category/179583.html">16. 阅读相关(14)</a>
+                </li>
+        </ul>
+    </div><div id="side-top-posts-custom">
+    <h2>推荐排行榜</h2>
+    <div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06/22/two-job-descriptions.html">1. 两则.NET高级技术人员的招聘信息(77)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/11/23/recommended-reading-3-csapp.html">2. 老赵书托（3）：深入理解计算机系统(59)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/15/recommended-reading-2-sicp.html">3. 老赵书托（2）：计算机程序的构造与解释(52)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/11/05/silverlight-and-microsoft-technology-2-microsoft-technology-and-how-to-learn.html">4. Silverlight与微软技术（下）：微软技术与技术学习(47)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/07/02/1769803.html">5. 关于using及foreach的一点看法，及其他(45)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/07/25/it168-thief.html">6. IT168转载问题解决情况，以及本人博客转载方式(42)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/11/02/silverlight-and-microsoft-technology-1-is-silverlight-dead.html">7. Silverlight与微软技术（上）：微软抛弃Silverlight了么？(39)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/08/05/from-delegate-to-others.html">8. 从.NET中委托写法的演变谈开去（上）：委托与匿名方法(38)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/08/30/1812515.html">9. 综述：编程语言的发展趋势及未来方向(32)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/23/1572868.html">10. 一些技术图书编写、推荐、出版人员需要自重(31)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/03/04/microsoft-technology-and-the-attitude.html">11. 谈谈微软技术，以及对待技术应有的态度(30)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/08/07/from-delegate-to-others-2.html">12. 从.NET中委托写法的演变谈开去（中）：Lambda表达式及其优势(29)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/01/14/be-clear-with-language-spec-and-platform-implementation-dotnet-cross-platform.html">13. 分清“语言/规范”以及“平台/实现”，以及跨平台.NET开发(27)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/09/25/things-about-padding-oracle-vulnerability-in-asp-net.html">14. 浅谈这次ASP.NET的Padding Oracle Attack相关内容(26)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/12/28/1634125.html">15. 计算机（及其他）书籍赠送(25)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/07/02/1769605.html">16. 单链表与List&lt;T&gt;究竟哪个遍历速度快？(24)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/09/18/aspnet-php-benchmark-and-more.html">17. 从ASP.NET的PHP执行速度比较谈起(24)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/10/26/book-review-Practices-of-an-Agile-Developer-The-Productive-Programmer-The-ThoughtWorks-Anthology.html">18. 书评：卓有成效的ThoughtWorks程序员的45个习惯(24)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/02/10/piano-life-and-interests-driven-practice.html">19. 我们不是牛人，所以还是老老实实跟着兴趣走吧(23)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2010/01/19/1651772.html">20. 今日入职盛大创新院(22)</a></li></ul></div>
+</div>    
+    
+    
+    
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+<div id="side-top-posts">
+    <h2>阅读排行榜</h2>
+    <div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2006/10/29/ASP_NET_AJAX_Q_and_A.html">1. Q &amp; A专用文章（已过期）(66431)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2011/06/22/two-job-descriptions.html">2. 两则.NET高级技术人员的招聘信息(52933)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/06/14/1221920.html">3. 精化集ASP.NET AJAX与ASP.NET MVC分类第二轮筛选结果(46642)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/07/17/1032799.html">4. 上海柏盛技术有限公司招聘技术人员(44322)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/08/04/the-csproj-file.html">5. 概念，依旧是概念……csproj文件是做什么用的？(42179)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/07/14/User_Control_Rendering.html">6. 方案改进：直接通过User Control生成HTML(41889)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/07/28/CachePanel.html">7. 输出缓存与CachePanel(39023)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/03/12/ASP_NET_AJAX_MSDN_Webcast_Feedback.html">8. MSDN Webcast“深入浅出ASP.NET AJAX系列”预告及反馈(38234)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/03/10/CodeTimer.html">9. 一个简单的性能计数器：CodeTimer(37367)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/04/01/tail-recursion-explanation.html">10. 浅谈尾递归的优化方式(37330)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/02/24/use-async-operation-properly.html">11. 正确使用异步操作(37323)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2007/03/26/AjaxUploadHelper_Prototype.html">12. UpdatePanel终于可以上传文件了！(36091)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/02/12/aspnet_upload.html">13. 随便说说：在ASP.NET应用程序中上传文件(36055)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/03/05/LINQ-to-SQL-Batch-Delete-Extension.html">14. 扩展LINQ to SQL：使用Lambda Expression批量删除数据(35564)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/11/24/invoke-method-by-lambda-expression.html">15. 方法的直接调用，反射调用与……Lambda表达式调用(35325)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/03/26/tail-recursion-and-continuation.html">16. 尾递归与Continuation(35289)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/06/04/ajax-linq-lambda-expression.html">17. 觉得有必要来澄清几组重要概念(34750)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/05/06/recommended-reading-1.html">18. 老赵书托（1）：写在前面(34603)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2008/05/04/build-component-to-upload-file-in-updatepanel.html">19. 更新：让UpdatePanel支持上传文件(34262)</a></li><li><a href="http://www.cnblogs.com/JeffreyZhao/archive/2009/11/23/recommended-reading-3-csapp.html">20. 老赵书托（3）：深入理解计算机系统(33702)</a></li></ul></div>
+</div><div id="side-link-198650">
+            <h2>编程语言</h2>
+            <ul class="chain">
+                        <li>
+                            <a href="http://erlang.org/" target="_self">Erlang</a>
+                        </li>
+                        <li>
+                            <a href="http://msdn.microsoft.com/en-us/fsharp/default.aspx" target="_self">F#</a>
+                        </li>
+                        <li>
+                            <a href="http://www.haskell.org/" target="_self">Haskell</a>
+                        </li>
+                        <li>
+                            <a href="http://iolanguage.com/" target="_self">IO</a>
+                        </li>
+                        <li>
+                            <a href="http://www.python.org/" target="_self">Python</a>
+                        </li>
+                        <li>
+                            <a href="http://www.ruby-lang.org/en/" target="_self">Ruby</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.scala-lang.org/featured/rss.xml">Rss</a>                             <a href="http://www.scala-lang.org/" target="_self">Scala</a>
+                        </li>
+            </ul>
+        </div><div id="side-link-198637">
+            <h2>存储相关</h2>
+            <ul class="chain">
+                        <li>
+                            <a href="http://incubator.apache.org/cassandra/" target="_self">Cassandra</a>
+                        </li>
+                        <li>
+                            <a href="http://couchdb.apache.org/" target="_self">CouchDB</a>
+                        </li>
+                        <li>
+                            <a href="http://fluidinfo.com/fluiddb" target="_self">FluidDB</a>
+                        </li>
+                        <li>
+                            <a href="http://hypertable.org/" target="_self">Hypertable</a>
+                        </li>
+                        <li>
+                            <a href="http://www.danga.com/mogilefs/" target="_self">MogileFS</a>
+                        </li>
+                        <li>
+                            <a href="http://www.mongodb.org/" target="_self">MongoDB</a>
+                        </li>
+                        <li>
+                            <a href="http://www.mysql.com/" target="_self">MySQL</a>
+                        </li>
+                        <li>
+                            <a href="http://neo4j.org/" target="_self">Neo4j</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.postgresql.org/versions.rss">Rss</a>                             <a href="http://www.postgresql.org/" target="_self">PostgreSQL</a>
+                        </li>
+                        <li>
+                            <a href="http://code.google.com/p/redis/" target="_self">Redis</a>
+                        </li>
+                        <li>
+                            <a href="http://www.terracotta.org/" target="_self">Terracotta</a>
+                        </li>
+                        <li>
+                            <a href="http://tokyocabinet.sourceforge.net/" target="_self">Tokyo Cabinet</a>
+                        </li>
+            </ul>
+        </div><div id="side-link-196922">
+            <h2>其他项目</h2>
+            <ul class="chain">
+                        <li>
+                            <a href="http://wiki.github.com/jboner/akka" target="_self">Akka</a>
+                        </li>
+                        <li>
+                            <a href="http://www.db4o.com/" target="_self">db4o</a>
+                        </li>
+                        <li>
+                            <a href="http://www.eqqon.com/index.php/GitSharp" target="_self">Git#</a>
+                        </li>
+                        <li>
+                            <a href="http://hadoop.apache.org/" target="_self">Hadoop</a>
+                        </li>
+                        <li>
+                            <a href="http://www.ikvm.net/" target="_self">IKVM.NET</a>
+                        </li>
+                        <li>
+                            <a href="http://www.codeplex.com/IronPython" target="_self">IronPython</a>
+                        </li>
+                        <li>
+                            <a href="http://www.ironruby.net/" target="_self">IronRuby</a>
+                        </li>
+                        <li>
+                            <a href="http://irony.codeplex.com/" target="_self">Irony</a>
+                        </li>
+                        <li>
+                            <a href="http://mina.apache.org/" target="_self">Mina</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.mono-project.com/news/index.rss2">Rss</a>                             <a href="http://www.mono-project.com/" target="_self">Mono</a>
+                        </li>
+                        <li>
+                            <a href="http://www.jboss.org/netty/" target="_self">Netty</a>
+                        </li>
+                        <li>
+                            <a href="http://nhforge.org/" target="_self">NHibernate</a>
+                        </li>
+                        <li>
+                            <a href="http://www.nutbox.org/" target="_self">NutBox</a>
+                        </li>
+                        <li>
+                            <a href="http://lucene.apache.org/nutch/" target="_self">Nutch</a>
+                        </li>
+            </ul>
+        </div><div id="side-link-226513">
+            <h2>推荐内容</h2>
+            <ul class="chain">
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#testability-driven-development" target="_self">“可测试性”驱动开发</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#asp-net-routing" target="_self">ASP.NET Routing相关</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#fsharp-async-parallel-patterns" target="_self">F#中的异步及并行模式</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#page-static" target="_self">HTML内容生成</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#nhibernate-custom-collection" target="_self">NHibernate自定义集合类型</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#prog-lang-trend" target="_self">编程语言的发展趋势及未来方向</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#expression-tree-reflection" target="_self">表达式树与反射调用</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#concurrent-cache-perf" target="_self">并发环境下的缓存容器性能优化</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#from-delegate-to-others" target="_self">从.NET中委托写法的演变谈开去</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#dotnet-basic-perf" target="_self">基础性能相关</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#url-gen-by-route" target="_self">基于Routing库的URL生成方式</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#book-recommendation" target="_self">老赵书托</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#my-view-of-il" target="_self">老赵谈IL</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#trouble-shooting" target="_self">排错相关</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#talk-about-code-performance" target="_self">浅谈代码的执行效率</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#tail-recursion" target="_self">浅谈尾递归</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#thread-pool" target="_self">浅谈线程池</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#code-for-fun" target="_self">趣味编程</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#fragment-cache" target="_self">视图片断缓存</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#array-linq-sort-perf" target="_self">数组排序方法的性能比较</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#expression-tree-cache" target="_self">谈表达式树的缓存</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#page-static" target="_self">谈网页静态化</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#my-view-of-hibernate" target="_self">我对NHibernate的感受</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#break-the-browsers-restrictions" target="_self">挣脱浏览器的束缚</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#string-concat-perf" target="_self">重谈字符串连接性能</a>
+                        </li>
+                        <li>
+                            <a href="http://blog.zhaojie.me/2009/12/valuable-posts-index.html#url-rewrite" target="_self">重提URL Rewrite</a>
+                        </li>
+            </ul>
+        </div><div id="side-link-196734">
+            <h2>中文博客</h2>
+            <ul class="chain">
+                        <li>
+ <a class="mini_rss" href="http://feedproxy.google.com/CatChen/Chinese">Rss</a>                             <a href="http://chinese.catchen.biz/" target="_self">陈广琛</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.dbanotes.net/index.xml">Rss</a>                             <a href="http://www.dbanotes.net/" target="_self">冯大辉</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds2.feedburner.com/virushuo">Rss</a>                             <a href="http://blog.devep.net/virushuo/" target="_self">霍炬</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedsky.com/csdn.net/hikaliv">Rss</a>                             <a href="http://blog.csdn.net/hikaliv/" target="_self">李博</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.xiaolai.net/index.php/feed">Rss</a>                             <a href="http://xiaolai.net/" target="_self">李笑来</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://blog.delphij.net/atom.xml">Rss</a>                             <a href="http://blog.delphij.net/" target="_self">李鑫</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.cnliufeng.com/blog/atom.xml">Rss</a>                             <a href="http://www.cnliufeng.com/blog/" target="_self">刘丰</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://mindhacks.cn/feed/">Rss</a>                             <a href="http://mindhacks.cn/" target="_self">刘未鹏</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://robertmao.com/feeds/latest/">Rss</a>                             <a href="http://robertmao.com/" target="_self">冒志鸿</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://rednaxelafx.javaeye.com/rss">Rss</a>                             <a href="http://rednaxelafx.javaeye.com/" target="_self">莫枢</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://blog.quehy.com/feed/">Rss</a>                             <a href="http://blog.quehy.com/" target="_self">阙宏宇</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feed.ruanyifeng.com/">Rss</a>                             <a href="http://www.ruanyifeng.com/blog/" target="_self">阮一峰</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.supengcast.net/syndication.axd">Rss</a>                             <a href="http://www.supengcast.net/" target="_self">苏鹏</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://lifesinger.org/blog/feed/">Rss</a>                             <a href="http://lifesinger.org/blog/" target="_self">王保平</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.baibanbao.net/?feed=rss2">Rss</a>                             <a href="http://www.baibanbao.net/" target="_self">王佩</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feed.arthraim.cn/">Rss</a>                             <a href="http://arthraim.cn/" target="_self">王徐阳</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://techblog.iamzellux.com/feed/">Rss</a>                             <a href="http://techblog.iamzellux.com/" target="_self">王远轩</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds2.feedburner.com/hc1983">Rss</a>                             <a href="http://blog.xiqiao.info/" target="_self">西乔</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds2.feedburner.com/xumathena">Rss</a>                             <a href="http://blog.youxu.info/" target="_self">徐宥</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://feeds.feedburner.com/yyfrankyy">Rss</a>                             <a href="http://yyfrankyy.com/blog/" target="_self">许阳寅</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://www.luanxiang.org/blog/feed">Rss</a>                             <a href="http://www.luanxiang.org/blog/" target="_self">余晟</a>
+                        </li>
+                        <li>
+ <a class="mini_rss" href="http://blog.vgod.tw/feed/">Rss</a>                             <a href="http://blog.vgod.tw/" target="_self">張琮翔</a>
+                        </li>
+            </ul>
+        </div><div id="side-book-recommendation"><h2>推荐阅读</h2><div>null</div></div></div>
+            
+                <div id="sideContainer"></div>
+                <script type="text/javascript">
+                    $.ajax({
+                        url: '/' + currentBlogApp + '/mvc/blog/Minyx2_Lite_SideColumn.aspx',
+                        data: '{}',
+                        type: 'post',
+                        dataType: 'text',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            if (data) {
+                                $("#sideContainer").html(data);
+                                loadBlogDefaultCalendar();
+                                loadBlogSideBlocks();
+                                var m = window.__blog.sideContainerRendered;
+                                if (m) { m(__$("sideContainer")); }
+                                window.__blog.sidebar.__layout();
+                            }
+                        }
+                    });
+
+                </script>
+            
+        </div>
+
+        <script type="text/javascript">
+            var m = window.__blog.sidebarRendered;
+            if (m) { m(__$("sidebar")); }
+        </script>
+
+        <div id="footer">
+            
+<p id="logoFoot">
+    <a href="http://www.spiga.com.mx/" title="Agencia Interactiva Spiga">www.spiga.com.mx</a>
+</p>
+<div class="footText">
+<p>
+Copyright ©2014 Jeffrey Zhao
+</p>
+<p>
+<a href="http://www.cnblogs.com/">博客园</a>
+</p>
+</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var m = window.__blog.wrapperRendered;
+        if (m) { m(__$("wrapper")); }
+    </script>
+
+</div>
+<!-- end of container -->
+
+<script type="text/javascript">
+    var m = window.__blog.containerRendered;
+    if (m) { m(__$("container")); }
+</script>
+
+
+<!--end: footer -->
+
+<!--PageEndHtml Block Begin-->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-929483-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<div id="liveMessengerContainer" style="position: fixed; right: 5px; bottom: 5px;">
+        <div style="border: solid 1px black; width: 160px; height:39px; background-image:url(http://www.cnblogs.com/images/cnblogs_com/jeffreyzhao/Messenger_Header_bg.gif)" id="liveMessengerThumb">
+            <a href="http://settings.messenger.live.com/Conversation/IMMe.aspx?invitee=fba4447598b1d752%40apps.messenger.live.com&mkt=zh-cn" target="_blank" onclick="return !confirm(&#39;老赵很忙，您不妨通过邮件（jeffz[at]live[dot]com）联系他吧？&#39;)">
+                <img src="./浅谈线程池（上）：线程池的作用及CLR线程池 - Jeffrey Zhao - 博客园_files/Messenger_logo_beta.gif" alt="使用Live Messenger联系我" style="margin: 10px 10px 0px 9px; border-width: 0px">
+            </a>
+        </div>
+    </div>
+
+<script language="javascript" type="text/javascript">
+if (doContentResize) { $(document).ready(doContentResize); }
+</script>
+
+<!--script src='http://toolbar.wibiya.com/toolbarLoader.php?toolbarId=7911' type='text/javascript'></script-->
+<!--PageEndHtml Block End-->
+
+
+<iframe id="google_osd_static_frame_6621223171241" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body></html>

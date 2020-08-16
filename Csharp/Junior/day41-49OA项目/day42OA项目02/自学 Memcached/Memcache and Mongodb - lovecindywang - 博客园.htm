@@ -1,0 +1,717 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0068)http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Memcache and Mongodb - lovecindywang - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./Memcache and Mongodb - lovecindywang - 博客园_files/common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Memcache and Mongodb - lovecindywang - 博客园_files/style.css">
+<link type="text/css" rel="stylesheet" href="./Memcache and Mongodb - lovecindywang - 博客园_files/common2.css">
+<link type="text/css" rel="stylesheet" href="./Memcache and Mongodb - lovecindywang - 博客园_files/shStyle.css">
+<link type="text/css" rel="stylesheet" href="./Memcache and Mongodb - lovecindywang - 博客园_files/customcss.aspx">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/lovecindywang/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/lovecindywang/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/lovecindywang/wlwmanifest.xml">
+<script async="" type="text/javascript" src="./Memcache and Mongodb - lovecindywang - 博客园_files/gpt.js"></script><script type="text/javascript" async="" src="./Memcache and Mongodb - lovecindywang - 博客园_files/ga.js"></script><script src="./Memcache and Mongodb - lovecindywang - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">
+var currentBlogApp = 'lovecindywang';
+</script>
+<script src="./Memcache and Mongodb - lovecindywang - 博客园_files/common.js" type="text/javascript"></script> 
+<script src="./Memcache and Mongodb - lovecindywang - 博客园_files/json2.js" type="text/javascript"></script>
+<script type="text/javascript" src="./Memcache and Mongodb - lovecindywang - 博客园_files/syntaxHighlighter.js"></script>
+<script async="" type="text/javascript" src="./Memcache and Mongodb - lovecindywang - 博客园_files/google_ads_gpt.js"></script><script type="text/javascript" src="./Memcache and Mongodb - lovecindywang - 博客园_files/osd.js"></script></head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/lovecindywang/">lovecindywang  = lovecherry</a></div>
+<div class="subtitle">未来是移动开发的天下@未来是云计算的天下</div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/lovecindywang/">首页</a></li>
+<li id="nav_q"><a class="menu" href="http://q.cnblogs.com/">博问</a></li>
+<li id="nav_ing"><a class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+<li id="nav_newpost"><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://www.cnblogs.com/lovecindywang/admin/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/lovecindywang">联系</a></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/lovecindywang/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/lovecindywang/rss"><img src="/Skins/Custom/images/rss.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://www.cnblogs.com/lovecindywang/admin/EditPosts.aspx">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-91&nbsp;
+文章-0&nbsp;
+评论-784&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+	
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="./Memcache and Mongodb - lovecindywang - 博客园_files/Memcache and Mongodb - lovecindywang - 博客园.htm">Memcache and Mongodb</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>先说说自己对Memcache和Mongodb的一些看法，主要是抛砖引玉了，希望看到大家的意见和补充。</p>
+<p>&nbsp;</p>
+<p><strong>Memcache</strong></p>
+<p><strong>&nbsp;</strong></p>
+<p>Memcache的优势我觉得总结下来主要体现在：</p>
+<p>1） 分布式。可以由10台拥有4G内存的机器，构成一个40G的内存池，如果觉得还不够大可以增加机器，这样一个大的内存池，完全可以把大部分热点业务数据保存进去，由内存来阻挡大部分对数据库读的请求，对数据库释放可观的压力。</p>
+<p>2） 单点。如果Web服务器或App服务器做负载均衡的话，在各自内存中保存的缓存可能各不相同，如果数据需要同步的话，比较麻烦（各自自己过期，还是分发数据同步？），即使数据并不需要同步，用户也可能因为数据的不一致而产生用户体验上的不友好。</p>
+<p>3） 性能强。不用怀疑和数据库相比确实是，根源上还是内存的读写和磁盘读写效率上几个数量级的差距。有的时候我们在抱怨数据库读写太差的情况下可以看看磁盘的IO，如果确实是瓶颈的话装啥强劲的数据库估计也档不了，强不强无非是这个数据库多少充分的利用了内存。</p>
+<p>但是也不太建议在任何情况下使用Memcache替代任何缓存：</p>
+<p>1） 如果Value特别大，不太适合。因为在默认编译下Memcache只支持1M的Value（Key的限制到不是最大的问题）。其实从实践的角度来说也不建议把非常大的数据保存在Memcache中，因为有序列化反序列化的过程，别小看它消耗的CPU。说到这个就要提一下，我一直觉得Memcache适合面向输出的内容缓存，而不是面向处理的数据缓存，也就是不太适合把大块数据放进去拿出来处理之后再放进去，而是适合拿出来就直接给输出了，或是拿出来不需要处理直接用。</p>
+<p>2） 如果不允许过期，不太适合。Memcache在默认情况下最大30天过期，而且在内存达到使用限制后它也会回收最少使用的数据。因此，如果我们要把它当作static变量的话就要考虑到这个问题，必须有重新初始化数据的过程。其实应该这么想，既然是缓存就是拿到了存起来，如果没有必定有一个重新获取重新缓存的过程，而不是想着它永远存在。</p>
+<p>在使用Memcache的过程中当然也会有一些问题或者说最佳实践：</p>
+<p>1） 清除部分数据的问题。Memcache只是一个Key/Value的池，一个公共汽车谁都可以上。我觉得对于类似的公共资源，如果用的人都按照自己的规则来的话很容易出现问题。因此，最好在Key值的规范上上使用类似命名空间的概念， 每一个用户都能很明确的知道某一块功能的Key的范围，或者说前缀。带来的好处是我们如果需要清空的话可以根据这个规范找到我们自己的一批Key然后再去清空，而不是清空所有的。当然有人是采用版本升级的概念，老的Key就让它过去吧，到时候自然会清空，这也是一种办法。不过Key有规范总是有好处的，在统计上也方便一点。</p>
+<p>2） Value的组织问题。也就是说我们存的数据的粒度，比如要保存一个列表，是一个保存在一个键值还是统一保存为一个键值，这取决于业务。如果粒度很小的话最好是在获取的时候能批量获取，在保存的时候也能批量保存。对于跨网络的调用次数越少越好，可以想一下，如果一个页面需要输出100行数据，每一个数据都需要获取一次，一个页面进行上百次连接这个性能会不会成问题。</p>
+<p>那么Memcache主要用在哪些功能上呢？</p>
+<p>其实我觉得平时能想到在内存中做缓存的地方我们都可以考虑下是不是可以去适用分布式缓存，但是主要的用途还是用来在前端或中部挡一下读的需求来释放Web服务器App服务器以及DB的压力。</p>
+<p>&nbsp;</p>
+<p><strong>Mongodb</strong></p>
+<p>&nbsp;</p>
+<p>Mongodb是一款比较优良的非关系型数据库的文档型的数据库。它的优势主要体现在：</p>
+<p>1） 开源。意味着即使我们不去改也可以充分挖掘它，MS SQL除了看那些文档，谁又知道它内部如何实现。</p>
+<p>2） 免费。意味着我们可以在大量垃圾服务器上装大量的实例，即使它性能不怎么高，也架不住非常多的点啊。</p>
+<p>3） 性能高。其它没比较过，和MS SQL相比，同样的应用（主要是写操作）一个撑500用户就挂了，一个可以撑到2000。在数据量上到百万之后，即使没索引，MS SQL的插入性能下降的也一塌糊涂。其实任何事物都有相对性的，在变得复杂变得完善了之后会牺牲一部分的性能，MS SQL体现的是非常强的安全性数据完整性，这点是Mongodb办不到的。</p>
+<p>4） 配置简单并且灵活。在生产环境中对数据库配置故障转移群集和读写分离的数据库复制是很常见的需求，MS SQL的配置繁琐的步骤还是很恐怖的，而Mongodb可以在五分钟之内配置自己所需要的故障转移组，读写分离更是只需要一分钟。灵活性体现在，我们可以配置一个M一个S，两个M一个S（两个M写入的数据会合并到S上供读取），一个M两个S（一个M写入的数据在两个S上有镜像），甚至是多个M多个S（理论上可以创建10个M，10个S，我们只需要通过轮询方式随便往哪个M上写，需要读的时候也可以轮训任意一个S，当然我们要知道不可能保证在同一时间所有的S都有一致的数据）。那么也可以配置两个M的对作为一套故障转移群集，然后这样的群集配置两套，再对应两个S，也就是4个M对应2个S，保证M点具有故障转移。</p>
+<p>5） 使用灵活。在之前的文章中我提到甚至可以通过SQL到JS表达式的转换让Mongodb支持SQL语句的查询，不管怎么说Mongodb在查询上还是很方便的。</p>
+<p>之前也说过了，并不是所有数据库应用都使用采用Mongodb来替代的，它的主要缺点是：</p>
+<p>1） 开源软件的特点：更新快，应用工具不完善。由于更新快，我们的客户端需要随着它的更新来升级才能享受到一些新功能，更新快也意味着很可能在某一阶段会缺乏某个重要功能。另外我们知道MS SQL在DEV/DBA/ADM多个维度都提供了非常好的GUI工具对数据库进行维护。而Mongodb虽然提供了一些程序，但是并不是非常友好。我们的DBA可能会很郁闷，去优化Mongodb的查询。</p>
+<p>2） 操作事务。Mongodb不支持内建的事务（没有内建事务不意味着完全不能有事务的功能），对于某些应用也就不适合。不过对于大部分的互联网应用来说并不存在这个问题。</p>
+<p>在使用Mongodb的过程中主要遇到下面的问题：</p>
+<p>1） 真正的横向扩展？在使用Memcache的过程中我们已经体会到这种爽了，基本可以无限的增加机器来横向扩展，因为什么，因为我们是通过客户端来决定键值保存在那个实例上，在获取的时候也很明确它在哪个实例上，即使是一次性获取多个键值，也是同样。而对于数据库来说，我们通过各种各样的方式进行了Sharding，不说其它的，在查询的时候我们根据一定的条件获取批量的数据，怎么样去处理？比如我们按照用户ID去分片，而查询根本不在乎用户ID，在乎的是用户的年龄和教育程度，最后按照姓名排序，到哪里去取这些数据？不管是基于客户端还是基于服务端的Sharding都是非常难做的，并且即使有了自动化的Sharding性能不一定能有保障。最简单的是尽量按照功能来分，再下去就是历史数据的概念，真正要做到实时数据分散在各个节点，还是很困难。</p>
+<p>2） 多线程，多进程。在写入速度达不到预期的情况下我们多开几个线程同时写，或者多开几个Mongodb进程（同一机器），也就是多个数据库实例，然后向不同的实例去写。这样是否能提高性能？很遗憾，非常有限，甚至可以说根本不能提高。为什么使用memcache的时候多开线程可以提高写入速度？那是因为内存数据交换的瓶颈我们没达到，而对于磁盘来说，IO的瓶颈每秒那么几十兆的是很容易达到的，一旦达到这个瓶颈了，无论是开多少个进程都无法提高性能了。还好Mongodb使用内存映射，看到内存使用的多了，其实我对它的信心又多了一点（内存占用多了我觉得CPU更容易让它不闲着），怕就怕某个DB不使用什么内存，看着IO瓶颈到了，内存和CPU还是吃不饱。</p>
+<p>&nbsp;</p>
+<p><strong>Memcache和Mongodb的配合</strong></p>
+<p>&nbsp;</p>
+<p>其实有了Memcache和Mongodb我们甚至可以让80%以上的应用摆脱传统关系型数据库。我能想到它们其实可以互相配合弥补对方的不足：</p>
+<p>Memcache适合根据Key保存Value，那么有的时候我们并不知道需要读取哪些Key怎么办呢？我在想是不是可以把Mongodb或说数据库当作一个原始数据，这份原始数据中分为需要查询的字段（索引字段）和普通的数据字段两部分，把大量的非查询字段保存在Memcache中，小粒度保存，在查询的时候我们查询数据库知道要获取哪些数据，一般查询页面也就显示20-100条吧，然后一次性从Memcache中获取这些数据。也就是说，Mongodb的读的压力主要是索引字段，而数据字段只是在缓存失效的时候才有用，使用Memcache挡住大部分实质数据的查询。反过来说，如果我们要清空Memcache中的数据也知道要清空哪些Key。</p></div><div id="MySignature"><div>作者：<a href="http://www.cnblogs.com/lovecindywang" target="_blank">lovecindywang</a></div>
+<div>本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。 </div></div>
+<script type="text/javascript">
+var isLogined = true;
+var cb_blogId = 64042;
+var cb_entryId = 1739025;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "27188122-57e5-de11-ba8f-001cf0cd104b";
+var cb_entryCreatedDate = '2010/5/19 11:23:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</script>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="blog_post_info"><div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/lovecindywang/category/280372.html">开源</a></div>
+<div id="EntryTag"></div>
+<div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(cb_entryId,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/lovecindywang" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Memcache and Mongodb - lovecindywang - 博客园_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="digg_block">
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/lovecindywang/" target="_blank"><img src="./Memcache and Mongodb - lovecindywang - 博客园_files/u103060.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/lovecindywang/">lovecindywang</a><br>
+<a href="http://home.cnblogs.com/u/lovecindywang/followees">关注 - 2</a><br>
+<a href="http://home.cnblogs.com/u/lovecindywang/followers">粉丝 - 428</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor">荣誉：<a href="http://www.cnblogs.com/expert/" target="_blank">推荐博客</a></div>
+<div id="author_profile_follow">
+<a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+	<div class="diggit" onclick="votePost(cb_entryId,&#39;Digg&#39;)"> 
+		<span class="diggnum" id="digg_count">8</span>
+	</div>
+	<div class="buryit" onclick="votePost(cb_entryId,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/16/1736934.html" class="p_n_p_prefix">« </a> 博主上一篇：<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/16/1736934.html" title="发布于2010-05-16 21:04">mongodb有关的研究</a><br><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739193.html" class="p_n_p_prefix">» </a> 博主下一篇：<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739193.html" title="发布于2010-05-19 14:22">浅谈.NET下的多线程和并行计算（十四）并行计算前言</a><br><a href="http://www.cnblogs.com/xfrog/archive/2010/05/19/1739015.html" class="p_n_p_prefix">« </a> 首页上一篇：<a href="http://www.cnblogs.com/xfrog/archive/2010/05/19/1739015.html">WCF编程系列(七)信道及信道工厂</a><br><a href="http://www.cnblogs.com/ioriwellings/archive/2010/05/19/1739113.html" class="p_n_p_prefix">» </a> 首页下一篇：<a href="http://www.cnblogs.com/ioriwellings/archive/2010/05/19/1739113.html">怀旧 你是否还记得蜜桃精-纯真的80年代的</a><br></div>
+</div>
+<script type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</script>
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2010-05-19 11:23</span> <a href="http://www.cnblogs.com/lovecindywang/">lovecindywang</a> 阅读(7859) 评论(<span id="post-comment-count">16</span>)  <a href="http://www.cnblogs.com/lovecindywang/admin/EditPosts.aspx?postid=1739025" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#" onclick="AddToWz(1739025);return false;">收藏</a></div>
+	</div>
+	<img src="./Memcache and Mongodb - lovecindywang - 博客园_files/1739025.html" width="1" height="1" alt="">
+	
+</div><!--end: topics 文章、评论容器-->
+<div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1827855,&#39;c2WJjncnGI7ZL+0ZVDY1C3mcKbVh3+OuQfA4YVrf6JigY1DKjyHGWg==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1827855,&#39;c2WJjncnGI7ZL+0ZVDY1C3mcKbVh3+OuQfA4YVrf6JigY1DKjyHGWg==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1827855" class="layer">#1楼</a><a name="1827855" id="comment_anchor_1827855"></a>  <span class="comment_date">2010-05-19 11:59</span> <a id="a_comment_author_1827855" href="http://www.cnblogs.com/Seapeak/" target="_blank">xvhfeng</a> <a href="http://space.cnblogs.com/msg/send/xvhfeng" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1827855" class="blog_comment_body"><img id="comment_1827855_avatar" class="comment-avatar" src="./Memcache and Mongodb - lovecindywang - 博客园_files/u28300.jpg" alt="" style="display:none;">很牛B！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1827855,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1827855,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1827914,&#39;Wd4/4gVVGi4xQiCjd3EaDbEIG2OTF9VrKhle0xrtYI7VXMr/d5gNFg==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1827914,&#39;Wd4/4gVVGi4xQiCjd3EaDbEIG2OTF9VrKhle0xrtYI7VXMr/d5gNFg==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1827914" class="layer">#2楼</a><a name="1827914" id="comment_anchor_1827914"></a>  <span class="comment_date">2010-05-19 12:51</span> <a id="a_comment_author_1827914" href="http://www.cnblogs.com/beyondjay/" target="_blank">Tony Zhou</a> <a href="http://space.cnblogs.com/msg/send/Tony+Zhou" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1827914" class="blog_comment_body"><img id="comment_1827914_avatar" class="comment-avatar" src="./Memcache and Mongodb - lovecindywang - 博客园_files/u24912.png" alt="" style="display:none;">good</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1827914,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1827914,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1827985,&#39;tVkq6zAtCFdNcdmFXdlC6lJ0Jwfr9sB0HijrZJ7uj8kjB7BwxZxX3Q==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1827985,&#39;tVkq6zAtCFdNcdmFXdlC6lJ0Jwfr9sB0HijrZJ7uj8kjB7BwxZxX3Q==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1827985" class="layer">#3楼</a><a name="1827985" id="comment_anchor_1827985"></a>  <span class="comment_date">2010-05-19 13:51</span> <a id="a_comment_author_1827985" href="http://www.cnblogs.com/darkluck99/" target="_blank">巫云</a> <a href="http://space.cnblogs.com/msg/send/%e5%b7%ab%e4%ba%91" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1827985" class="blog_comment_body"><img id="comment_1827985_avatar" class="comment-avatar" src="./Memcache and Mongodb - lovecindywang - 博客园_files/u16978.gif" alt="" style="display:none;">不错的想法</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1827985,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1827985,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1828103,&#39;APoTAY5oGgACvhXAlVoK44AZXPd9QdO77xPraj5B0atxme2VfsGS6Q==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1828103,&#39;APoTAY5oGgACvhXAlVoK44AZXPd9QdO77xPraj5B0atxme2VfsGS6Q==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1828103" class="layer">#4楼</a><a name="1828103" id="comment_anchor_1828103"></a>  <span class="comment_date">2010-05-19 16:02</span> <a id="a_comment_author_1828103" href="http://www.cnblogs.com/tristanguo/" target="_blank">Tristan G</a> <a href="http://space.cnblogs.com/msg/send/Tristan+G" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1828103" class="blog_comment_body">动态查询MongoDb获得所谓的索引字段所需要的IO消耗和把完整数据拧出来的差别有多大呢？<br>我感觉后者就多占点内存而已。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1828103,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1828103,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1828158,&#39;mvPYpiekD8bjfZKFh1cTYhq46oD0NiEQpiNhg83t2kqbzJHoYsLp4g==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1828158,&#39;mvPYpiekD8bjfZKFh1cTYhq46oD0NiEQpiNhg83t2kqbzJHoYsLp4g==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1828158" class="layer">#5楼</a><a name="1828158" id="comment_anchor_1828158"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2010-05-19 17:01</span> <a id="a_comment_author_1828158" href="http://www.cnblogs.com/lovecindywang/" target="_blank">lovecindywang</a> <a href="http://space.cnblogs.com/msg/send/lovecindywang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1828158" class="blog_comment_body"><img id="comment_1828158_avatar" class="comment-avatar" src="./Memcache and Mongodb - lovecindywang - 博客园_files/u103060.jpg" alt="" style="display:none;">能少点磁盘读也好，当然如果不需要借助索引进行查询的话也就不需要先访问一次数据库了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1828158,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1828158,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1828225,&#39;9u8ajqZILazMcwzw84btBcFgEP1mB9hgP6ymmJ+kQF+GWU2twhabrQ==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1828225,&#39;9u8ajqZILazMcwzw84btBcFgEP1mB9hgP6ymmJ+kQF+GWU2twhabrQ==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1828225" class="layer">#6楼</a><a name="1828225" id="comment_anchor_1828225"></a>  <span class="comment_date">2010-05-19 17:46</span> <a id="a_comment_author_1828225" href="http://www.cnblogs.com/rentj1/" target="_blank">rentj</a> <a href="http://space.cnblogs.com/msg/send/rentj" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1828225" class="blog_comment_body">好文，公司正在用</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1828225,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1828225,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1828250,&#39;TNFVokNeIgLDqwFG1KSm9xqGUebbkCURQTRMlNfQMUJra/u+HPQtUQ==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1828250,&#39;TNFVokNeIgLDqwFG1KSm9xqGUebbkCURQTRMlNfQMUJra/u+HPQtUQ==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1828250" class="layer">#7楼</a><a name="1828250" id="comment_anchor_1828250"></a>  <span class="comment_date">2010-05-19 18:16</span> <a id="a_comment_author_1828250" href="http://www.cnblogs.com/bobli/" target="_blank">黎波</a> <a href="http://space.cnblogs.com/msg/send/%e9%bb%8e%e6%b3%a2" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1828250" class="blog_comment_body"><img id="comment_1828250_avatar" class="comment-avatar" src="./Memcache and Mongodb - lovecindywang - 博客园_files/u8185.jpg" alt="" style="display:none;">好文章，支持！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1828250,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1828250,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1828437,&#39;APoTAY5oGgACvhXAlVoK44AZXPd9QdO77xPraj5B0atxme2VfsGS6Q==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1828437,&#39;APoTAY5oGgACvhXAlVoK44AZXPd9QdO77xPraj5B0atxme2VfsGS6Q==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1828437" class="layer">#8楼</a><a name="1828437" id="comment_anchor_1828437"></a>  <span class="comment_date">2010-05-20 00:06</span> <a id="a_comment_author_1828437" href="http://www.cnblogs.com/tristanguo/" target="_blank">Tristan G</a> <a href="http://space.cnblogs.com/msg/send/Tristan+G" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1828437" class="blog_comment_body">嗯，不管是有SQL还是NoSQL，缓存总是需要的，总可与MemCached配合使用。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1828437,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1828437,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1829891,&#39;V257GQEdTEthjwQgWcAmNR4RW6yh3KAjeWmd63QkG3CWpiEAuRQQzw==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1829891,&#39;V257GQEdTEthjwQgWcAmNR4RW6yh3KAjeWmd63QkG3CWpiEAuRQQzw==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1829891" class="layer">#9楼</a><a name="1829891" id="comment_anchor_1829891"></a>  <span class="comment_date">2010-05-21 16:28</span> <a id="a_comment_author_1829891" href="http://www.cnblogs.com/billowdragon/" target="_blank">billowdragon</a> <a href="http://space.cnblogs.com/msg/send/billowdragon" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1829891" class="blog_comment_body">我想请教下列表数据如何缓存，key怎么设计。其中的一个列表项如果更新了，那么这个列表的数据如何更新。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1829891,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1829891,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1838695,&#39;qwygYdW49Rx/UchChk8liH+aGLemPZGIDJTXn7SrVqrY87ePb4R1YA==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1838695,&#39;qwygYdW49Rx/UchChk8liH+aGLemPZGIDJTXn7SrVqrY87ePb4R1YA==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1838695" class="layer">#10楼</a><a name="1838695" id="comment_anchor_1838695"></a>  <span class="comment_date">2010-06-02 12:49</span> <a id="a_comment_author_1838695" href="http://www.cnblogs.com/jerrychang/" target="_blank">JerryChang</a> <a href="http://space.cnblogs.com/msg/send/JerryChang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1838695" class="blog_comment_body"><img id="comment_1838695_avatar" class="comment-avatar" src="./Memcache and Mongodb - lovecindywang - 博客园_files/u32417.jpg" alt="" style="display:none;">思路很好，NoSQL与SQL之间总一定能找到一个合适平衡点。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1838695,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1838695,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1840753,&#39;Jqo6bea1gjTVtu92E1GOwuLhabSkkWALUeXITAuTZbM3OzYEE2Ksbw==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1840753,&#39;Jqo6bea1gjTVtu92E1GOwuLhabSkkWALUeXITAuTZbM3OzYEE2Ksbw==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1840753" class="layer">#11楼</a><a name="1840753" id="comment_anchor_1840753"></a>  <span class="comment_date">2010-06-04 16:48</span> <a id="a_comment_author_1840753" href="http://www.cnblogs.com/xuanye/" target="_blank">假正经哥哥</a> <a href="http://space.cnblogs.com/msg/send/%e5%81%87%e6%ad%a3%e7%bb%8f%e5%93%a5%e5%93%a5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1840753" class="blog_comment_body"><img id="comment_1840753_avatar" class="comment-avatar" src="./Memcache and Mongodb - lovecindywang - 博客园_files/u18296.gif" alt="" style="display:none;">我想先收藏一下。以后再看。。应该会用到</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1840753,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1840753,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1840817,&#39;h85GciwioS3/tORUSdCntElXMhGEH5rKHd7aCMF229OW/26qrJyvOg==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1840817,&#39;h85GciwioS3/tORUSdCntElXMhGEH5rKHd7aCMF229OW/26qrJyvOg==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1840817" class="layer">#12楼</a><a name="1840817" id="comment_anchor_1840817"></a>  <span class="comment_date">2010-06-04 17:43</span> <a id="a_comment_author_1840817" href="http://www.cnblogs.com/xiaosonl/" target="_blank">xiaosonl</a> <a href="http://space.cnblogs.com/msg/send/xiaosonl" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1840817" class="blog_comment_body">用Lucene来做索引不知道可行不可行</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1840817,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1840817,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1870450,&#39;3gyWa6YBRn10lxBbpEKTl/Et6eYf+W2eoTzfSOMy1kFApAQ0krwvxA==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1870450,&#39;3gyWa6YBRn10lxBbpEKTl/Et6eYf+W2eoTzfSOMy1kFApAQ0krwvxA==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1870450" class="layer">#13楼</a><a name="1870450" id="comment_anchor_1870450"></a>  <span class="comment_date">2010-07-13 15:10</span> <a id="a_comment_author_1870450" href="http://www.cnblogs.com/blodfox777/" target="_blank">LanceZhang</a> <a href="http://space.cnblogs.com/msg/send/LanceZhang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1870450" class="blog_comment_body"><img id="comment_1870450_avatar" class="comment-avatar" src="./Memcache and Mongodb - lovecindywang - 博客园_files/u25148.gif" alt="" style="display:none;"><fieldset class="comment_quote"><legend><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1828103" title="查看引用原文">引用</a></legend>Tristan G：<br>动态查询MongoDb获得所谓的索引字段所需要的IO消耗和把完整数据拧出来的差别有多大呢？<br>我感觉后者就多占点内存而已。</fieldset><br><br>@Tristan G<br><br>额，在一般的关系数据库里，如果只获取聚簇索的话，相对来说开销是很小的吧。MongoDb的索引没有聚簇的吗？</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1870450,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1870450,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1897926,&#39;WCJb0OI/8z1QGKETyrVDkHlYcmGg6Qf3//g25J3gpnqPqz1UOGQrNg==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1897926,&#39;WCJb0OI/8z1QGKETyrVDkHlYcmGg6Qf3//g25J3gpnqPqz1UOGQrNg==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1897926" class="layer">#14楼</a><a name="1897926" id="comment_anchor_1897926"></a>  <span class="comment_date">2010-08-20 09:49</span> <a id="a_comment_author_1897926" href="http://www.cnblogs.com/SinSay/" target="_blank">兴说：</a> <a href="http://space.cnblogs.com/msg/send/%e5%85%b4%e8%af%b4%ef%bc%9a" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1897926" class="blog_comment_body"><img id="comment_1897926_avatar" class="comment-avatar" src="./Memcache and Mongodb - lovecindywang - 博客园_files/u42237.jpg" alt="" style="display:none;">其实比较经典的应用不应该是缓存查询语句么。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1897926,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1897926,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(1952264,&#39;fXWzQvtZzrtxti9wswC49wnZvz9S3NTSyPHw0kzQqeah+xR2k3Vweg==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(1952264,&#39;fXWzQvtZzrtxti9wswC49wnZvz9S3NTSyPHw0kzQqeah+xR2k3Vweg==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1952264" class="layer">#15楼</a><a name="1952264" id="comment_anchor_1952264"></a>  <span class="comment_date">2010-11-04 22:18</span> <a id="a_comment_author_1952264" href="http://www.cnblogs.com/king_wgj/" target="_blank">王国金</a> <a href="http://space.cnblogs.com/msg/send/%e7%8e%8b%e5%9b%bd%e9%87%91" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_1952264" class="blog_comment_body">写得真好，我们公司正在使用这两款。不过对于MongoDb的备份机制还没有研究过。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(1952264,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(1952264,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"><a href="javascript:void(0);" onclick="return ReplyComment(2038342,&#39;VlhF5j+vYrdTerjtelKC6lEDEIXpVNYSEIPAU2CK/wgrKgSMNtaVXg==&#39;)">回复</a><a href="javascript:void(0);" onclick="return QuoteComment(2038342,&#39;VlhF5j+vYrdTerjtelKC6lEDEIXpVNYSEIPAU2CK/wgrKgSMNtaVXg==&#39;)">引用</a></span>
+				</div>
+				<a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#2038342" class="layer">#16楼</a><a name="2038342" id="comment_anchor_2038342"></a><span id="comment-maxId" style="display:none;">2038342</span><span id="comment-maxDate" style="display:none;">2011/3/4 10:50:59</span>  <span class="comment_date">2011-03-04 10:50</span> <a id="a_comment_author_2038342" href="http://www.cnblogs.com/dj1232090/" target="_blank">Lerry.Zhao</a> <a href="http://space.cnblogs.com/msg/send/Lerry.Zhao" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2038342" class="blog_comment_body">很好</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2038342,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2038342,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</script>
+<div id="comment_form" class="commentform">
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div id="commentform_title">发表评论</div>
+<span id="tip_comment" style="color:Red"></span>
+<p>
+昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled" value="FlyDragon">
+</p>
+<div class="commentbox_main">
+<div class="commentbox_title">
+<div class="commentbox_title_left">评论内容：</div>
+<div class="commentbox_title_right">
+<img id="ubb_quote" class="comment_icon" src="./Memcache and Mongodb - lovecindywang - 博客园_files/quote.gif" alt="引用" title="添加引用" onclick="insertUBB(&#39;tbCommentBody&#39;,&#39;quote&#39;)">
+<img id="ubb_bold" class="comment_icon" src="./Memcache and Mongodb - lovecindywang - 博客园_files/b.png" alt="粗体" title="添加粗体" onclick="insertUBB(&#39;tbCommentBody&#39;,&#39;b&#39;)">
+<img id="ubb_url" class="comment_icon" src="./Memcache and Mongodb - lovecindywang - 博客园_files/lk.png" alt="链接" title="添加链接" onclick="insertUbbUrl(&#39;tbCommentBody&#39;)">
+<img id="ubb_indent" class="comment_icon" src="./Memcache and Mongodb - lovecindywang - 博客园_files/indent.png" alt="缩进" title="添加首行缩进" onclick="insertIndent(&#39;tbCommentBody&#39;)">
+<img id="ubb_code" class="comment_icon" src="./Memcache and Mongodb - lovecindywang - 博客园_files/InsertCode.gif" alt="代码" title="添加代码" onclick="insertUbbCode()">
+<img id="ubb_img" class="comment_icon" src="./Memcache and Mongodb - lovecindywang - 博客园_files/img.gif" alt="图片" title="上传图片" onclick="OpenImageUploadWindow();">
+</div>
+</div>
+<div class="clear"></div>
+<textarea id="tbCommentBody" class="comment_textarea" rows="10"></textarea>
+</div>
+<p id="commentbox_opt">
+<input id="btn_comment_submit" type="button" class="comment_btn" value="提交评论">
+<span id="span_comment_canceledit" style="display:none"><a href="javascript:void(0);" onclick="return CancelCommentEdit()">不改了</a></span>
+<a href="javascript:void(0);" onclick="return logout();">注销</a>
+        <a id="commentbox_opt_sub" href="javascript:void(0);" title="订阅后有新评论时会邮件通知您" onclick="commentManager.Subscribe()">订阅评论</a>
+</p>
+<p>
+[使用Ctrl+Enter键快速提交]
+</p>
+<div style="display:none">
+<span id="comment_edit_id"></span><span id="span_parentcomment_id"></span>
+<span id="span_parent_id"></span>
+<span id="span_comment_replyto"></span>
+<span id="span_comment_posted"></span>
+</div>
+</div>
+
+<script type="text/javascript">
+    if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</script>
+
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="程序员的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="ad_under_post_holder">
+<div id="google_ad_c1" class="c_ad_block">
+    <!-- cnblogs_blogpost_C1_sitehome -->
+    <div id="div-gpt-ad-1346480159711-0" style="width: 300px; height: 250px;">
+    
+    <iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px;"></iframe><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" width="0" height="0" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; visibility: hidden; display: none;"></iframe></div>
+</div>
+<div id="blog_news_kb"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/172475/" target="_blank">英国天空广播3亿美元购Telefonica在英宽带业务</a><br> ·  <a href="http://news.cnblogs.com/n/172473/" target="_blank">如何巧妙固定iPad？苹果最新专利告诉你！</a><br> ·  <a href="http://news.cnblogs.com/n/172472/" target="_blank">Bing地图更新1300万平方公里卫星图像</a><br> ·  <a href="http://news.cnblogs.com/n/172471/" target="_blank">ARM CEO：Windows RT后续产品还有希望</a><br> ·  <a href="http://news.cnblogs.com/n/172468/" target="_blank">富士康宣布中国大陆零售业务重心转向电商</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/172462/" target="_blank">Facebook如何实现PB级别数据库自动化备份</a><br> ·  <a href="http://kb.cnblogs.com/page/171034/" target="_blank">源代码管理十诫</a><br> ·  <a href="http://kb.cnblogs.com/page/171286/" target="_blank">如何成为强大的程序员？</a><br> ·  <a href="http://kb.cnblogs.com/page/172315/" target="_blank">Xen 虚拟机架构</a><br> ·  <a href="http://kb.cnblogs.com/page/172156/" target="_blank">NoSQL的现状</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="google_ad_c2" class="c_ad_block">
+    <!-- cnblogs_blogpost_C2_sitehome -->
+    <div id="div-gpt-ad-1346479110744-1" style="width: 468px; height: 60px;">
+    
+    <iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_sitehome_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C2_sitehome_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px;"></iframe></div>
+</div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+</div>
+
+
+
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news" style=""><a href="http://product.china-pub.com/197209" target="
+_blank"><img border="0" src="./Memcache and Mongodb - lovecindywang - 博客园_files/微软应用架构指南.png" href="http://product.china-pub.com/197209"></a><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/lovecindywang/">lovecindywang</a><br>园龄：<a href="http://home.cnblogs.com/u/lovecindywang/" title="入园时间：2009-12-10">3年2个月</a><br>荣誉：<a href="http://www.cnblogs.com/expert/">推荐博客</a><br>粉丝：<a href="http://home.cnblogs.com/u/lovecindywang/followers/">428</a><br>关注：<a href="http://home.cnblogs.com/u/lovecindywang/followees/">2</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;27188122-57e5-de11-ba8f-001cf0cd104b&#39;)">+加关注</a></div></div></div>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="displya:none"></div></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+
+<div class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+
+</div>
+
+
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_0" href="http://www.cnblogs.com/lovecindywang/MyPosts.html">我的随笔</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_1" href="http://www.cnblogs.com/lovecindywang/MyComments.html">我的评论</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_2" title="我发表过评论的随笔" href="http://www.cnblogs.com/lovecindywang/OtherPosts.html">我的参与</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_3" href="http://www.cnblogs.com/lovecindywang/RecentComments.html">最新评论</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_4" href="http://www.cnblogs.com/lovecindywang/tag/">我的标签</a></li>
+	
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+<div class="catListPostCategory">
+<h3 class="catListTitle">随笔分类<span style="font-size:11px;font-weight:normal">(79)</span></h3>
+
+<ul>
+
+<li><a id="ctl02_CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/lovecindywang/category/326923.html">Adhesive框架(16)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/lovecindywang/category/296094.html">Wcf Extension(8)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/lovecindywang/category/225505.html">多线程和并行计算(15)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/lovecindywang/category/280372.html">开源(9)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/lovecindywang/category/385452.html">移动开发(2)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/lovecindywang/category/246029.html">优化解决方案(4)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/lovecindywang/category/226564.html">杂谈(25)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案<span style="font-size:11px;font-weight:normal">(92)</span></h3>
+
+<ul>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/lovecindywang/archive/2012/12.html">2012年12月 (9)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/lovecindywang/archive/2012/10.html">2012年10月 (3)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/lovecindywang/archive/2012/09.html">2012年9月 (1)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/lovecindywang/archive/2012/08.html">2012年8月 (1)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/lovecindywang/archive/2012/06.html">2012年6月 (1)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/lovecindywang/archive/2012/05.html">2012年5月 (1)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/lovecindywang/archive/2012/03.html">2012年3月 (2)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/lovecindywang/archive/2012/02.html">2012年2月 (2)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/lovecindywang/archive/2012/01.html">2012年1月 (2)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/lovecindywang/archive/2011/12.html">2011年12月 (1)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/lovecindywang/archive/2011/11.html">2011年11月 (5)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/lovecindywang/archive/2011/10.html">2011年10月 (15)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/lovecindywang/archive/2011/05.html">2011年5月 (3)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/lovecindywang/archive/2011/04.html">2011年4月 (5)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/lovecindywang/archive/2011/03.html">2011年3月 (3)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/lovecindywang/archive/2011/02.html">2011年2月 (2)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/lovecindywang/archive/2011/01.html">2011年1月 (4)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/lovecindywang/archive/2010/12.html">2010年12月 (4)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/lovecindywang/archive/2010/11.html">2010年11月 (1)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/lovecindywang/archive/2010/10.html">2010年10月 (2)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/lovecindywang/archive/2010/09.html">2010年9月 (2)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/lovecindywang/archive/2010/08.html">2010年8月 (1)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/lovecindywang/archive/2010/07.html">2010年7月 (2)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/lovecindywang/archive/2010/06.html">2010年6月 (1)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_24" href="http://www.cnblogs.com/lovecindywang/archive/2010/05.html">2010年5月 (4)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_25" href="http://www.cnblogs.com/lovecindywang/archive/2010/03.html">2010年3月 (2)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_26" href="http://www.cnblogs.com/lovecindywang/archive/2010/02.html">2010年2月 (1)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_27" href="http://www.cnblogs.com/lovecindywang/archive/2010/01.html">2010年1月 (7)</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_1_Link_28" href="http://www.cnblogs.com/lovecindywang/archive/2009/12.html">2009年12月 (5)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catList">
+<h3 class="catListTitle">友情链接</h3>
+
+<ul>
+
+<li><a id="ctl02_CatList_LinkList_2_Link_0" rel="nofollow" href="http://www.cnblogs.com/hb_cattle/" target="_blank">陈锋</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_2_Link_1" rel="nofollow" href="http://www.cnblogs.com/lovecherry" target="_blank">我另外一个博客</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_2_Link_2" rel="nofollow" href="http://seapeak.cnblogs.com/" target="_blank">徐海峰</a> </li>
+
+<li><a id="ctl02_CatList_LinkList_2_Link_3" rel="nofollow" href="http://zgx.cnblogs.com/" target="_blank">周国选</a> </li>
+
+</ul>
+
+</div>
+
+
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	157745
+	</li>
+	<li class="liRank">
+		排名 -	640
+	</li>
+</ul>
+</div>
+
+
+
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2618188">1. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body">第一天上班没什么活，把LZ的全部文章都看了一遍<br>当然，技术的只是粗粗看下啊<br><br>很羡慕LZ比我早出生了10年左右，能够赶上IT这股早起的浪潮<br>看了LZ的文章，也见识到了很多，感觉很多还要学习，谢谢啦</li>
+    <li class="recent_comment_author">--清风333</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2616813">2. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body">LZ写的好,不过我有个细节问题.在多iframe并列与嵌套时如何使用amplify框架.目前我所知道的有两个解决方法1.是在子页面使用top.amplify.2.修改源码将(function( global, undefined )( (this) ) )修改为(function( global, undefined )( (top || this) ) ),将(function( amplify...</li>
+    <li class="recent_comment_author">--永远的阿哲</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2613621">3. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body">很喜欢博主的文章，刚刚用豆约翰博客备份专家备份了您的全部博文。</li>
+    <li class="recent_comment_author">--KevinQiangK</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/10/23/2735704.html#2612528">4. Re:我的技术历程（下）</a></li>
+    <li class="recent_comment_body"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#2612502" title="查看所回复的评论">@</a>阿兵<br>能否仔细阅读下我的文章，已经说了重的书是出版社送的，自己翻译的书。。。。</li>
+    <li class="recent_comment_author">--lovecindywang</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/10/23/2735704.html#2612502">5. Re:我的技术历程（下）</a></li>
+    <li class="recent_comment_body">书买重了，说明根本就没有看过</li>
+    <li class="recent_comment_author">--阿兵</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/12/03/1895517.html#2611740">6. Re:微软应用架构指南(第2版)出版</a></li>
+    <li class="recent_comment_body">楼主能把翻译版本共享吗？谢谢！</li>
+    <li class="recent_comment_author">--wanlf</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/01/06/1640267.html#2601932">7. Re:浅谈.NET下的多线程和并行计算（八）Winform中多线程编程基础上</a></li>
+    <li class="recent_comment_body"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#1741831" title="查看所回复的评论">@</a>完全实况<br>数据保存在内存中，表格上需要显示哪些信息就实时绘制哪些信息。<br>虚拟表表格控件，我老师自己写了一个</li>
+    <li class="recent_comment_author">--GIS探索者</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/10/23/2735704.html#2596845">8. Re:我的技术历程（下）</a></li>
+    <li class="recent_comment_body"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#2555463" title="查看所回复的评论">@</a>帅帅的蓝莓<br>这个故事告诉我们，买书看书太靠谱了，只用了 9000，造就了如此神牛，绝对是一本万利啊</li>
+    <li class="recent_comment_author">--iddmx</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2588012">9. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#2586306" title="查看所回复的评论">@</a>奥特曼公主<br>脚本都这样，不过现在浏览器很好调试啊</li>
+    <li class="recent_comment_author">--腐乳</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/23/2829828.html#2587969">10. Re:我的架构经验系列文章索引</a></li>
+    <li class="recent_comment_body">mARK,慢慢看</li>
+    <li class="recent_comment_author">--tom.to</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2586640">11. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body">绝对是好文！！！</li>
+    <li class="recent_comment_author">--刘江北</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2586583">12. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body">绝对是一片好文章，总结的很全面。</li>
+    <li class="recent_comment_author">--高天乐</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2586447">13. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#2586306" title="查看所回复的评论">@</a>奥特曼公主<br>感觉正好相反，我喊觉得js的debug更加简单明了。可能是我写的js都比较简单？不管怎么样我觉得用opera的dragonfly或者是firefox都是debug的利器。</li>
+    <li class="recent_comment_author">--陈祥林</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2586389">14. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body">不错，值得参考............</li>
+    <li class="recent_comment_author">--llp074520</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2586380">15. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#2586306" title="查看所回复的评论">@</a>奥特曼公主<br>我真不觉得编译能帮我找出多少bug，js找bug很麻烦吗？对语言本身足够熟悉加上使用正确的工具，我没觉得比静态语言找起来慢，而改起来就更是js更方便了</li>
+    <li class="recent_comment_author">--清風揚諰</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2586378">16. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body"><fieldset class="comment_quote"><legend>引用</legend>沙发.<br><br>JS就是找BUG不方便,C#代码,编译就能检测出好多BUG! <br><br>--特别是修改代码的时候.</fieldset><br>关键还是我们对js的熟悉程度不够。</li>
+    <li class="recent_comment_author">--李新杰</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2586346">17. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body">@奥特曼公主引用沙发.JS就是找BUG不方便,C#代码,编译就能检测出好多BUG! --特别是修改代码的时候.在开发编译阶段消灭错误，这个是正点。</li>
+    <li class="recent_comment_author">--通用信息化建设平台</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html#2586306">18. Re:我的架构经验系列文章 - 前端架构</a></li>
+    <li class="recent_comment_body">沙发.<br><br>JS就是找BUG不方便,C#代码,编译就能检测出好多BUG! <br><br>--特别是修改代码的时候.</li>
+    <li class="recent_comment_author">--奥特曼公主</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/23/2829968.html#2585325">19. Re:我的架构经验系列文章 - 后端架构 - 框架层面</a></li>
+    <li class="recent_comment_body">许多建议值得借鉴，多谢</li>
+    <li class="recent_comment_author">--brycezhang</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/23/2830032.html#2585111">20. Re:我的架构经验系列文章 - 后端架构 - 设计层面</a></li>
+    <li class="recent_comment_body"><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/19/1739025.html#2584730" title="查看所回复的评论">@</a>高天乐<br>:) I share all my thoughts and dont expect any return, please do not treat my dedication as falungong</li>
+    <li class="recent_comment_author">--lovecindywang</li>
+</ul>
+</div>
+</div>
+
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/03/02/1969324.html">1. Mongodb亿级数据量的性能测试(24476)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/12/28/1919132.html">2. 一种集各种优点于一身的技术面试方式(17160)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/05/16/1736934.html">3. mongodb有关的研究(17027)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/10/23/2735416.html">4. 我的技术历程（上）(8917)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/10/23/2735704.html">5. 我的技术历程（下）(8847)</a></li><li><a href="./Memcache and Mongodb - lovecindywang - 博客园_files/Memcache and Mongodb - lovecindywang - 博客园.htm">6. Memcache and Mongodb(7859)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/03/03/1969633.html">7. Redis千万级的数据量的性能测试(6550)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/04/25/2027220.html">8. Wcf通讯基础框架方案（一）——基本结构(4624)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/01/06/1640267.html">9. 浅谈.NET下的多线程和并行计算（八）Winform中多线程编程基础上(4599)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/03/17/1987024.html">10. 究竟应该怎么调用WCF服务？(4558)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/05/10/2042188.html">11. Wcf通讯基础框架方案（六）解决方案说明以及源代码(4277)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/03/10/1682344.html">12. 项目优化经验——垃圾回收导致的性能问题(3937)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/12/10/1902325.html">13. mongodb分片集群(sharding with replica set)配置(3827)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/05/12/2044301.html">14. 在内部架设NuGet服务器(3743)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/02/12/1952537.html">15. 闲聊Redis(3653)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/01/12/1933972.html">16. 神奇的Redis(3519)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2009/12/25/1632014.html">17. 浅谈.NET下的多线程和并行计算（一）前言(3284)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/06/18/1760099.html">18. 使用windbg排查一个内存溢出的问题(3097)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/08/06/2624678.html">19. .net(偏web) vs j2ee的一些框架选型(3095)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/02/24/1672859.html">20. 浅谈.NET下的多线程和并行计算（十二）CLR via C#第三版阅读笔记（1）(2992)</a></li></ul></div>
+</div>
+
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/10/23/2735704.html">1. 我的技术历程（下）(106)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/03/02/1969324.html">2. Mongodb亿级数据量的性能测试(51)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/05/10/2042188.html">3. Wcf通讯基础框架方案（六）解决方案说明以及源代码(44)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/10/23/2735416.html">4. 我的技术历程（上）(42)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/12/28/1919132.html">5. 一种集各种优点于一身的技术面试方式(41)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/03/10/1682344.html">6. 项目优化经验——垃圾回收导致的性能问题(37)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/04/25/2027220.html">7. Wcf通讯基础框架方案（一）——基本结构(23)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/03/17/1987024.html">8. 究竟应该怎么调用WCF服务？(23)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/10/10/2205497.html">9. Adhesive框架系列文章--总体介绍(21)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/06/18/1760099.html">10. 使用windbg排查一个内存溢出的问题(21)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2009/12/25/1632014.html">11. 浅谈.NET下的多线程和并行计算（一）前言(19)</a></li><li><a href="./Memcache and Mongodb - lovecindywang - 博客园_files/Memcache and Mongodb - lovecindywang - 博客园.htm">12. Memcache and Mongodb(16)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/04/28/2032004.html">13. Wcf通讯基础框架方案（五）——更新通知(16)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/08/06/2624678.html">14. .net(偏web) vs j2ee的一些框架选型(15)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/01/11/2318973.html">15. 框架规划(15)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/10/21/1857846.html">16. 一个局部变量导致的血案(13)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/04/28/2031598.html">17. Wcf通讯基础框架方案（二）——集中配置(12)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/09/11/2680055.html">18. 分享一个BookStore ios程序的例子(12)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html">19. 我的架构经验系列文章 - 前端架构(12)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/10/26/1861724.html">20. 对于基于模板的前端框架的补充(11)</a></li></ul></div>
+</div>
+
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/10/23/2735704.html">1. 我的技术历程（下）(55)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/12/28/1919132.html">2. 一种集各种优点于一身的技术面试方式(14)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/03/10/1682344.html">3. 项目优化经验——垃圾回收导致的性能问题(12)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/08/06/2624678.html">4. .net(偏web) vs j2ee的一些框架选型(12)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/02/09/2344315.html">5. 【翻译】C#编程语言和JAVA编程语言的比较（上）(11)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/10/23/2735416.html">6. 我的技术历程（上）(11)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/03/02/1969324.html">7. Mongodb亿级数据量的性能测试(10)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2009/12/28/1634189.html">8. 浅谈.NET下的多线程和并行计算（三）线程同步基础上(10)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2009/12/25/1632014.html">9. 浅谈.NET下的多线程和并行计算（一）前言(10)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/03/17/1987024.html">10. 究竟应该怎么调用WCF服务？(9)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/10/21/1857846.html">11. 一个局部变量导致的血案(8)</a></li><li><a href="./Memcache and Mongodb - lovecindywang - 博客园_files/Memcache and Mongodb - lovecindywang - 博客园.htm">12. Memcache and Mongodb(8)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2012/12/25/2832894.html">13. 我的架构经验系列文章 - 前端架构(8)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/10/13/2210353.html">14. Adhesive框架系列文章--Mongodb数据服务模块实现（上）(7)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2010/06/18/1760099.html">15. 使用windbg排查一个内存溢出的问题(7)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/04/25/2027220.html">16. Wcf通讯基础框架方案（一）——基本结构(7)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/04/28/2032004.html">17. Wcf通讯基础框架方案（五）——更新通知(7)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/04/28/2031598.html">18. Wcf通讯基础框架方案（二）——集中配置(6)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2011/05/10/2042188.html">19. Wcf通讯基础框架方案（六）解决方案说明以及源代码(6)</a></li><li><a href="http://www.cnblogs.com/lovecindywang/archive/2009/12/25/1632213.html">20. 浅谈.NET下的多线程和并行计算（二）线程基本知识(6)</a></li></ul></div>
+</div></div>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2013 lovecindywang
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<script type="text/javascript" src="./Memcache and Mongodb - lovecindywang - 博客园_files/google-analytics.js"></script>
+
+
+</body></html>

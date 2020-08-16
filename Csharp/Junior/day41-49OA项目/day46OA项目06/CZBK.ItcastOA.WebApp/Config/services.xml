@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects>
+  <object type="CZBK.ItcastOA.BLL.UserInfoService, CZBK.ItcastOA.BLL" singleton="false" name="UserInfoService" >
+  </object>
+  <object type="CZBK.ItcastOA.BLL.RoleInfoService, CZBK.ItcastOA.BLL" singleton="false" name="RoleInfoService" >
+  </object>
+  <object type="CZBK.ItcastOA.BLL.ActionInfoService, CZBK.ItcastOA.BLL" singleton="false" name="ActionInfoService" >
+  </object>
+  <object type="CZBK.ItcastOA.BLL.R_UserInfo_ActionInfoService, CZBK.ItcastOA.BLL" singleton="false" name="R_UserInfo_ActionInfoService" >
+  </object>
+  
+</objects>

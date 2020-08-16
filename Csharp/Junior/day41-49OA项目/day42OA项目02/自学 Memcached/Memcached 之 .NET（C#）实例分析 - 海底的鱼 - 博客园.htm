@@ -1,0 +1,551 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0053)http://www.cnblogs.com/Caceolod/articles/1710342.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/style.css">
+<link type="text/css" rel="stylesheet" href="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/common2.css">
+<link type="text/css" rel="stylesheet" href="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/shStyle.css">
+<link type="text/css" rel="stylesheet" href="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/customcss.aspx">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/Caceolod/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/Caceolod/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/Caceolod/wlwmanifest.xml">
+<script type="text/javascript" async="" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/ga.js"></script><script async="" type="text/javascript" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/gpt.js"></script><script type="text/javascript" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/encoder.js"></script><script src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">
+var currentBlogApp = 'Caceolod';
+</script>
+<script src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/common.js" type="text/javascript"></script> 
+<script src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/json2.js" type="text/javascript"></script>
+<script type="text/javascript" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/syntaxHighlighter.js"></script>
+<script async="" type="text/javascript" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/google_ads_gpt.js"></script><script type="text/javascript" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/osd.js"></script></head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/Caceolod/"><img id="blogLogo" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/Caceolod/">人生苦短</a></h1>
+<h2>破茧</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/Caceolod/">首页</a></li>
+<li><a class="menu" href="http://q.cnblogs.com/">博问</a></li>
+<li><a class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+<li><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://www.cnblogs.com/Caceolod/admin/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/%e6%b5%b7%e5%ba%95%e7%9a%84%e9%b1%bc">联系</a></li>
+<li><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/Caceolod/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/Caceolod/rss"><img src="/Skins/Custom/images/rss.gif" alt="订阅" /></a>--></li>
+<li><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://www.cnblogs.com/Caceolod/admin/EditPosts.aspx">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔- 17&nbsp;
+文章- 212&nbsp;
+评论- 56&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+	
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园.htm">Memcached 之 .NET（C#）实例分析</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>一：Memcached的安装</p>
+<p>step1. 下载mem<span class="t_tag" onclick="tagshow(event)" href="tag.php?name=cache">cache</span>(<a href="http://jehiah.cz/projects/memcached-win32" target="_blank">http://jehiah.cz/projects/<span class="t_tag" onclick="tagshow(event)" href="tag.php?name=memcache">memcache</span>d-win32</a>)的windows稳定版（这里我下载了<a href="http://jehiah.cz/projects/memcached-win32/files/memcached-1.2.1-win32.zip" target="_blank">memcached 1.2.1 for Win32 binaries</a> <span class="date">(Dec 23, 2006)</span> 这个版本），解压放某个盘下面，比如在c:\memcached<br>step2. 在终端（也即cmd命令界面）下输入 ‘c:\memcached\memcached.exe -d install’ 安装<br>step3. 再输入： ‘c:\memcached\memcached.exe -d start’ 启动。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS: 以后memcached将作为windows的一个服务每次开机时自动启动。这样<span class="t_tag" onclick="tagshow(event)" href="tag.php?name=%B7%FE%CE%F1%C6%F7">服务器</span>端已经安装完毕了。</p>
+<p>&nbsp;</p>
+<p>二：&nbsp;<span>.NET memcached client library</span><span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 下载文件：<a href="https://sourceforge.net/projects/memcacheddotnet/" target="_blank"><font color="#96b0af" size="2">https://sourceforge.net/projects/memcacheddotnet/</font></a></span>&nbsp; </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 将Commons.dll，ICSharpCode.SharpZipLib.dll，log4net.dll，Memcached.ClientLibrary.dll 等放到bin目录</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 引用<span>Memcached.ClientLibrary.dll</span></p>
+<p><span></span>&nbsp;</p>
+<p><span>程序实例</span></p>
+<p><span>&nbsp;</span></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;fe75c21d-9bea-4d42-a92f-4d75be817d4b&#39;)"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div><img class="code_img_closed" id="code_img_closed_fe75c21d-9bea-4d42-a92f-4d75be817d4b" style="display: none" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/ContractedBlock.gif" alt=""><img class="code_img_opened" id="code_img_opened_fe75c21d-9bea-4d42-a92f-4d75be817d4b" onclick="cnblogs_code_hide(&#39;fe75c21d-9bea-4d42-a92f-4d75be817d4b&#39;,event)" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/ExpandedBlockStart.gif"><span class="cnblogs_code_collapse">代码</span>
+<div id="cnblogs_code_open_fe75c21d-9bea-4d42-a92f-4d75be817d4b">
+<div><!--<br/ /><br/ />Code highlighting produced by Actipro CodeHighlighter (freeware)<br/ />http://www.CodeHighlighter.com/<br/ /><br/ />--><span style="color: #0000ff">using</span><span style="color: #000000">&nbsp;System;<br></span><span style="color: #0000ff">using</span><span style="color: #000000">&nbsp;System.Collections;<br></span><span style="color: #0000ff">using</span><span style="color: #000000">&nbsp;Memcached.ClientLibrary;<br></span><span style="color: #0000ff">using</span><span style="color: #000000">&nbsp;System.Text;<br><br></span><span style="color: #0000ff">namespace</span><span style="color: #000000">&nbsp;Memcache<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">public</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">partial</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">class</span><span style="color: #000000">&nbsp;_Default&nbsp;:&nbsp;System.Web.UI.Page<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">protected</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">void</span><span style="color: #000000">&nbsp;Page_Load(</span><span style="color: #0000ff">object</span><span style="color: #000000">&nbsp;sender,&nbsp;EventArgs&nbsp;e)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">if</span><span style="color: #000000">&nbsp;(</span><span style="color: #000000">!</span><span style="color: #000000">IsPostBack)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">if</span><span style="color: #000000">&nbsp;(Request[</span><span style="color: #800000">"</span><span style="color: #800000">action</span><span style="color: #800000">"</span><span style="color: #000000">]&nbsp;</span><span style="color: #000000">==</span><span style="color: #000000">&nbsp;</span><span style="color: #800000">"</span><span style="color: #800000">clear</span><span style="color: #800000">"</span><span style="color: #000000">)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">this</span><span style="color: #000000">.clear();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">else</span><span style="color: #000000"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">this</span><span style="color: #000000">.test();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">public</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">void</span><span style="color: #000000">&nbsp;clear()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">string</span><span style="color: #000000">[]&nbsp;servers&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;{&nbsp;</span><span style="color: #800000">"</span><span style="color: #800000">192.168.1.113:11211</span><span style="color: #800000">"</span><span style="color: #000000">,&nbsp;</span><span style="color: #800000">"</span><span style="color: #800000">192.168.202.128:11211</span><span style="color: #800000">"</span><span style="color: #000000">&nbsp;};<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">初始化池</span><span style="color: #008000"><br></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SockIOPool&nbsp;pool&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;SockIOPool.GetInstance();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.SetServers(servers);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.InitConnections&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">3</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.MinConnections&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">3</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.MaxConnections&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">5</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.SocketConnectTimeout&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">1000</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.SocketTimeout&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">3000</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.MaintenanceSleep&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">30</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.Failover&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">true</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.Nagle&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">false</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.Initialize();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MemcachedClient&nbsp;mc&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">new</span><span style="color: #000000">&nbsp;Memcached.ClientLibrary.MemcachedClient();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mc.EnableCompression&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">false</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mc.Delete(</span><span style="color: #800000">"</span><span style="color: #800000">cache</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mc.Delete(</span><span style="color: #800000">"</span><span style="color: #800000">endCache</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Response.Write(</span><span style="color: #800000">"</span><span style="color: #800000">清空缓存成功</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">public</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">void</span><span style="color: #000000">&nbsp;test()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">分布Memcachedf服务IP&nbsp;端口</span><span style="color: #008000"><br></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">string</span><span style="color: #000000">[]&nbsp;servers&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;{&nbsp;</span><span style="color: #800000">"</span><span style="color: #800000">192.168.1.113:11211</span><span style="color: #800000">"</span><span style="color: #000000">,&nbsp;</span><span style="color: #800000">"</span><span style="color: #800000">192.168.202.128:11211</span><span style="color: #800000">"</span><span style="color: #000000">&nbsp;};<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">初始化池</span><span style="color: #008000"><br></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SockIOPool&nbsp;pool&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;SockIOPool.GetInstance();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.SetServers(servers);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.InitConnections&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">3</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.MinConnections&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">3</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.MaxConnections&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">5</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.SocketConnectTimeout&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">1000</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.SocketTimeout&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">3000</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.MaintenanceSleep&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #800080">30</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.Failover&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">true</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.Nagle&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">false</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pool.Initialize();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">客户端实例</span><span style="color: #008000"><br></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MemcachedClient&nbsp;mc&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">new</span><span style="color: #000000">&nbsp;Memcached.ClientLibrary.MemcachedClient();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mc.EnableCompression&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">false</span><span style="color: #000000">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringBuilder&nbsp;sb&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">new</span><span style="color: #000000">&nbsp;StringBuilder();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">写入缓存</span><span style="color: #008000"><br></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">写入缓存测试：</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">&lt;br&gt;_______________________________________&lt;br&gt;</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">if</span><span style="color: #000000">&nbsp;(mc.KeyExists(</span><span style="color: #800000">"</span><span style="color: #800000">cache</span><span style="color: #800000">"</span><span style="color: #000000">))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">缓存cache已存在</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">else</span><span style="color: #000000"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mc.Set(</span><span style="color: #800000">"</span><span style="color: #800000">cache</span><span style="color: #800000">"</span><span style="color: #000000">,&nbsp;</span><span style="color: #800000">"</span><span style="color: #800000">写入缓存时间：</span><span style="color: #800000">"</span><span style="color: #000000">&nbsp;</span><span style="color: #000000">+</span><span style="color: #000000">DateTime.Now.ToString());<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">缓存已成功写入到cache</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">&lt;br&gt;_______________________________________&lt;br&gt;</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">读取缓存内容如下：&lt;br&gt;</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(mc.Get(</span><span style="color: #800000">"</span><span style="color: #800000">cache</span><span style="color: #800000">"</span><span style="color: #000000">).ToString());<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">测试缓存过期</span><span style="color: #008000"><br></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">&lt;br&gt;_______________________________________&lt;br&gt;</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">if</span><span style="color: #000000">&nbsp;(mc.KeyExists(</span><span style="color: #800000">"</span><span style="color: #800000">endCache</span><span style="color: #800000">"</span><span style="color: #000000">))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">缓存endCache已存在，过期时间为：</span><span style="color: #800000">"</span><span style="color: #000000">&nbsp;</span><span style="color: #000000">+</span><span style="color: #000000">&nbsp;&nbsp;mc.Get(</span><span style="color: #800000">"</span><span style="color: #800000">endCache</span><span style="color: #800000">"</span><span style="color: #000000">).ToString());<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">else</span><span style="color: #000000"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mc.Set(</span><span style="color: #800000">"</span><span style="color: #800000">endCache</span><span style="color: #800000">"</span><span style="color: #000000">,&nbsp;DateTime.Now.AddMinutes(</span><span style="color: #800080">1</span><span style="color: #000000">).ToString(),&nbsp;DateTime.Now.AddMinutes(</span><span style="color: #800080">1</span><span style="color: #000000">));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">缓存已更新写入到endCache，写入时间：</span><span style="color: #800000">"</span><span style="color: #000000">&nbsp;</span><span style="color: #000000">+</span><span style="color: #000000">&nbsp;DateTime.Now.ToString()&nbsp;&nbsp;</span><span style="color: #000000">+</span><span style="color: #800000">"</span><span style="color: #800000">&nbsp;过期时间：</span><span style="color: #800000">"</span><span style="color: #000000">&nbsp;</span><span style="color: #000000">+</span><span style="color: #000000">&nbsp;&nbsp;DateTime.Now.AddMinutes(</span><span style="color: #800080">1</span><span style="color: #000000">).ToString());<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">分析缓存状态</span><span style="color: #008000"><br></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hashtable&nbsp;ht&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;mc.Stats();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">&lt;br&gt;_______________________________________&lt;br&gt;</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">Memcached&nbsp;Stats:</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(</span><span style="color: #800000">"</span><span style="color: #800000">&lt;br&gt;_______________________________________&lt;br&gt;</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">foreach</span><span style="color: #000000">&nbsp;(DictionaryEntry&nbsp;de&nbsp;</span><span style="color: #0000ff">in</span><span style="color: #000000">&nbsp;ht)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hashtable&nbsp;info&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;(Hashtable)de.Value;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">foreach</span><span style="color: #000000">&nbsp;(DictionaryEntry&nbsp;de2&nbsp;</span><span style="color: #0000ff">in</span><span style="color: #000000">&nbsp;info)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.AppendLine(de2.Key.ToString()&nbsp;</span><span style="color: #000000">+</span><span style="color: #000000">&nbsp;</span><span style="color: #800000">"</span><span style="color: #800000">:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span><span style="color: #800000">"</span><span style="color: #000000">&nbsp;</span><span style="color: #000000">+</span><span style="color: #000000">&nbsp;de2.Value.ToString()&nbsp;</span><span style="color: #000000">+</span><span style="color: #000000">&nbsp;</span><span style="color: #800000">"</span><span style="color: #800000">&lt;br&gt;</span><span style="color: #800000">"</span><span style="color: #000000">);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Response.Write(sb.ToString());<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}<br></span></div></div><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span>&nbsp;</span></p>
+<p><br><br><br></p></div><div id="MySignature"></div>
+<script type="text/javascript">
+var isLogined = false;
+var cb_blogId = 25812;
+var cb_entryId = 1710342;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "f6703d0b-63cf-dd11-9e4d-001cf0cd104b";
+var cb_entryCreatedDate = '2010/4/12 16:48:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</script>
+<div id="blog_post_info_block">
+<div id="blog_post_info"><div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/Caceolod/category/90494.html">ASP.Net(C#)</a>, <a href="http://www.cnblogs.com/Caceolod/category/230092.html">建站知识</a></div>
+<div id="EntryTag"></div>
+<div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(cb_entryId,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/%e6%b5%b7%e5%ba%95%e7%9a%84%e9%b1%bc" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="digg_block">
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/Caceolod/" target="_blank"><img src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/u22253.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/Caceolod/">海底的鱼</a><br>
+<a href="http://home.cnblogs.com/u/Caceolod/followees">关注 - 19</a><br>
+<a href="http://home.cnblogs.com/u/Caceolod/followers">粉丝 - 2</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+<a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+	<div class="diggit" onclick="votePost(cb_entryId,&#39;Digg&#39;)"> 
+		<span class="diggnum" id="digg_count">0</span>
+	</div>
+	<div class="buryit" onclick="votePost(cb_entryId,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/Caceolod/archive/2008/03/31/1130842.html" class="p_n_p_prefix">« </a> 博主前一篇：<a href="http://www.cnblogs.com/Caceolod/archive/2008/03/31/1130842.html" title="发布于2008-03-31 11:09">Acer 4250G TL 58 Vista 系统装xp系统完全攻略</a><br><a href="http://www.cnblogs.com/Caceolod/archive/2011/10/08/2201686.html" class="p_n_p_prefix">» </a> 博主后一篇：<a href="http://www.cnblogs.com/Caceolod/archive/2011/10/08/2201686.html" title="发布于2011-10-08 09:12">Silverlight 4 右键菜单项简单实现</a><br></div>
+</div>
+<script type="text/javascript">
+    initBottomGoogleAd();
+</script>
+<script type="text/javascript">
+    $(function () {       
+        fixPostBodyFormat();
+        loadBottomGoogleAd();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+        showEditorOpt();
+        loadNewsAndKb();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+        loadAdUnderGoogle();
+    });
+</script>
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2010-04-12 16:48</span> <a href="http://www.cnblogs.com/Caceolod/">海底的鱼</a> 阅读(907) 评论(<span id="post-comment-count">0</span>) &nbsp;<a href="http://www.cnblogs.com/Caceolod/admin/EditArticles.aspx?postid=1710342" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/Caceolod/articles/1710342.html#" onclick="AddToWz(1710342);return false;">收藏</a></div>
+	</div>
+	<img src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/1710342.html" width="1" height="1" alt="">
+	
+</div><!--end: topics 文章、评论容器-->
+<div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</script>
+<div id="comment_form" class="commentform">
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/Caceolod/articles/1710342.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/Caceolod/articles/1710342.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+
+<script type="text/javascript">
+    if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</script>
+
+<div class="ad_text_commentbox"><a href="http://q.cnblogs.com/" target="_blank">程序员问答社区，解决您的技术难题</a></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="程序员的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a><div id="site_editor_opt"></div></div>
+<script type="text/javascript">
+enableGoogleAd = true;
+if ($("#cnblogs_post_body").text().length < 1000) {
+    enableGoogleAd = false;
+}
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+<div id="div-gpt-ad-1320933818841-0" style="width: 300px; height: 250px; ">
+<script type="text/javascript">
+    if (enableGoogleAd) {
+        try {
+            googletag.cmd.push(function () { googletag.display('div-gpt-ad-1320933818841-0'); });
+        } catch (e) { }
+    } else {
+        $('#google_ad_c1').hide();
+    }
+</script>
+<iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; "></iframe><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_0__hidden__" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_0__hidden__" width="0" height="0" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; visibility: hidden; display: none; "></iframe></div>
+</div>
+<div id="blog-news-kb"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/152216/" target="_blank">苹果三星专利诉讼周一开审 或重塑移动产业格局</a><br> ·  <a href="http://news.cnblogs.com/n/152215/" target="_blank">小型零售商热衷在Facebook上建立门店</a><br> ·  <a href="http://news.cnblogs.com/n/152214/" target="_blank">揭密维基百科幕后：数百款自主程序进行维护</a><br> ·  <a href="http://news.cnblogs.com/n/152213/" target="_blank">诺基亚告别芬兰制造！最后一间工厂关闭</a><br> ·  <a href="http://news.cnblogs.com/n/152212/" target="_blank">YouTube如何为64个国家提供伦敦奥运会网上直播？</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/119555/" target="_blank">项目管理的“三边六拍”！</a><br> ·  <a href="http://kb.cnblogs.com/page/119174/" target="_blank">IIS 内部运行机制</a><br> ·  <a href="http://kb.cnblogs.com/page/139206/" target="_blank">阿里巴巴离职DBA职业生涯总结</a><br> ·  <a href="http://kb.cnblogs.com/page/111803/" target="_blank">开发人员需做代码审查（Code Review）的5个原因</a><br> ·  <a href="http://kb.cnblogs.com/page/123204/" target="_blank">如何快速成为Javascript高手的思考</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id="div-gpt-ad-1320933818841-1" style="width: 468px; height: 60px; ">
+<script type="text/javascript">
+    if (enableGoogleAd) {
+        try {
+            googletag.cmd.push(function () { googletag.display('div-gpt-ad-1320933818841-1'); });
+        } catch (e) { }
+    } else {
+        $('#google_ad_c2').hide();
+    }
+</script>
+<iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; "></iframe></div>
+</div>
+<div id="ad_under_google" class="c_ad_block" style=""><a href="http://www.china-pub.com/static07/1206/12znq_dyb_20120618/12znq_dyb_20120618.asp" target="_blank" rel="nofollow"><img src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/china-pub-0620.jpg" alt="" style="border:0px;"></a><br><a href="http://www.china-pub.com/sale/usedbook.aspx" target="_blank" rel="nofollow">China-Pub 低价书精选</a><br><a href="http://www.china-pub.com/static07/0901/zh_jueba_090121.asp" target="_blank" rel="nofollow">China-Pub 计算机绝版图书按需印刷服务</a></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+</div>
+
+
+
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news" style=""><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/Caceolod/">海底的鱼</a><br>园龄：<a href="http://home.cnblogs.com/u/Caceolod/" title="入园时间：2007-04-12">5年3个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/Caceolod/followers/">2</a><br>关注：<a href="http://home.cnblogs.com/u/Caceolod/followees/">19</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;f6703d0b-63cf-dd11-9e4d-001cf0cd104b&#39;)">+加关注</a></div></div></div>
+</div>
+
+			<div id="blog-calendar" style="displya:none"><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2012/06/01&#39;);return false;">&lt;</a></td><td align="center">2012年7月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2012/08/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">24</td><td class="CalOtherMonthDay" align="center">25</td><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td></tr><tr><td class="CalWeekendDay" align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td class="CalWeekendDay" align="center">7</td></tr><tr><td class="CalWeekendDay" align="center">8</td><td align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td class="CalWeekendDay" align="center">14</td></tr><tr><td class="CalWeekendDay" align="center">15</td><td align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td class="CalWeekendDay" align="center">21</td></tr><tr><td class="CalWeekendDay" align="center">22</td><td align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td class="CalTodayDay" align="center">28</td></tr><tr><td class="CalWeekendDay" align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td></tr>
+</tbody></table></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+
+<div class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+
+
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_0" href="http://www.cnblogs.com/Caceolod/MyPosts.html">我的随笔</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_1" href="http://www.cnblogs.com/Caceolod/MyComments.html">我的评论</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_2" title="我发表过评论的随笔" href="http://www.cnblogs.com/Caceolod/OtherPosts.html">我的参与</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_3" href="http://www.cnblogs.com/Caceolod/RecentComments.html">最新评论</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_4" href="http://www.cnblogs.com/Caceolod/tag/">我的标签</a></li>
+	
+<li><a id="itemListLink" onclick="this.blur();WarpClass(&#39;itemListLink&#39;, &#39;itemListLin_con&#39;);return false;" href="http://www.cnblogs.com/Caceolod/articles/1710342.html#">更多链接</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+<div class="catListEssay">
+<h3 class="catListTitle">最新随笔</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/Caceolod/archive/2012/01/12/2320111.html">1. 让背景图片一直不动</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/11/23/2260269.html">2. 关于一些Silverlight中常用的尺寸，慢慢记录</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/11/23/2260100.html">3. 自定义ChildWindow，完美实现同时弹出多个自定义的窗口</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/11/22/2258974.html">4. 关于图片蒙板的使用方法</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/11/04/2236224.html">5. 两种方法设置图形元素的RenderTransform属性</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/10/11/2207283.html">6. Silverlight中实现人物的A Star寻径</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/10/10/2205796.html">7. silverlight 自定义 鼠标 双击事件</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/10/09/2203267.html">8. WPF/Silverlight QQ交流群：137377438</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/10/08/2201731.html">9. [Silverlight入门系列]不用ChildWindow的自定义MessageBox及其MVVM实现(1)</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/10/08/2201686.html">10. Silverlight 4 右键菜单项简单实现</a></li>
+</ul>
+</div>
+
+<div class="catListPostCategory">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/Caceolod/category/326628.html">ASP.NET</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/Caceolod/category/326631.html">CSS(1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/Caceolod/category/339137.html">HTML5</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/Caceolod/category/326630.html">JavaScript</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/Caceolod/category/326629.html">WinForm</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/Caceolod/category/326627.html">WPF/Silverlight(9)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/Caceolod/archive/2012/01.html">2012年1月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/Caceolod/archive/2011/11.html">2011年11月 (4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/Caceolod/archive/2011/10.html">2011年10月 (5)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/Caceolod/archive/2008/03.html">2008年3月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/Caceolod/archive/2007/11.html">2007年11月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/Caceolod/archive/2007/08.html">2007年8月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/Caceolod/archive/2007/06.html">2007年6月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/Caceolod/archive/2007/04.html">2007年4月 (6)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListArticleCategory">
+<h3 class="catListTitle">文章分类</h3>
+
+<ul>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/Caceolod/category/90496.html">AJAX(7)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_1" href="http://www.cnblogs.com/Caceolod/category/165175.html">ASP(3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_2" href="http://www.cnblogs.com/Caceolod/category/90494.html">ASP.Net(C#)(98)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_3" href="http://www.cnblogs.com/Caceolod/category/122892.html">C#基础(19)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_4" href="http://www.cnblogs.com/Caceolod/category/135030.html">CinDou(6)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_5" href="http://www.cnblogs.com/Caceolod/category/91095.html">DIV+Css(19)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_6" href="http://www.cnblogs.com/Caceolod/category/92170.html">JavaScript(41)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_7" href="http://www.cnblogs.com/Caceolod/category/213588.html">JQuery(3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_8" href="http://www.cnblogs.com/Caceolod/category/153103.html">Jsp(4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_9" href="http://www.cnblogs.com/Caceolod/category/233305.html">MVC(1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_10" href="http://www.cnblogs.com/Caceolod/category/90497.html">SQL Server(18)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_11" href="http://www.cnblogs.com/Caceolod/category/116939.html">WinForm(C#)(13)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_12" href="http://www.cnblogs.com/Caceolod/category/213589.html">WPF/SilverLight(5)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_13" href="http://www.cnblogs.com/Caceolod/category/230092.html">建站知识(9)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_2_Link_14" href="http://www.cnblogs.com/Caceolod/category/230604.html">其它(2)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListArticleArchive">
+<h3 class="catListTitle">文章档案</h3>
+
+<ul>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_0" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2012/05.html">2012年5月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_1" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2011/11.html">2011年11月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_2" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2011/09.html">2011年9月 (5)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_3" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2011/08.html">2011年8月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_4" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2011/03.html">2011年3月 (4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_5" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2011/02.html">2011年2月 (4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_6" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2011/01.html">2011年1月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_7" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2010/12.html">2010年12月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_8" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2010/11.html">2010年11月 (4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_9" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2010/07.html">2010年7月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_10" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2010/06.html">2010年6月 (8)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_11" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2010/05.html">2010年5月 (3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_12" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2010/04.html">2010年4月 (5)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_13" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2010/03.html">2010年3月 (4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_14" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2010/02.html">2010年2月 (3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_15" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2010/01.html">2010年1月 (13)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_16" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2009/12.html">2009年12月 (7)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_17" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2009/11.html">2009年11月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_18" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2009/10.html">2009年10月 (4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_19" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2009/06.html">2009年6月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_20" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2009/05.html">2009年5月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_21" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2009/04.html">2009年4月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_22" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2009/03.html">2009年3月 (3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_23" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2009/02.html">2009年2月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_24" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2009/01.html">2009年1月 (3)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_25" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/12.html">2008年12月 (6)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_26" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/11.html">2008年11月 (11)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_27" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/10.html">2008年10月 (7)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_28" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/09.html">2008年9月 (2)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_29" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/08.html">2008年8月 (6)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_30" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/06.html">2008年6月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_31" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/05.html">2008年5月 (5)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_32" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/04.html">2008年4月 (5)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_33" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/03.html">2008年3月 (8)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_34" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/02.html">2008年2月 (6)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_35" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2008/01.html">2008年1月 (7)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_36" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2007/12.html">2007年12月 (5)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_37" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2007/10.html">2007年10月 (4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_38" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2007/09.html">2007年9月 (8)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_39" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2007/08.html">2007年8月 (8)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_40" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2007/07.html">2007年7月 (1)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_41" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2007/06.html">2007年6月 (15)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_42" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2007/05.html">2007年5月 (4)</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_3_Link_43" rel="nofollow" href="http://www.cnblogs.com/Caceolod/archives/2007/04.html">2007年4月 (16)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListImageCategory">
+<h3 class="catListTitle">相册</h3>
+
+<ul>
+
+<li><a id="ctl04_CatList_LinkList_4_Link_0" rel="nofollow" href="http://www.cnblogs.com/Caceolod/gallery/90896.html">asp.net(C#)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catList技术同盟">
+<h3 class="catListTitle">技术同盟</h3>
+
+<ul>
+
+<li><a id="ctl04_CatList_LinkList_5_Link_0" rel="nofollow" href="http://www.silverlight.net/learn/videos/all/?__sn=Rating&__sd=Asc">SilverLight视频教程</a> </li>
+
+<li><a id="ctl04_CatList_LinkList_5_Link_1" rel="nofollow" href="http://yjmyzz.cnblogs.com/" target="_blank">菩提树下的杨过</a> </li>
+
+</ul>
+
+</div>
+
+
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	67672
+	</li>
+	<li class="liRank">
+		排名 -	1620
+	</li>
+</ul>
+</div>
+
+
+
+<div class="catListComment">
+<h3 class="catListTitle">最新评论<a id="_12f1445_RSSHyperlink1" title="RSS订阅最最新评论" href="http://www.cnblogs.com/Caceolod/CommentsRSS.aspx"><img title="RSS订阅最最新评论" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/xml.gif" alt=""></a></h3>
+
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Caceolod/archive/2011/02/28/1966889.html#2339382">1. Re:使用SqlDependency时提示当前数据库未启用Service broker</a></li>
+    <li class="recent_comment_body">谢谢楼主，我遇到同样的问题，只是没有你执行那么长的时间，呵呵～··  但通过你的这篇文章，我的问题解决了。非常感谢！</li>
+    <li class="recent_comment_author">--keny</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Caceolod/archive/2011/11/23/2260100.html#2251810">2. Re:自定义ChildWindow，完美实现同时弹出多个自定义的窗口</a></li>
+    <li class="recent_comment_body">有点问题，期待高手解决啊...</li>
+    <li class="recent_comment_author">--海底的鱼</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Caceolod/articles/1979527.html#2167515">3. Re:c#线程池详解</a></li>
+    <li class="recent_comment_body">for (int i = 0; i &lt;50; i++)｛ ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadMethod));｝开辟50个线程 同时去执行ThreadMethod这个方法。当执行结束后，我想查看一下 池中 第一个线程此时的状态。还有它的启动时间以及结束时间。 这个该怎么做呢？</li>
+    <li class="recent_comment_author">--宅</li>
+</ul>
+</div>
+</div>
+
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/Caceolod/archive/2007/04/17/716675.html">1. 快钱接口实例(2283)</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2008/03/31/1130842.html">2. Acer 4250G TL 58 Vista 系统装xp系统完全攻略(1359)</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2007/04/17/716428.html">3. C#远程抓取网页(1333)</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2007/04/17/716426.html">4. 通过移动,联通接口发送短信(790)</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2007/06/15/784737.html">5. JS 控制RadioButtonList 获得上传文件类型后选中(699)</a></li></ul></div>
+</div>
+
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/Caceolod/archive/2007/04/17/716428.html">1. C#远程抓取网页(3)</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2007/04/17/716426.html">2. 通过移动,联通接口发送短信(2)</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2007/06/15/784737.html">3. JS 控制RadioButtonList 获得上传文件类型后选中(2)</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2011/11/23/2260100.html">4. 自定义ChildWindow，完美实现同时弹出多个自定义的窗口(1)</a></li><li><a href="http://www.cnblogs.com/Caceolod/archive/2007/04/17/716675.html">5. 快钱接口实例(1)</a></li></ul></div>
+</div>
+
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"></div>
+</div></div>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2012 海底的鱼
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<script type="text/javascript" src="./Memcached 之 .NET（C#）实例分析 - 海底的鱼 - 博客园_files/google-analytics.js"></script>
+
+
+</body></html>

@@ -1,0 +1,237 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0061)http://www.cnblogs.com/mejozn/archive/2013/05/05/3060479.html -->
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=8.0000" 
+http-equiv="X-UA-Compatible">
+<TITLE>.net json序列化组件Json.NET - 城岸 - 博客园</TITLE>
+<META content="text/html; charset=utf-8" http-equiv=Content-Type><LINK 
+rel=stylesheet type=text/css 
+href="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/common.css"><LINK 
+id=MainCss rel=stylesheet type=text/css 
+href="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/style.css"><LINK 
+rel=stylesheet type=text/css 
+href="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/common2.css"><LINK 
+rel=stylesheet type=text/css 
+href="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/shStyle.css"><LINK 
+title=RSS rel=alternate type=application/rss+xml 
+href="http://www.cnblogs.com/mejozn/rss"><LINK title=RSD rel=EditURI 
+type=application/rsd+xml href="http://www.cnblogs.com/mejozn/rsd.xml"><LINK 
+rel=wlwmanifest type=application/wlwmanifest+xml 
+href="http://www.cnblogs.com/mejozn/wlwmanifest.xml">
+<SCRIPT type=text/javascript 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+var currentBlogApp = 'mejozn';
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name=GENERATOR content="MSHTML 8.00.7600.17267"></HEAD>
+<BODY><A name=top></A><!--PageBeginHtml Block Begin--><LINK rel=Stylesheet 
+type=text/css 
+href="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/mejozn.css"><!--PageBeginHtml Block End--><!--done-->
+<DIV id=header><!--done-->
+<DIV class=header>
+<DIV class=headerText><A id=Header1_HeaderTitle class=headermaintitle 
+href="http://www.cnblogs.com/mejozn/">城岸</A><BR>分享技术,分享快乐 </DIV></DIV></DIV>
+<DIV id=mylinks><!--done--><A id=MyLinks1_HomeLink class=listitem 
+href="http://www.cnblogs.com/">博客园</A>&nbsp;&nbsp;::&nbsp; <A 
+id=MyLinks1_MyHomeLink class=listitem 
+href="http://www.cnblogs.com/mejozn/">首页</A>&nbsp;&nbsp;::&nbsp; <A 
+id=MyLinks1_NewPostLink class=listitem 
+href="http://www.cnblogs.com/mejozn/admin/EditPosts.aspx?opt=1" 
+rel=nofollow>新随笔</A>&nbsp;&nbsp;::&nbsp; <A accessKey=9 id=MyLinks1_ContactLink 
+class=listitem href="http://space.cnblogs.com/msg/send/%e5%9f%8e%e5%b2%b8" 
+rel=nofollow>联系</A>&nbsp;&nbsp;::&nbsp; <A id=MyLinks1_Syndication 
+class=listitem href="http://www.cnblogs.com/mejozn/rss">订阅</A>&nbsp;<A 
+id=MyLinks1_XMLLink href="http://www.cnblogs.com/mejozn/rss"><IMG alt=订阅 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/xml.gif"></A>&nbsp;&nbsp;::&nbsp; 
+<A id=MyLinks1_Admin class=listitem 
+href="http://www.cnblogs.com/mejozn/admin/EditPosts.aspx" rel=nofollow>管理</A> 
+</DIV>
+<DIV id=mytopmenu>
+<DIV id=mystats><!--done-->
+<DIV class=blogStats>posts - 4,&nbsp; comments - 9,&nbsp; trackbacks - 0 
+</DIV></DIV></DIV>
+<DIV id=leftcontent>
+<DIV id=leftcontentcontainer><!--done-->
+<DIV class=news>公告</DIV>
+<DIV class=newsItem>
+<DIV id=blog-news></DIV></DIV>
+<UL></UL>
+<DIV style="DISPLAY: none" id=blog-calendar-block>
+<DIV id=blog-calendar></DIV></DIV>
+<DIV id=blog-sidecolumn></DIV></DIV></DIV>
+<DIV id=centercontent><!--done-->
+<DIV class=post>
+<DIV class=postTitle><A id=cb_post_title_url class=postTitle2 
+href="http://www.cnblogs.com/mejozn/archive/2013/05/05/3060479.html">.net 
+json序列化组件Json.NET</A> </DIV>
+<DIV id=cnblogs_post_body>
+<P>&nbsp;&nbsp;&nbsp; Json.NET（Newtonsoft.Json）是.Net 
+框架下比较流行的一款高效json序列化开源组件,支持.Net Framework 2.0 到 
+4.5+,并且可用于.Net各种环境Asp.net,Silverlight,Windows Phone,Windows 8等等.更多特性移步开源首页：<A 
+title=http://json.codeplex.com/ 
+href="http://json.codeplex.com/">http://json.codeplex.com/</A></P>
+<P><STRONG><FONT size=4>性能</FONT></STRONG></P>
+<P>Json.NET 、DataContractJsonSerializer、JavascriptSeriallizer性能测试结果对比，还不错吧。<A 
+href="http://images.cnitblog.com/blog/167327/201305/05005300-8738e70ffe3e482fa7a0b7db7c314e3d.jpg"><IMG 
+style="BACKGROUND-IMAGE: none; BORDER-RIGHT-WIDTH: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; DISPLAY: inline; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px" 
+title=未命名 border=0 alt=未命名 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/05005301-bac6f16ca70d4540bab73d1991bbc6d8.jpg" 
+width=526 height=295></A></P>
+<P><STRONG><FONT style="BACKGROUND-COLOR: #ffff00" 
+size=4></FONT></STRONG><STRONG><FONT size=4></FONT></STRONG></P>
+<P><STRONG><FONT size=4></FONT></STRONG></P>
+<P><STRONG><FONT size=4>引用</FONT></STRONG><STRONG><FONT 
+style="BACKGROUND-COLOR: #ffff00" size=4></FONT></STRONG></P>
+<P>方式1.下载解压引用Newtonsoft.Json.dll</P>
+<P>下载地址<A title=http://json.codeplex.com/releases/view/105633 
+href="http://json.codeplex.com/releases/view/105633">http://json.codeplex.com/releases/view/105633</A></P>
+<P>方式2:Nuget安装</P>
+<DIV 
+style="BORDER-BOTTOM: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; PADDING-BOTTOM: 5px; BACKGROUND-COLOR: #f5f5f5; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BORDER-TOP: #cccccc 1px solid; BORDER-RIGHT: #cccccc 1px solid; PADDING-TOP: 5px" 
+class=cnblogs_code><PRE>PM&gt; Install-Package Newtonsoft.Json</PRE></DIV><STRONG></STRONG>
+<P><STRONG><FONT size=4></FONT></STRONG></P>
+<P><STRONG><FONT size=4></FONT></STRONG></P>
+<P><STRONG><FONT size=4></FONT></STRONG></P>
+<P><STRONG><FONT size=4></FONT></STRONG></P>
+<P><STRONG><FONT size=4>序列化与反序列</FONT></STRONG></P>
+<P>1.基本用法，首先引用Newtonsoft.Json命名空间,定义好与json同结构的的类用于转换</P>
+<DIV 
+style="BORDER-BOTTOM: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; PADDING-BOTTOM: 5px; BACKGROUND-COLOR: #f5f5f5; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BORDER-TOP: #cccccc 1px solid; BORDER-RIGHT: #cccccc 1px solid; PADDING-TOP: 5px" 
+class=cnblogs_code><PRE>Software software = <SPAN style="COLOR: #0000ff">new</SPAN>  Software{ SoftID=<SPAN style="COLOR: #800080">1</SPAN><SPAN style="COLOR: #000000">, 
+                SoftName</SPAN>=<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">限时免费</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000"> ,
+                DownloadUrl</SPAN>=<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">http://itunes.apple.com/cn/app/id427577372?mt=8</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000">,
+                ReleaseTime</SPAN>=<SPAN style="COLOR: #000000">DateTime.Now
+            };
+
+</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">序列化</SPAN>
+ <SPAN style="COLOR: #0000ff">string</SPAN> jsonStr =<SPAN style="COLOR: #000000"> JsonConvert.SerializeObject(software);
+
+</SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">反序列化</SPAN>
+Software objSoftware =JsonConvert.DeserializeObject&lt;Software&gt;<SPAN style="COLOR: #000000">(jsonStr);
+Console.WriteLine(jsonStr);</SPAN></PRE></DIV>
+<P>序列化输出</P>
+<P><A 
+href="http://images.cnitblog.com/blog/167327/201305/05005301-03602d19c7b64c16b9942a3bcecd1f05.jpg"><IMG 
+style="BACKGROUND-IMAGE: none; BORDER-RIGHT-WIDTH: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; DISPLAY: inline; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px" 
+title=未命名 border=0 alt=未命名 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/05005301-e36cab6c0bd94464ad4dfb9ec2b8a8ce.jpg" 
+width=532 height=68></A></P>
+<P>&nbsp;</P>
+<P>2.时间格式处理,DateTime类型序列化默认序列化如上,这种格式在其它客户端很难读取，或者想按自己的格式化</P>
+<DIV 
+style="BORDER-BOTTOM: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; PADDING-BOTTOM: 5px; BACKGROUND-COLOR: #f5f5f5; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BORDER-TOP: #cccccc 1px solid; BORDER-RIGHT: #cccccc 1px solid; PADDING-TOP: 5px" 
+class=cnblogs_code><PRE>Newtonsoft.Json.Converters.IsoDateTimeConverter timeConverter = <SPAN style="COLOR: #0000ff">new</SPAN><SPAN style="COLOR: #000000"> Newtonsoft.Json.Converters.IsoDateTimeConverter();
+timeConverter.DateTimeFormat </SPAN>= <SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">yyyy年MM月dd日 HH:mm:ss</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000">;
+Console.WriteLine(JsonConvert.SerializeObject(software, timeConverter));</SPAN></PRE></DIV>
+<P>输出结果：</P>
+<P><A 
+href="http://images.cnitblog.com/blog/167327/201305/05005451-2e670adfc14d48a49e19575d434b300e.jpg"><IMG 
+style="BACKGROUND-IMAGE: none; BORDER-RIGHT-WIDTH: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; DISPLAY: inline; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px" 
+title=未命名 border=0 alt=未命名 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/05005452-e5b4c29cf15944bd8a542a35dd9d97d6.jpg" 
+width=549 height=62></A></P>
+<P>&nbsp;</P>
+<P>3.匿名类型序列化,这种方法无需事先定义与json同结构的类就能反序列化</P>
+<DIV 
+style="BORDER-BOTTOM: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; PADDING-BOTTOM: 5px; BACKGROUND-COLOR: #f5f5f5; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BORDER-TOP: #cccccc 1px solid; BORDER-RIGHT: #cccccc 1px solid; PADDING-TOP: 5px" 
+class=cnblogs_code><PRE><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">Json字符串</SPAN>
+ <SPAN style="COLOR: #0000ff">string</SPAN> jsonStr = <SPAN style="COLOR: #800000">@"</SPAN><SPAN style="COLOR: #800000">{result:-1,desc:'参数错误，请检查格式'}</SPAN><SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #000000">;
+
+ </SPAN><SPAN style="COLOR: #008000">//</SPAN><SPAN style="COLOR: #008000">反序列化</SPAN>
+ <SPAN style="COLOR: #0000ff">var</SPAN> obj = JsonConvert.DeserializeAnonymousType(jsonStr, <SPAN style="COLOR: #0000ff">new</SPAN> { result = <SPAN style="COLOR: #800080">0</SPAN>, desc = <SPAN style="COLOR: #0000ff">string</SPAN><SPAN style="COLOR: #000000">.Empty });
+ Console.WriteLine(</SPAN><SPAN style="COLOR: #0000ff">string</SPAN>.Format(<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">result:{0} desc:{1}</SPAN><SPAN style="COLOR: #800000">"</SPAN>, obj.result, obj.desc));</PRE></DIV>
+<P>&nbsp;</P>
+<P>4.快速定位节点，用于快速处理或者json结构较为复杂的字符串,又不想定义对应转移类,如</P>
+<DIV 
+style="BORDER-BOTTOM: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; PADDING-BOTTOM: 5px; BACKGROUND-COLOR: #f5f5f5; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BORDER-TOP: #cccccc 1px solid; BORDER-RIGHT: #cccccc 1px solid; PADDING-TOP: 5px" 
+class=cnblogs_code><PRE>{"weatherinfo":{"city":"福州","city_en":"fuzhou","date_y":"2013年5月4日","date":"","week":"星期六","fchh":"18","cityid":"101230101","temp1":"16℃~21℃","temp2":"16℃~23℃","temp3":"17℃~24℃","temp4":"16℃~26℃","temp5":"17℃~29℃","temp6":"18℃~28℃","tempF1":"60.8℉~69.8℉","tempF2":"60.8℉~73.4℉","tempF3":"62.6℉~75.2℉","tempF4":"60.8℉~78.8℉","tempF5":"62.6℉~84.2℉","tempF6":"64.4℉~82.4℉","weather1":"阵雨","weather2":"阵雨转阴","weather3":"阴转雷阵雨","weather4":"阵雨转雷阵雨","weather5":"阵雨转多云","weather6":"多云转中雨","img1":"3","img2":"99","img3":"3","img4":"2","img5":"2","img6":"4","img7":"3","img8":"4","img9":"3","img10":"1","img11":"1","img12":"8","img_single":"3","img_title1":"阵雨","img_title2":"阵雨","img_title3":"阵雨","img_title4":"阴","img_title5":"阴","img_title6":"雷阵雨","img_title7":"阵雨","img_title8":"雷阵雨","img_title9":"阵雨","img_title10":"多云","img_title11":"多云","img_title12":"中雨","img_title_single":"阵雨","wind1":"微风","wind2":"微风","wind3":"微风","wind4":"微风","wind5":"微风","wind6":"微风","fx1":"微风","fx2":"微风","fl1":"小于3级","fl2":"小于3级","fl3":"小于3级","fl4":"小于3级","fl5":"小于3级","fl6":"小于3级","index":"舒适","index_d":"建议着薄型套装或牛仔衫裤等春秋过渡装。年老体弱者宜着套装、夹克衫等。","index48":"舒适","index48_d":"建议着薄型套装或牛仔衫裤等春秋过渡装。年老体弱者宜着套装、夹克衫等。","index_uv":"弱","index48_uv":"最弱","index_xc":"不宜","index_tr":"适宜","index_co":"舒适","st1":"19","st2":"14","st3":"25","st4":"14","st5":"23","st6":"16","index_cl":"较不宜","index_ls":"不太适宜","index_ag":"易发"}}</PRE></DIV>
+<P>读取weatherinfo下的weather1</P>
+<DIV 
+style="BORDER-BOTTOM: #cccccc 1px solid; BORDER-LEFT: #cccccc 1px solid; PADDING-BOTTOM: 5px; BACKGROUND-COLOR: #f5f5f5; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BORDER-TOP: #cccccc 1px solid; BORDER-RIGHT: #cccccc 1px solid; PADDING-TOP: 5px" 
+class=cnblogs_code><PRE><SPAN style="COLOR: #0000ff"> var</SPAN> obj =<SPAN style="COLOR: #000000"> JObject.Parse(html);
+ </SPAN><SPAN style="COLOR: #0000ff">string</SPAN> weather1 = (<SPAN style="COLOR: #0000ff">string</SPAN>)obj[<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">weatherinfo</SPAN><SPAN style="COLOR: #800000">"</SPAN>][<SPAN style="COLOR: #800000">"</SPAN><SPAN style="COLOR: #800000">weather1</SPAN><SPAN style="COLOR: #800000">"</SPAN>];</PRE></DIV>
+<P>快速方便吧~~</P></DIV>
+<DIV id=MySignature></DIV>
+<SCRIPT type=text/javascript>
+var isLogined = false;
+var cb_blogId = 149196;
+var cb_entryId = 3060479;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "5486c38a-7fd7-df11-ac81-842b2b196315";
+var cb_entryCreatedDate = '2013/5/5 0:53:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV class=clear></DIV>
+<DIV id=blog_post_info_block>
+<DIV id=blog_post_info></DIV>
+<DIV class=clear></DIV>
+<DIV id=post_next_prev></DIV></DIV>
+<SCRIPT type=text/javascript>
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {  
+        loadViewCount(cb_entryId);
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+
+<DIV class=postDesc>posted on <SPAN id=post-date>2013-05-05 00:53</SPAN> <A 
+href="http://www.cnblogs.com/mejozn/">城岸</A> 阅读(<SPAN 
+id=post_view_count>...</SPAN>) 评论(<SPAN id=post_comment_count>...</SPAN>) <A 
+href="http://www.cnblogs.com/mejozn/admin/EditPosts.aspx?postid=3060479" 
+rel=nofollow>编辑</A> <A onclick="AddToWz(3060479);return false;" 
+href="http://www.cnblogs.com/mejozn/archive/2013/05/05/3060479.html#">收藏</A></DIV></DIV>
+<SCRIPT type=text/javascript 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/3060479"></SCRIPT>
+
+<DIV id=blog-comments-placeholder></DIV>
+<SCRIPT type=text/javascript>var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+
+<DIV id=comment_form class=commentform>
+<DIV id=divCommentShow></DIV>
+<DIV id=comment_nav><SPAN id=span_refresh_tips></SPAN><A id=lnk_RefreshComments 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" 
+href="http://www.cnblogs.com/mejozn/archive/2013/05/05/3060479.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/mejozn/archive/2013/05/05/3060479.html#top">返回顶部</A></DIV>
+<DIV id=comment_form_container></DIV>
+<SCRIPT type=text/javascript>
+    if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id=ad_text_under_commentbox class=ad_text_commentbox></DIV>
+<DIV id=site_nav_under><A title=程序员的网上家园 href="http://www.cnblogs.com/" 
+target=_blank>博客园首页</A><A title=程序员问答社区 href="http://q.cnblogs.com/" 
+target=_blank>博问</A><A title=IT新闻 href="http://news.cnblogs.com/" 
+target=_blank>新闻</A><A href="http://home.cnblogs.com/ing/" 
+target=_blank>闪存</A><A href="http://job.cnblogs.com/" target=_blank>程序员招聘</A><A 
+href="http://kb.cnblogs.com/" target=_blank>知识库</A></DIV>
+<DIV id=ad_under_post_holder></DIV>
+<DIV id=HistoryToday class=c_ad_block></DIV></DIV></DIV><!--done-->
+<DIV class=footer>Powered by: <BR><A 
+style="FONT-FAMILY: Verdana; FONT-SIZE: 12px" id=Footer1_Hyperlink3 
+href="http://www.cnblogs.com/" name=Hyperlink1>博客园</A> <BR>Copyright ©2013 城岸 
+</DIV>
+<SCRIPT type=text/javascript 
+src="_net%20json序列化组件Json_NET%20-%20城岸%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

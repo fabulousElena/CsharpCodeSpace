@@ -1,0 +1,192 @@
+BODY {
+	MARGIN: 0px; FONT-FAMILY: ms shell dlg; BACKGROUND: url(images/o_headbg.gif) #f8f8f8 repeat-x; FONT-SIZE: 12pt
+}
+#classnavbar {
+	DISPLAY: none
+}
+P.date {
+	DISPLAY: none
+}
+#nadframe {
+	DISPLAY: none
+}
+H1 {
+	BORDER-BOTTOM: #adbb88 6px solid; MARGIN: 0px; PADDING-RIGHT: 40px; FONT-FAMILY: ms shell dlg; BACKGROUND: url(images/o_head.jpg) no-repeat; HEIGHT: 175px; FONT-SIZE: 16px; FONT-WEIGHT: bold
+}
+H1 A:link {
+	COLOR: #2e9ce9
+}
+H1 A:active {
+	COLOR: #2e9ce9
+}
+H1 A:hover {
+	COLOR: #2e9ce9
+}
+#Header1_HeaderTitle {
+	TEXT-ALIGN: right; WIDTH: 100%; FLOAT: left; PADDING-TOP: 116px
+}
+#main {
+	PADDING-BOTTOM: 40px; MARGIN-TOP: 0px; WIDTH: 78%; MARGIN-BOTTOM: 10px; BACKGROUND: #fff; FLOAT: left; BORDER-RIGHT: #000000 1px dotted; PADDING-TOP: 20px
+}
+#rightmenu {
+	BACKGROUND-COLOR: transparent; MARGIN-TOP: 10px; PADDING-LEFT: 0px; WIDTH: 20%; WORD-WRAP: break-word; FLOAT: right; FONT-SIZE: 13px
+}
+#footer {
+	POSITION: relative; TEXT-ALIGN: center; WIDTH: 100%; CLEAR: both; FONT-SIZE: 8pt; BORDER-TOP: medium none; PADDING-TOP: 5px
+}
+A:visited {
+	COLOR: #2e9ce9; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #2e9ce9; TEXT-DECORATION: none
+}
+A:link {
+	COLOR: #2e9ce9; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #88bbff; TEXT-DECORATION: underline
+}
+BLOCKQUOTE {
+	BORDER-BOTTOM: #f4f4f4 1px solid; BORDER-LEFT: #f4f4f4 1px solid; PADDING-BOTTOM: 0px; LINE-HEIGHT: 150%; FONT-STYLE: normal; PADDING-LEFT: 11px; PADDING-RIGHT: 11px; BACKGROUND: #f9f9f9; COLOR: #5b5b5b; FONT-SIZE: 10pt; BORDER-TOP: #f4f4f4 1px solid; BORDER-RIGHT: #f4f4f4 1px solid; PADDING-TOP: 0px
+}
+H1 A:visited {
+	
+}
+H1 A:active {
+	
+}
+H1 A:link {
+	
+}
+H1 A:hover {
+	
+}
+.post {
+	LINE-HEIGHT: 200%; PADDING-LEFT: 40px; PADDING-RIGHT: 40px; WORD-WRAP: break-word; FONT-SIZE: 14px
+}
+H5 {
+	FONT-FAMILY: bold; FONT-SIZE: 14px
+}
+.postTitle {
+	BORDER-BOTTOM: #d6d6d6 1px dotted; COLOR: #000000; FONT-SIZE: 14px; FONT-WEIGHT: bold
+}
+.postText {
+	LINE-HEIGHT: 180%; FONT-SIZE: 14px
+}
+H3 {
+	BORDER-BOTTOM: #d6d6d6 1px dotted; BACKGROUND-COLOR: transparent; COLOR: #000000; FONT-SIZE: 14px
+}
+.listitem {
+	BORDER-BOTTOM: #e4e4e4 1px dotted; PADDING-BOTTOM: 3px; WIDTH: 180px; PADDING-TOP: 3px
+}
+INPUT {
+	FONT-FAMILY: Verdana; COLOR: gray; FONT-SIZE: 10pt
+}
+LABEL {
+	FONT-FAMILY: Verdana; COLOR: gray; FONT-SIZE: 10pt
+}
+INPUT.text {
+	WIDTH: 381px
+}
+LI {
+	FONT-STYLE: normal; WIDTH: 180px; WORD-WRAP: break-word; TABLE-LAYOUT: fixed; FONT-SIZE: 10pt
+}
+H2 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 20px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+H2 A:visited {
+	FONT-SIZE: 14px
+}
+H2 A:active {
+	FONT-SIZE: 14px
+}
+H2 A:link {
+	FONT-SIZE: 14px
+}
+H2 A:hover {
+	FONT-SIZE: 14px
+}
+.dateTitle {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 20px; PADDING-RIGHT: 0px; HEIGHT: 26px; COLOR: #97ac5f; FONT-SIZE: 14px; FONT-WEIGHT: bold; PADDING-TOP: 0px
+}
+P.date IMG {
+	VERTICAL-ALIGN: middle
+}
+.postFoot {
+	BORDER-BOTTOM: #d6d6d6 1px dotted; TEXT-ALIGN: right; COLOR: #d3d3d3; FONT-SIZE: 9pt
+}
+SPAN.highlight {
+	BACKGROUND-COLOR: transparent
+}
+TD {
+	FONT-SIZE: 10pt
+}
+TEXTAREA {
+	WIDTH: 300px; HEIGHT: 200px; COLOR: #000000; FONT-SIZE: 10pt
+}
+.CommentForm {
+	PADDING-LEFT: 70px; PADDING-RIGHT: 40px; COLOR: #a9a9a9; BORDER-TOP: #d6d6d6 1px dotted; PADDING-TOP: 20px
+}
+#comments {
+	PADDING-LEFT: 70px; PADDING-RIGHT: 40px; COLOR: #888; FONT-SIZE: 13px
+}
+#comments H4 {
+	FONT-SIZE: 13px
+}
+#relatedlinks UL {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; MARGIN-LEFT: 10px; LIST-STYLE-IMAGE: none; PADDING-TOP: 0px
+}
+#rightmenu H3 {
+	BORDER-BOTTOM: #d6d6d6 1px dotted; BORDER-LEFT: medium none; PADDING-BOTTOM: 2px; BACKGROUND-COLOR: transparent; MARGIN: 10px 0px 0px; PADDING-LEFT: 5px; WIDTH: 100px; PADDING-RIGHT: 5px; COLOR: #000000; FONT-SIZE: 12px; BORDER-TOP: medium none; BORDER-RIGHT: medium none; PADDING-TOP: 2px
+}
+#rightmenu UL {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; PADDING-BOTTOM: 5px; LINE-HEIGHT: 150%; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; FONT-SIZE: 13px; BORDER-TOP: medium none; LIST-STYLE-IMAGE: none; BORDER-RIGHT: medium none; PADDING-TOP: 5px
+}
+#rightmenu LI {
+	FONT-SIZE: 13px
+}
+#tagline {
+	POSITION: absolute; TEXT-ALIGN: right; MARGIN: 0px; FONT-FAMILY: ms shell dlg; COLOR: #fff; FONT-SIZE: 12px; VERTICAL-ALIGN: bottom; TOP: 150px; RIGHT: 20px
+}
+#rigthtag {
+	
+}
+DIV.RecentComment {
+	WIDTH: 180px
+}
+.block_title {
+	FONT-SIZE: 14px; FONT-WEIGHT: bold
+}
+.code {
+	BORDER-BOTTOM: #d9d9d9 1px dotted; BORDER-LEFT: #d9d9d9 1px dotted; PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; WIDTH: 90%; PADDING-RIGHT: 10px; BACKGROUND: #f4f4f4; FLOAT: left; BORDER-TOP: #d9d9d9 1px dotted; BORDER-RIGHT: #d9d9d9 1px dotted; PADDING-TOP: 10px
+}
+.postFoot {
+	CLEAR: both; PADDING-TOP: 6px
+}
+BR {
+	CLEAR: both
+}
+I {
+	FONT-STYLE: normal; COLOR: green
+}
+TABLE {
+	WORD-WRAP: break-word; TABLE-LAYOUT: fixed
+}
+DIV {
+	WORD-WRAP: break-word
+}
+UL {
+	WORD-WRAP: break-word
+}
+P {
+	WORD-WRAP: break-word
+}
+FONT {
+	WORD-WRAP: break-word
+}
+.commentform TABLE {
+	TABLE-LAYOUT: auto
+}
+#cnblogs_post_body H1 {
+	BORDER-BOTTOM: medium none; MARGIN: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: verdana, Arial, Helvetica, sans-serif; BACKGROUND: none transparent scroll repeat 0% 0%; HEIGHT: auto; FONT-SIZE: 16px; FONT-WEIGHT: bold
+}

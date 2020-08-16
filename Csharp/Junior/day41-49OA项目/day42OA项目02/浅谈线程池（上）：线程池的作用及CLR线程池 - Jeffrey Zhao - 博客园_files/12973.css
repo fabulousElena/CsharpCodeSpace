@@ -1,0 +1,126 @@
+div.post div.entry
+{
+    font-family: "Trebuchet MS" ,Georgia,"Times New Roman",Times,sans-serif;
+}
+
+div.post div.entry img.embed {
+    border: 0 none;
+    padding: 0;
+}
+
+.lb_search { padding-top: 1px; }
+#mySearch input.keyword { padding-bottom: 1px; padding-top: 1px; }
+
+div.post div.entry blockquote { min-height: 30px; border-width:0px; }
+
+div#my_ing_recent { display: none; }
+
+div#about_body p { margin: 0 auto 10px auto; }
+
+div#sidebar div#sideMain div ul li {
+    padding-top: 4px;
+}
+
+div.post div.entry img {
+	border-style: solid;
+	border-width: 1px;
+	padding: 5px;
+	border-color: #CCC;
+}
+
+div.post div.entry img.floatLeft {
+    margin: 5px 10px 5px 0px;
+}
+
+div.post div.entry img.floatRight {
+    margin: 5px 0px 5px 10px;
+}
+
+#content, #sidebar {
+	overflow:hidden;
+}
+
+div#sidebar div#sideMain div h2 {
+    margin: 7px 0px 0px 0px
+}
+
+div#sidebar div#sideRight div h2, div#sidebar div#sideLeft div h2 {
+	margin: 7px 0px 5px 0px;
+}
+
+div.post div.entry h1, div.post div.entry h2, div.post div.entry h3 {
+	margin-top: 18px;
+	margin-bottom: 12px;
+}
+
+div.post div.entry h1 {
+	padding: 5px;
+	color:white;
+	background-color: gray;
+}
+
+div.post h2 {
+	font-size: 22px;
+	line-height: 100%;
+}
+
+div.post div.entry blockquote p {
+	line-height: 150%;
+}
+
+ol.commentlist li {
+	border-bottom: gray 1px solid
+}
+
+div.post div.entry small {
+	display: inline;
+	text-align: left;
+	font-size: 80%;
+}
+
+#AjaxHolder_PostComment_panelAD, #relative_posts, #itnews, #google_ads_div_cnblogs_blogpost_bottom, #div_ad2 {
+	display: none;
+}
+
+#commentList fieldset.comment_quote, #comment_form fieldset.comment_quote {
+	border:1px solid gray;
+}
+
+div.post div.entry pre.code {
+    border-style: dashed;
+    border-left: solid 5px #6ce26c;
+    margin: 10px 0px 10px 0px;
+    font-size: 10pt;
+    line-height: 140%;
+}
+
+div.post div.entry {
+    margin-bottom: 10px;
+}
+
+.jeffz_seo {display:none;}
+div#license_information
+{
+    background-color: #f8f8ee;
+    border: solid 1px #e8e7d0;
+    padding: 5px 10px 0px 10px;
+    min-height: 10px;
+    margin-top: -15px;
+    margin-bottom: 30px;
+    color: #666666
+}
+div#license_information p a
+{
+    border-bottom: dashed 1px;
+}
+div#license_information img
+{
+    margin: 5px 8px 0 0;
+}
+
+div#author_profile, div.blog_topic, div#profile_block
+{
+    display:none;
+}
+
+div.post div.entry ul ul { margin-top: 0px; margin-bottom: 0px; }

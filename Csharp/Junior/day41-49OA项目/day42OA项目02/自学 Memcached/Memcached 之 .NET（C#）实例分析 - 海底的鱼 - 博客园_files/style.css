@@ -1,0 +1,635 @@
+﻿/**************************************************
+名称：iMetro HD
+版本：2.0.0.1
+时间：2011年1月21日
+作者：崎仔
+**************************************************/
+
+/**************************************************
+公共样式
+**************************************************/
+#EntryTag {
+	margin-top: 20px;
+	font-size: 9pt;
+	color: gray;
+}
+.topicListFooter {
+	text-align: right;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+#divRefreshComments {
+	text-align: right;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	font-size: 9pt;
+}
+/**************************************************
+全局样式
+**************************************************/
+* {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	background-image:url("images/background.jpg");
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0px;
+}
+fieldset, img {
+	border: 0px;
+}
+li {
+	list-style: none;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+a:link, a:visited, a:hover, a:active {
+	color:black;
+	text-decoration: none;
+}
+.clear {
+	clear: both;
+}
+/**************************************************
+Home
+**************************************************/
+#home {
+	background-color:white;
+	font-family: "微软雅黑";
+	font-size: 12px;
+	color: black;
+	margin:15px;
+	padding-top:30px;
+	padding-right:25px;
+	word-wrap:break-word;
+	box-shadow: 0 0 25px black;
+	position:relative;
+	min-width:950px;
+}
+/**************************************************
+Header
+**************************************************/
+#header {
+	margin-bottom:15px;
+	padding-left:45px;
+}
+#blogTitle {
+	margin-bottom:15px;
+}
+#lnkBlogLogo {
+	background-color:green;
+	width:20px;
+	height:120px;
+	display:block;
+	position:absolute;
+	left:0px;
+}
+#blogLogo {
+	display:none;
+}
+#blogTitle h1 {
+	font-size: 400%;
+}
+#blogTitle h2 {
+	display:none;
+}
+/*************************************************/
+#navigator {
+}
+#navList {
+	overflow:auto;
+	margin-bottom:10px;
+}
+#navList li {
+	float: left;
+}
+.menu {
+	color:gray !important;
+	margin-right:30px;
+	font-size:250%;
+}
+#navList a[href="http://www.cnblogs.com/"] {
+	color:black !important;
+}
+.aHeaderXML {
+}
+.blogStats {
+	text-align:right;
+	color:gray;
+}
+/**************************************************
+Main
+**************************************************/
+#main {
+	overflow:auto;
+	padding-left:25px;
+}
+/*************************************************/
+#mainContent .forFlow {
+	padding-right:250px;
+}
+#mainContent {
+	float:left;
+	margin-right:-250px;
+	width:100%;
+}
+/*************************************************/
+.day {
+	margin-bottom:10px;
+	border-bottom:1px solid black;
+}
+/*************************************************/
+.dayTitle {
+	background-color:#CD4900;
+	padding-top:3px;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom:3px;
+	margin-bottom:10px;
+}
+.dayTitle a {
+	color:white;
+	font-size:133%;
+}
+/*************************************************/
+.postTitle {
+	background-image:url("images/logo.png");
+	background-repeat:repeat-y;
+	background-position: -10px 0px;
+	margin-bottom:10px;
+	padding-left:15px;
+	padding-right:15px;
+}
+.postTitle2 {
+	font-size:200%;
+}
+/*************************************************/
+.postCon {
+	font-size:116%;
+	padding-left:15px;
+	padding-right:15px;
+	margin-bottom:5px;
+	overflow:auto;
+}
+/*************************************************/
+.postDesc {
+	color:gray;
+	text-align:right;
+	padding-left:15px;
+	padding-right:15px;
+	margin-bottom:5px;
+}
+.postDesc a {
+	color:gray;
+}
+/*************************************************/
+.postSeparator {
+	border-bottom:1px dashed black;
+	margin-bottom:10px;
+}
+/*************************************************/
+.topicListFooter {
+	padding-left:15px;
+	padding-right:15px;
+	margin:0px;
+}
+.topicListFooter a {
+	color:green;
+}
+/**************************************************
+Side Bar
+**************************************************/
+#sideBar {
+	width:225px;
+	float:right;
+}
+/*************************************************/
+#sideBarMain {
+	font-size:116%;
+}
+#sideBarMain li {
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
+/*************************************************/
+.newsItem {
+	border:1px solid black;
+	padding:15px;
+	margin-bottom:15px;
+}
+/*************************************************/
+#calendar {
+	border:1px solid black;
+	padding:15px;
+	margin-bottom:15px;
+}
+/*************************************************/
+.Cal {
+	width: 100%;
+	margin-bottom:10px;
+}
+/*************************************************/
+.CalTitle {
+	width:100%;
+	border-bottom:1px solid black;
+}
+.CalNextPrev a {
+	font-weight:normal !important;
+	color:black !important;
+	background-color:transparent !important;
+}
+/*************************************************/
+.CalDayHeader {
+	border-bottom:1px dashed black;
+}
+/*************************************************/
+#calendar a {
+	color:green;
+	font-weight: bold;
+}
+#calendar a:hover {
+	color: white;
+	background-color: green;
+}
+.CalTodayDay {
+	font-weight: bold;
+	color:#CD4900;
+}
+/*************************************************/
+.catListTag {
+	overflow:auto;
+}
+.catListTag li {
+	float:left;
+	float:none\9;
+	margin:0px 4px 6px 0px;
+	overflow:visible !important;
+	white-space:normal !important;
+	word-break:break-all !important;
+}
+.catListTag a {
+	color:white;
+	background-color:green;
+	padding:1px 3px 1px 3px;
+}
+/*************************************************/
+.div_my_zzk {
+	position:relative;
+}
+.input_my_zzk {
+	width: 155px;
+	height:25px;
+	padding-right:30px;
+	width:100px\9;
+	height:auto\9;
+	padding-right:0px\9;
+}
+.btn_my_zzk {
+	background-repeat:no-repeat;
+	background-size:25px;
+	background-color:transparent;
+	width: 25px;
+	height:25px;
+	color: transparent;
+	border: 0px;
+	border-style:none;
+	position:absolute;
+	cursor:pointer;
+	top:2px;
+	right:6px;
+	background-repeat:repeat\9;
+	background-size:auto\9;
+	background-color:green\9;
+	width:auto\9;
+	height:auto\9;
+	color:white\9;
+	border: 0px\9;
+	border-style:none\9;
+	position:static\9;
+	cursor:pointer\9;
+}
+#btnZzk {
+	background-image:url("images/search.png");
+	background-image:none\9;
+	background-image:none\0;
+}
+.mySearch input[value="谷歌搜索"] {
+	background-image:url("images/google.png");
+	background-image:none\9;
+	background-image:none\0;
+}
+/*************************************************/
+#leftcontentcontainer > div {
+	border:1px solid black;
+	padding:15px;
+	margin-bottom:15px;
+}
+.catListTitle {
+	font-size:200%;
+	margin-bottom:5px;
+}
+.catListComment {
+}
+.recent_comment_body {
+	text-indent:2em;
+	font-size:85%;
+	color: gray !important;
+	overflow:visible !important;
+	white-space:normal !important;
+}
+.recent_comment_author {
+	border-bottom:1px dashed black;
+	font-size:85%;
+	color:green !important;
+	overflow:visible !important;
+	white-space:normal !important;
+}
+/**************************************************
+文章
+**************************************************/
+#topics {
+	margin-bottom: 10px;
+	border-bottom: 1px solid black;
+}
+/*************************************************/
+.postBody {
+	font-size:116%;
+	padding-left:15px;
+	padding-right:15px;
+	margin-bottom:5px;
+}
+/*************************************************/
+#cnblogs_post_body {
+	margin-bottom:30px;
+	overflow:auto;
+}
+/*************************************************/
+#MySignature {
+	background-color: #F8F8EE;
+	border: solid 1px #E8E7D0;
+	box-shadow: 0 0 15px #aaa;
+	padding: 10px;
+	margin-bottom:10px;
+	color: gray;
+}
+/*************************************************/
+#BlogPostCategory {
+	margin-bottom:5px;
+}
+/*************************************************/
+#EntryTag {
+	margin-top:0px;
+	text-align:right;
+}
+#EntryTag a {
+	color: white;
+	background-color: green;
+	padding: 1px 3px 1px 3px;
+}
+/**************************************************
+评论
+**************************************************/
+.feedback_area_title {
+	color:white;
+	font-size:133%;
+	background-color:#CD4900;
+	padding:3px 15px 3px 15px;
+	margin-bottom:10px;
+}
+/*************************************************/
+.feedbackItem {
+	position:relative;
+	border-bottom:1px solid black;
+	padding-left:15px;
+	padding-right:15px;
+	margin-bottom:10px;
+}
+/*************************************************/
+.feedbackListSubtitle {
+	margin-left:65px;
+	margin-bottom:5px;
+	border-bottom:1px dashed black;
+}
+/*************************************************/
+.feedbackManage {
+	position:absolute;
+	bottom:0px;
+	right:15px;
+}
+.feedbackManage a {
+	color:gray;
+}
+/*************************************************/
+.feedbackManage + a[href^="#"] {
+	display:block;
+	width:50px;
+	height:50px;
+	background-color:green;
+	position:absolute;
+	color:white;
+	font-size:133%;
+	text-align:center;
+	left:15px;
+}
+/*************************************************/
+.louzhu {
+	color:#CD4900;
+}
+/*************************************************/
+.feedbackCon {
+	padding-left:65px;
+	margin-bottom:35px;
+	font-size:116%;
+}
+/*************************************************/
+#comment_nav {
+	margin-right:0px;
+	margin-bottom: 10px;
+	text-align:center;
+	padding-top:3px;
+	padding-bottom:3px;
+	padding-left:15px;
+	padding-right:15px;
+	background-color:green;
+}
+#comment_nav a {
+	color:white;
+	font-size:116%;
+}
+/**************************************************
+列表
+**************************************************/
+.entrylistTitle, .PostListTitle, .thumbTitle {
+	background-color:#CD4900;
+	padding-top:3px;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom:3px;
+	margin-bottom:10px;
+	color: white;
+	font-size: 133%;
+}
+.entrylistDescription, .thumbDescription {
+	background-color:green;
+	padding-top:3px;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom:3px;
+	margin-bottom:10px;
+	color:white;
+	text-align:right;
+}
+.entrylistItem {
+	margin-bottom:10px;
+	border-bottom:1px solid black;
+}
+.entrylistPosttitle {
+	background-image:url("images/logo.png");
+	background-repeat:repeat-y;
+	background-position: -10px 0px;
+	margin-bottom:10px;
+	padding-left:15px;
+	padding-right:15px;
+}
+.entrylistItemTitle {
+	font-size:200%;
+}
+.entrylistPostSummary {
+	font-size:116%;
+	padding-left:15px;
+	padding-right:15px;
+	margin-bottom:5px;
+}
+.entrylistItemPostDesc {
+	color:gray;
+	text-align:right;
+	padding-left:15px;
+	padding-right:15px;
+	margin-bottom:5px;
+}
+.entrylistItemPostDesc a {
+	color:gray;
+}
+.entrylist .postSeparator {
+	display:none;
+}
+.PostList {
+	padding-left:15px;
+	padding-right:15px;
+	margin-bottom: 10px;
+	border-bottom: 1px dashed black;
+}
+.postTitl2 {
+	float: left;
+	margin-bottom: 5px;
+}
+.postDesc2 {
+	float: right;
+	color: gray;
+	margin-bottom: 5px;
+}
+.postText2 {
+	clear:both;
+	color: gray;
+	margin-bottom: 5px;
+}
+/**************************************************
+相册
+**************************************************/
+.divPhoto {
+	border: 1px solid green;
+	padding: 2px;
+	margin-right: 10px;
+	opacity:0.5;
+}
+.divPhoto:hover {
+	opacity:1;
+}
+/**************************************************
+Footer
+**************************************************/
+#footer {
+	text-align: center;
+	border-top: 2px solid green;
+	margin-top: 50px;
+	margin-left:25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+/**************************************************
+文章内部格式
+**************************************************/
+.postBody h1 {
+	display: block;
+	font-size: 2em;
+	font-weight: bold;
+	margin: 15px auto 2px auto;
+}
+.postBody h2 {
+	display: block;
+	font-size: 1.5em;
+	font-weight: bold;
+	margin: 15px auto 2px auto;
+}
+.postBody h3 {
+	display: block;
+	font-size: 1.17em;
+	font-weight:bold;
+	margin: 15px auto 2px auto;
+}
+.postBody h4 {
+	display: block;
+	font-weight:bold;
+	margin: 15px auto 2px auto;
+}
+.postBody h5 {
+	display: block;
+	font-size: 0.83em;
+	font-weight:bold;
+	margin: 15px auto 2px auto;
+}
+.postBody h6 {
+	font-size:100%;
+	font-size: 0.67em;
+	font-weight:bold;
+	margin: 15px auto 2px auto;
+}
+.postBody a {
+	color:green;
+	padding: 1px 3px 1px 3px;
+}
+.postBody a:hover {
+	background-color:green;
+	color:white;
+}
+.postBody blockquote {
+	background: url("images/quote.png") no-repeat -75px -20px #F0F0F0;
+	border-radius: 10px;
+	margin: 20px 0px;
+	padding: 20px 50px;
+}
+/*************************************************/
+.postCon a {
+	color:green;
+	padding: 1px 3px 1px 3px;
+}
+.postCon a:hover {
+	background-color:green;
+	color:white;
+}
+/*************************************************/
+.c_b_p_desc_readmore {
+	color:#CD4900 !important;
+}
+.c_b_p_desc_readmore:hover {
+	color:white !important;
+	background-color:#CD4900 !important;
+}

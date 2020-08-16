@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1231
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{38D7AA58-C95B-449B-86C6-A8073A56E11F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{53995DBB-9836-4647-AD22-865884FDEB9E}"
@@ -11,6 +13,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBUtility", "DBUtility\DBUtility.csproj", "{0988C62E-247F-471F-A183-DB509C7A3839}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{2D8E89D1-371E-47B9-B2E7-2FE215C7869A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailDemo", "MailDemo\MailDemo.csproj", "{F89B0836-FAB8-49F9-BD18-C54C30498E07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,8 +86,23 @@ Global
 		{2D8E89D1-371E-47B9-B2E7-2FE215C7869A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2D8E89D1-371E-47B9-B2E7-2FE215C7869A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2D8E89D1-371E-47B9-B2E7-2FE215C7869A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Debug|.NET.Build.0 = Debug|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Release|.NET.ActiveCfg = Release|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Release|.NET.Build.0 = Release|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F89B0836-FAB8-49F9-BD18-C54C30498E07}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B25A821-09C9-4EF3-AC22-9D88AECE0E4C}
 	EndGlobalSection
 EndGlobal

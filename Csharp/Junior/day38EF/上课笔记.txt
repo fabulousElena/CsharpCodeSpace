@@ -1,0 +1,155 @@
+http://www.oschina.net/code/snippet_554456_47759
+
+
+http://www.csdn.net/article/2015-04-22/2824533-Elevator.js
+锚点。
+
+http://www.csdn.net/article/2015-03-18/2824243
+
+
+注意：表以及实体中都要有主键，否则EF会出现异常。
+
+一：EF介绍(Entity Framework)  
+EF是微软以ADO.NET为基础发展的一个ORM框架。
+
+object
+Releations
+Mapping
+
+DataBaseFirst.
+
+
+ModelFirst.
+
+
+
+
+
+二：EF实现CRUD
+ 1:添加
+  insert into dbo.RoomType(TypeName, Price, AddBed, BedPrice, Remark) output inserted.ID
+values('kkk',321,1,34,'oooo')
+
+  
+  
+  
+  exec sp_executesql N'insert [dbo].[UserInfo]([UserName], [UserPass], [RegTime], [Email])
+values (@0, @1, @2, @3)
+select [ID]
+from [dbo].[UserInfo]
+where @@ROWCOUNT > 0 and [ID] = scope_identity()',N'@0 nvarchar(32),@1 nvarchar(32),@2 datetime,@3 nvarchar(32)',@0=N'sss56',@1=N'123456',@2='2015-06-17 10:32:43:217',@3=N'sss@256.com'
+  
+  @@identity
+  
+  SCOPE_IDENTITY 和 @@IDENTITY 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。
+
+例如，有两个表 T1 和 T2，并且在 T1 上定义了 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。 该方案演示了两个作用域：在 T1 上的插入，以及在 T2 通过触发器的插入。
+
+假设 T1 和 T2 都有标识列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 将返回在当前会话中的任何作用域内插入的最后一个标识列的值。这是在 T2 中插入的值。SCOPE_IDENTITY() 将返回在 T1 中插入的 IDENTITY 值。这是在同一个作用域内发生的最后的插入。如果在任何 INSERT 语句作用于作用域中的标识列之前调用 SCOPE_IDENTITY() 函数，则该函数将返回空值。
+
+
+  
+  
+  
+  
+
+2：实现查询
+SELECT 
+[Extent1].[ID] AS [ID], 
+[Extent1].[UserName] AS [UserName], 
+[Extent1].[UserPass] AS [UserPass], 
+[Extent1].[RegTime] AS [RegTime], 
+[Extent1].[Email] AS [Email]
+FROM [dbo].[UserInfo] AS [Extent1]
+WHERE 343 = [Extent1].[ID]
+  
+			  
+	3：删除
+
+Nvarchar(max) 
+
+4：更新操作			
+
+  
+			
+三：ModelFirst
+根据业务需求创建实体，并且建立各个实体之间的关系。（注意导航属性。）
+
+
+
+四：导航属性查询。
+添加
+
+SELECT 
+[Extent1].[ID] AS [ID], 
+[Extent1].[CustomerName] AS [CustomerName], 
+[Extent1].[CustomerPwd] AS [CustomerPwd], 
+[Extent1].[SubTime] AS [SubTime]
+FROM [dbo].[Customer] AS [Extent1]
+
+
+exec sp_executesql N'SELECT 
+[Extent1].[ID] AS [ID], 
+[Extent1].[OrderNum] AS [OrderNum], 
+[Extent1].[CreateDateTime] AS [CreateDateTime], 
+[Extent1].[CustomerID] AS [CustomerID]
+FROM [dbo].[OrderInfo] AS [Extent1]
+WHERE [Extent1].[CustomerID] = @EntityKeyValue1',N'@EntityKeyValue1 int',@EntityKeyValue1=1
+
+
+
+
+
+导航属性基本的查询
+
+ 		
+			
+			
+ （1）：输出某个具体客户的订单号
+ 
+ 
+            }
+  （2）：输出某个具体订单(100001)号对应的用户名
+  
+  
+  
+  （3）：删除某个用户（userId=1）下的所有订单
+  
+    
+
+五：CodeFirst
+1：创建实体类，并且给实体加上特性标签，并且标注一下实体类之间的关系。
+
+   
+2：在配置文件构建数据库链接字符串。
+
+  <add name="connStr" connectionString="server=.;uid=home;pwd=;database=T8" providerName="System.Data.SqlClient"/>
+  
+
+3：创建EF数据操作类  
+
+
+	
+4:执行代码
+
+ protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
+
+六：查询部分列 Lambda查询   排序， 分页
+
+
+
+
+七：扩展方法
+
+
+
+
+八：接口区别。
+
+
+
+九EF创建问题
+

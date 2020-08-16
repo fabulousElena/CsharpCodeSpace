@@ -12,32 +12,32 @@ namespace ThreadPoolDemo
     {
         static void Main(string[] args)
         {
-            Stopwatch  sw =new Stopwatch();
+            Stopwatch sw = new Stopwatch();
             sw.Start();
             for (int i = 0; i < 1000; i++)
             {
-               new Thread(() =>
-                 {
+                new Thread(() =>
+                  {
                       int i2 = 1 + 1;
-                     
-                    }).Start();
-           }
-           sw.Stop();
-           Console.WriteLine(sw.Elapsed.TotalMilliseconds);
+
+                  }).Start();
+            }
+            sw.Stop();
+            Console.WriteLine(sw.Elapsed.TotalMilliseconds);
 
 
-		  sw.Reset();
-           sw.Restart();
-           for (int i = 0; i < 1000; i++)
-          {
-              ThreadPool.QueueUserWorkItem(new WaitCallback(PoolCallBack), "sssss"+i);
-               //ThreadPool.GetMaxThreads
-           }
-           sw.Stop();
-           Console.WriteLine(sw.Elapsed.TotalMilliseconds);
+            sw.Reset();
+            sw.Restart();
+            for (int i = 0; i < 1000; i++)
+            {
+                ThreadPool.QueueUserWorkItem(new WaitCallback(PoolCallBack), "sssss" + i);
+                //ThreadPool.GetMaxThreads
+            }
+            sw.Stop();
+            Console.WriteLine(sw.Elapsed.TotalMilliseconds);
 
-           Console.ReadKey();
-		  
+            Console.ReadKey();
+
         }
         private static void PoolCallBack(object state)
         {

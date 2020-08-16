@@ -1,0 +1,1222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0056)http://blog.csdn.net/xinguan1267/article/details/7870308 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ca-pub-1076724771190722.js"></script>
+    <title>memcached 一致性hash原理 - 就是你的博客
+        - 博客频道 - CSDN.NET</title>
+    
+    <meta name="description" content="memcache 是一个分布式的缓存系统，但是本身没有提供集群功能，在大型应用的情况下容易成为瓶颈。但是客户端这个时候可以自由扩展，分两阶段实现。第一阶段：key 要先根据一定的算法映射到一台memcache服务器。第二阶段从服务器中取出缓存的值。但是有一个问题，比如其中一台服务器挂了，或者需要增加一台服务 的时候，这个时候第一阶段的算法就很重要了，怎样使得原来的数据尽可能的继续有效，减少扩展节点">
+    <script type="text/javascript" async="" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ga.js"></script><script src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ad.js"></script>
+        <!--new top-->
+       
+        <link rel="stylesheet" href="http://static.csdn.net/public/common/toolbar/css/index.css">
+        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/style.css">
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/xinguan1267/rss/list">
+    <link rel="shortcut icon" href="http://csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/default.css">
+ 
+
+<link href="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/bdsstyle.css" rel="stylesheet" type="text/css"><script type="text/javascript" charset="utf-8" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/tracking.js"></script><script type="text/javascript" charset="utf-8" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/main.js"></script><link type="text/css" rel="stylesheet" href="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/style(1).css"><script src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/logger.js"></script></head>
+<body><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/o.htm" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div><iframe frameborder="0" style="display: none;"></iframe><div id="bdshare_s" style="display: block;"><iframe id="bdsIfr" style="position:absolute;display:none;z-index:9999;" frameborder="0"></iframe><div id="bdshare_l" style="display: none;"><div id="bdshare_l_c"><h6>分享到</h6><ul><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_mshare mshare">一键分享</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_qzone qqkj">QQ空间</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_tsina xlwb">新浪微博</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_bdysc bdysc">百度云收藏</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_renren rrw">人人网</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_tqq txwb">腾讯微博</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_bdxc bdxc">百度相册</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_kaixin001 kxw">开心网</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_tqf txpy">腾讯朋友</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_tieba bdtb">百度贴吧</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_douban db">豆瓣网</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_tsohu shwb">搜狐微博</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_bdhome bdhome">百度新首页</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_sqq sqq">QQ好友</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_thx thx">和讯微博</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="bds_more">更多...</a></li></ul><p><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="goWebsite">百度分享</a></p></div></div></div>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/html.js" type="text/javascript"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" target="_blank" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="https://passport.csdn.net/account/register?ref=toolbar">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="about:block" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt><a href="http://share.csdn.net/slides/new?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/100x100.jpg"></a></dt>                        <dd class="info"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-right "><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd><a href="http://share.csdn.net/?ref=toolbar" target="_blank">Share</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/xinguan1267">就是你的博客</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+                <li id="btnContents"><a href="http://blog.csdn.net/xinguan1267?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/xinguan1267?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/xinguan1267/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "xinguan1267";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/xinguan1267";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/25387451" target="_blank">
+<font color="blue">有奖征资源，博文分享有内涵
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/37602759" target="_blank">
+<font color="red">6月推荐文章汇总 
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="http://blog.csdn.net/blogdevteam/article/details/37874361" target="_blank">
+<font color="blue">CSDN博文大赛初赛晋级名单公布
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+</div>                    <link href="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/comment1.css" type="text/css" rel="stylesheet">
+<link href="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/style1.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/jquery.cookie.js"></script>
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/main(1).js"></script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET.htm">
+        memcached 一致性hash原理
+        </a></span>
+    </h1>
+</div>
+
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="http://blog.csdn.net/xinguan1267/article/category/1213738" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_fenlei&#39;]);">memcache</a> 
+        </span>
+    <span class="link_postdate">2012-08-15 18:13</span>
+    <span class="link_view" title="阅读次数">2130人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(0)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shoucang&#39;]);collectArticle(&#39;memcached 一致性hash原理&#39;,&#39;7870308&#39;);return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#report" onclick="javascript:_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_jubao&#39;]);report(7870308,2);return false;" title="举报">举报</a></span>
+    
+</div>
+<div class="tag2box"><a href="http://www.csdn.net/tag/%e9%9b%86%e7%be%a4" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">集群</a><a href="http://www.csdn.net/tag/cache" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">cache</a><a href="http://www.csdn.net/tag/object" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">object</a><a href="http://www.csdn.net/tag/%e7%ae%97%e6%b3%95" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">算法</a><a href="http://www.csdn.net/tag/function" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">function</a><a href="http://www.csdn.net/tag/%e6%9c%8d%e5%8a%a1%e5%99%a8" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">服务器</a></div>
+
+    
+<div style="clear:both"></div><div style="border:solid 1px #ccc; background:#eee; float:left; min-width:200px;padding:4px 10px;"><p style="text-align:right;margin:0;"><span style="float:left;">目录<a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" title="系统根据文章中H1到H6标签自动生成文章目录">(?)</a></span><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" onclick="javascript:return openct(this);" title="展开">[+]</a></p><ol style="display:none;margin-left:14px;padding-left:14px;line-height:160%;"><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t0">基本场景</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t1">hash&nbsp;算法和单调性</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t2">consistent hashing&nbsp;算法的原理</a></li><ol><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t3">环形hash&nbsp;空间</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t4">把对象映射到hash&nbsp;空间</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t5">把cache&nbsp;映射到hash&nbsp;空间</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t6">把对象映射到cache</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t7">考察cache&nbsp;的变动</a></li></ol><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t8">虚拟节点</a></li><li><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#t9">小结</a></li></ol></div><div style="clear:both"></div><div id="article_content" class="article_content">
+
+<p>memcache 是一个分布式的缓存系统，但是本身没有提供集群功能，在大型应用的情况下容易成为瓶颈。但是客户端这个时候可以自由扩展，分两阶段实现。第一阶段：key 要先根据一定的算法映射到一台memcache服务器。第二阶段从服务器中取出缓存的值。但是有一个问题，比如其中一台服务器挂了，或者需要增加一台服务 的时候，这个时候第一阶段的算法就很重要了，怎样使得原来的数据尽可能的继续有效，减少扩展节点或缩减节点带来的冲击。下面列出想到一些解决方法：</p>
+<p>一：hash一致性算法：</p>
+<p>优点：</p>
+<p>当一个节点失效的时候，其他节点的数据不会受到破坏，这个节点的数据会被分流到另外一个节点。当增加一个节点时，只会对一个节点的一分部数据有影响。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>缺点：</p>
+<p>&nbsp;极容易造成节点间数据量的不平衡，可能一个节点上热点非常多，一个节点上热点很少。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>下面是具体介绍：（转自：<a href="http://blog.csdn.net/sparkliang/archive/2010/02/02/5279393.aspx">http://blog.csdn.net/sparkliang/archive/2010/02/02/5279393.aspx</a>）</p>
+<p>consistent hashing&nbsp;算法早在&nbsp;1997&nbsp;年就在论文&nbsp;<strong><a href="http://portal.acm.org/citation.cfm?id=258660" target="_blank" style="color:#336699">Consistent hashing and random trees</a>&nbsp;</strong>中被提出，目前在&nbsp;cache&nbsp;系统中应用越来越广泛；</p>
+<h2><a name="t0"></a>1&nbsp;基本场景</h2>
+<p>比如你有&nbsp;N&nbsp;个&nbsp;cache&nbsp;服务器（后面简称&nbsp;cache&nbsp;），那么如何将一个对象&nbsp;object&nbsp;映射到&nbsp;N&nbsp;个&nbsp;cache&nbsp;上呢，你很可能会采用类似下面的通用方法计算&nbsp;object&nbsp;的&nbsp;hash&nbsp;值，然后均匀的映射到到&nbsp;N&nbsp;个&nbsp;cache&nbsp;；</p>
+<p>hash(object)%N</p>
+<p>一切都运行正常，再考虑如下的两种情况；</p>
+<p>1&nbsp;一个&nbsp;cache&nbsp;服务器&nbsp;m down&nbsp;掉了（在实际应用中必须要考虑这种情况），这样所有映射到&nbsp;cache m&nbsp;的对象都会失效，怎么办，需要把&nbsp;cache m&nbsp;从&nbsp;cache&nbsp;中移除，这时候&nbsp;cache&nbsp;是&nbsp;N-1&nbsp;台，映射公式变成了&nbsp;hash(object)%(N-1)&nbsp;；</p>
+<p>2&nbsp;由于访问加重，需要添加&nbsp;cache&nbsp;，这时候&nbsp;cache&nbsp;是&nbsp;N+1&nbsp;台，映射公式变成了&nbsp;hash(object)%(N+1)&nbsp;；</p>
+<p>1&nbsp;和&nbsp;2&nbsp;意味着什么？这意味着突然之间几乎所有的&nbsp;cache&nbsp;都失效了。对于服务器而言，这是一场灾难，洪水般的访问都会直接冲向后台服务器；</p>
+<p>再来考虑第三个问题，由于硬件能力越来越强，你可能想让后面添加的节点多做点活，显然上面的&nbsp;hash&nbsp;算法也做不到。</p>
+<p>&nbsp;&nbsp;有什么方法可以改变这个状况呢，这就是&nbsp;consistent hashing...</p>
+<h2><a name="t1"></a>2 hash&nbsp;算法和单调性</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hash&nbsp;算法的一个衡量指标是单调性（&nbsp;Monotonicity&nbsp;），定义如下：</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单调性是指如果已经有一些内容通过哈希分派到了相应的缓冲中，又有新的缓冲加入到系统中。哈希的结果应能够保证原有已分配的内容可以被映射到新的缓冲中去，而不会被映射到旧的缓冲集合中的其他缓冲区。</p>
+<p>容易看到，上面的简单&nbsp;hash&nbsp;算法&nbsp;hash(object)%N&nbsp;难以满足单调性要求。</p>
+<h2><a name="t2"></a>3 consistent hashing&nbsp;算法的原理</h2>
+<p>consistent hashing&nbsp;是一种&nbsp;hash&nbsp;算法，简单的说，在移除&nbsp;/&nbsp;添加一个&nbsp;cache&nbsp;时，它能够尽可能小的改变已存在&nbsp;key&nbsp;映射关系，尽可能的满足单调性的要求。</p>
+<p>下面就来按照&nbsp;5&nbsp;个步骤简单讲讲&nbsp;consistent hashing&nbsp;算法的基本原理。</p>
+<h3><a name="t3"></a>3.1&nbsp;环形hash&nbsp;空间</h3>
+<p>考虑通常的&nbsp;hash&nbsp;算法都是将&nbsp;value&nbsp;映射到一个&nbsp;32&nbsp;为的&nbsp;key&nbsp;值，也即是&nbsp;0~2^32-1&nbsp;次方的数值空间；我们可以将这个空间想象成一个首（&nbsp;0）尾（&nbsp;2^32-1&nbsp;）相接的圆环，如下面图&nbsp;1&nbsp;所示的那样。</p>
+<p align="center"><img alt="memcache 集群 " src="http://news.open-open.com/lib/uploadImg/20120622/20120622115507_352.jpg" width="91" height="104"></p>
+<p align="center">图&nbsp;1&nbsp;环形&nbsp;hash&nbsp;空间</p>
+<h3><a name="t4"></a>3.2&nbsp;把对象映射到hash&nbsp;空间</h3>
+<p>接下来考虑&nbsp;4&nbsp;个对象&nbsp;object1~object4&nbsp;，通过&nbsp;hash&nbsp;函数计算出的&nbsp;hash&nbsp;值&nbsp;key&nbsp;在环上的分布如图&nbsp;2&nbsp;所示。</p>
+<p>hash(object1) = key1;</p>
+<p>… …</p>
+<p>hash(object4) = key4;</p>
+<p align="center"><img alt="memcache 集群 " src="http://news.open-open.com/lib/uploadImg/20120622/20120622115508_268.jpg" width="234" height="253"></p>
+<p align="center">图&nbsp;2 4&nbsp;个对象的&nbsp;key&nbsp;值分布</p>
+<h3><a name="t5"></a>3.3&nbsp;把cache&nbsp;映射到hash&nbsp;空间</h3>
+<p>Consistent hashing&nbsp;的基本思想就是将对象和&nbsp;cache&nbsp;都映射到同一个&nbsp;hash&nbsp;数值空间中，并且使用相同的&nbsp;hash&nbsp;算法。</p>
+<p>假设当前有&nbsp;A,B&nbsp;和&nbsp;C&nbsp;共&nbsp;3&nbsp;台&nbsp;cache&nbsp;，那么其映射结果将如图&nbsp;3&nbsp;所示，他们在&nbsp;hash&nbsp;空间中，以对应的&nbsp;hash&nbsp;值排列。</p>
+<p>hash(cache A) = key A;</p>
+<p>… …</p>
+<p>hash(cache C) = key C;</p>
+<p align="center"><img alt="memcache 集群 " src="http://news.open-open.com/lib/uploadImg/20120622/20120622115509_653.jpg" width="283" height="253"></p>
+<p align="center">图&nbsp;3 cache&nbsp;和对象的&nbsp;key&nbsp;值分布</p>
+<p align="center">&nbsp;</p>
+<p>说到这里，顺便提一下&nbsp;cache&nbsp;的&nbsp;hash&nbsp;计算，一般的方法可以使用&nbsp;cache&nbsp;机器的&nbsp;IP&nbsp;地址或者机器名作为&nbsp;hash&nbsp;输入。</p>
+<h3><a name="t6"></a>3.4&nbsp;把对象映射到cache</h3>
+<p>现在&nbsp;cache&nbsp;和对象都已经通过同一个&nbsp;hash&nbsp;算法映射到&nbsp;hash&nbsp;数值空间中了，接下来要考虑的就是如何将对象映射到&nbsp;cache&nbsp;上面了。</p>
+<p>在这个环形空间中，如果沿着顺时针方向从对象的&nbsp;key&nbsp;值出发，直到遇见一个&nbsp;cache&nbsp;，那么就将该对象存储在这个&nbsp;cache&nbsp;上，因为对象和&nbsp;cache&nbsp;的&nbsp;hash&nbsp;值是固定的，因此这个&nbsp;cache&nbsp;必然是唯一和确定的。这样不就找到了对象和&nbsp;cache&nbsp;的映射方法了吗？！</p>
+<p>依然继续上面的例子（参见图&nbsp;3&nbsp;），那么根据上面的方法，对象&nbsp;object1&nbsp;将被存储到&nbsp;cache A&nbsp;上；&nbsp;object2&nbsp;和&nbsp;object3&nbsp;对应到&nbsp;cache C&nbsp;；&nbsp;object4&nbsp;对应到&nbsp;cache B&nbsp;；</p>
+<h3><a name="t7"></a>3.5&nbsp;考察cache&nbsp;的变动</h3>
+<p>前面讲过，通过&nbsp;hash&nbsp;然后求余的方法带来的最大问题就在于不能满足单调性，当&nbsp;cache&nbsp;有所变动时，&nbsp;cache&nbsp;会失效，进而对后台服务器造成巨大的冲击，现在就来分析分析&nbsp;consistent hashing&nbsp;算法。</p>
+<p><strong>3.5.1&nbsp;移除&nbsp;cache</strong></p>
+<p>考虑假设&nbsp;cache B&nbsp;挂掉了，根据上面讲到的映射方法，这时受影响的将仅是那些沿&nbsp;cache B&nbsp;逆时针遍历直到下一个&nbsp;cache&nbsp;（&nbsp;cache C&nbsp;）之间的对象，也即是本来映射到&nbsp;cache B&nbsp;上的那些对象。</p>
+<p>因此这里仅需要变动对象&nbsp;object4&nbsp;，将其重新映射到&nbsp;cache C&nbsp;上即可；参见图&nbsp;4&nbsp;。</p>
+<p align="center"><img alt="memcache 集群 " src="http://news.open-open.com/lib/uploadImg/20120622/20120622115509_432.jpg" width="283" height="253"></p>
+<p align="center">图&nbsp;4 Cache B&nbsp;被移除后的&nbsp;cache&nbsp;映射</p>
+<p><strong>3.5.2&nbsp;添加&nbsp;cache</strong></p>
+<p>再考虑添加一台新的&nbsp;cache D&nbsp;的情况，假设在这个环形&nbsp;hash&nbsp;空间中，&nbsp;cache D&nbsp;被映射在对象&nbsp;object2&nbsp;和&nbsp;object3&nbsp;之间。这时受影响的将仅是那些沿&nbsp;cache D&nbsp;逆时针遍历直到下一个&nbsp;cache&nbsp;（&nbsp;cache B&nbsp;）之间的对象（它们是也本来映射到&nbsp;cache C&nbsp;上对象的一部分），将这些对象重新映射到&nbsp;cache D&nbsp;上即可。</p>
+<p>&nbsp;</p>
+<p>因此这里仅需要变动对象&nbsp;object2&nbsp;，将其重新映射到&nbsp;cache D&nbsp;上；参见图&nbsp;5&nbsp;。</p>
+<p align="center"><img alt="memcache 集群 " src="http://news.open-open.com/lib/uploadImg/20120622/20120622115510_387.jpg" width="283" height="253"></p>
+<p align="center">图&nbsp;5&nbsp;添加&nbsp;cache D&nbsp;后的映射关系</p>
+<h2><a name="t8"></a>4&nbsp;虚拟节点</h2>
+<p>考量&nbsp;Hash&nbsp;算法的另一个指标是平衡性&nbsp;(Balance)&nbsp;，定义如下：</p>
+<p>平衡性</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;平衡性是指哈希的结果能够尽可能分布到所有的缓冲中去，这样可以使得所有的缓冲空间都得到利用。</p>
+<p>hash&nbsp;算法并不是保证绝对的平衡，如果&nbsp;cache&nbsp;较少的话，对象并不能被均匀的映射到&nbsp;cache&nbsp;上，比如在上面的例子中，仅部署&nbsp;cache A&nbsp;和&nbsp;cache C&nbsp;的情况下，在&nbsp;4&nbsp;个对象中，&nbsp;cache A&nbsp;仅存储了&nbsp;object1&nbsp;，而&nbsp;cache C&nbsp;则存储了&nbsp;object2&nbsp;、&nbsp;object3&nbsp;和&nbsp;object4&nbsp;；分布是很不均衡的。</p>
+<p>为了解决这种情况，&nbsp;consistent hashing&nbsp;引入了“虚拟节点”的概念，它可以如下定义：</p>
+<p>“虚拟节点”（&nbsp;virtual node&nbsp;）是实际节点在&nbsp;hash&nbsp;空间的复制品（&nbsp;replica&nbsp;），一实际个节点对应了若干个“虚拟节点”，这个对应个数也成为“复制个数”，“虚拟节点”在&nbsp;hash&nbsp;空间中以&nbsp;hash&nbsp;值排列。</p>
+<p>仍以仅部署&nbsp;cache A&nbsp;和&nbsp;cache C&nbsp;的情况为例，在图&nbsp;4&nbsp;中我们已经看到，&nbsp;cache&nbsp;分布并不均匀。现在我们引入虚拟节点，并设置“复制个数”为&nbsp;2&nbsp;，这就意味着一共会存在&nbsp;4&nbsp;个“虚拟节点”，&nbsp;cache A1, cache A2&nbsp;代表了&nbsp;cache A&nbsp;；&nbsp;cache C1, cache C2&nbsp;代表了&nbsp;cache C&nbsp;；假设一种比较理想的情况，参见图&nbsp;6&nbsp;。</p>
+<p align="center"><img alt="memcache 集群 " src="http://news.open-open.com/lib/uploadImg/20120622/20120622115510_520.jpg" width="283" height="253"></p>
+<p align="center">图&nbsp;6&nbsp;引入“虚拟节点”后的映射关系</p>
+<p align="center">&nbsp;</p>
+<p>此时，对象到“虚拟节点”的映射关系为：</p>
+<p>objec1-&gt;cache A2&nbsp;；&nbsp;objec2-&gt;cache A1&nbsp;；&nbsp;objec3-&gt;cache C1&nbsp;；&nbsp;objec4-&gt;cache C2&nbsp;；</p>
+<p>因此对象&nbsp;object1&nbsp;和&nbsp;object2&nbsp;都被映射到了&nbsp;cache A&nbsp;上，而&nbsp;object3&nbsp;和&nbsp;object4&nbsp;映射到了&nbsp;cache C&nbsp;上；平衡性有了很大提高。</p>
+<p>引入“虚拟节点”后，映射关系就从&nbsp;{&nbsp;对象&nbsp;-&gt;&nbsp;节点&nbsp;}&nbsp;转换到了&nbsp;{&nbsp;对象&nbsp;-&gt;&nbsp;虚拟节点&nbsp;}&nbsp;。查询物体所在&nbsp;cache&nbsp;时的映射关系如图&nbsp;7&nbsp;所示。</p>
+<p align="center"><img alt="memcache 集群 " src="http://news.open-open.com/lib/uploadImg/20120622/20120622115511_254.jpg" width="529" height="232"></p>
+<p align="center">图&nbsp;7&nbsp;查询对象所在&nbsp;cache</p>
+<p align="center">&nbsp;</p>
+<p>“虚拟节点”的&nbsp;hash&nbsp;计算可以采用对应节点的&nbsp;IP&nbsp;地址加数字后缀的方式。例如假设&nbsp;cache A&nbsp;的&nbsp;IP&nbsp;地址为&nbsp;202.168.14.241&nbsp;。</p>
+<p>引入“虚拟节点”前，计算&nbsp;cache A&nbsp;的&nbsp;hash&nbsp;值：</p>
+<p>Hash(“202.168.14.241”);</p>
+<p>引入“虚拟节点”后，计算“虚拟节”点&nbsp;cache A1&nbsp;和&nbsp;cache A2&nbsp;的&nbsp;hash&nbsp;值：</p>
+<p>Hash(“202.168.14.241#1”);&nbsp;&nbsp;// cache A1</p>
+<p>Hash(“202.168.14.241#2”);&nbsp;&nbsp;// cache A2</p>
+<h2><a name="t9"></a>5&nbsp;小结</h2>
+<p>Consistent hashing&nbsp;的基本原理就是这些，具体的分布性等理论分析应该是很复杂的，不过一般也用不到。</p>
+<p><a href="http://weblogs.java.net/blog/2007/11/27/consistent-hashing" style="color:#336699">http://weblogs.java.net/blog/2007/11/27/consistent-hashing</a>&nbsp;上面有一个&nbsp;java&nbsp;版本的例子，可以参考。</p>
+<p><a href="http://blog.csdn.net/mayongzhan/archive/2009/06/25/4298834.aspx" style="color:#336699">http://blog.csdn.net/mayongzhan/archive/2009/06/25/4298834.aspx</a>&nbsp;转载了一个&nbsp;PHP&nbsp;版的实现代码。</p>
+<p><a href="http://www.codeproject.com/KB/recipes/lib-conhash.aspx" style="color:#336699">http://www.codeproject.com/KB/recipes/lib-conhash.aspx</a>&nbsp;C语言版本<br>
+</p>
+<p><br>
+</p>
+<p>&nbsp;</p>
+<p>一些参考资料地址：</p>
+<p><a href="http://portal.acm.org/citation.cfm?id=258660" target="_blank" style="color:#336699">http://portal.acm.org/citation.cfm?id=258660</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Consistent_hashing" target="_blank" style="color:#336699">http://en.wikipedia.org/wiki/Consistent_hashing</a></p>
+<p><a href="http://www.spiteful.com/2008/03/17/programmers-toolbox-part-3-consistent-hashing/" target="_blank" style="color:#336699">http://www.spiteful.com/2008/03/17/programmers-toolbox-part-3-consistent-hashing/</a></p>
+<p>&nbsp;<a href="http://weblogs.java.net/blog/2007/11/27/consistent-hashing" style="color:#336699">http://weblogs.java.net/blog/2007/11/27/consistent-hashing</a></p>
+<p><a href="http://tech.idv2.com/2008/07/24/memcached-004/" style="color:#336699">http://tech.idv2.com/2008/07/24/memcached-004/</a></p>
+<p><a href="http://blog.csdn.net/mayongzhan/archive/2009/06/25/4298834.aspx" style="color:#336699">http://blog.csdn.net/mayongzhan/archive/2009/06/25/4298834.aspx</a></p>
+<p><br>
+</p>
+<p>此文章转载于:</p>
+<p>http://www.open-open.com/lib/view/open1340337319596.html<br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p>php对一致性hash分布不均，使用虚拟节点，看了http://bbs.phpchina.com/forum.php?mod=viewthread&amp;tid=233897这个之后，自己对查找算法进行了修改：</p>
+<p></p>
+<div class="dp-highlighter bg_php"><div class="bar"><div class="tools"><b>[php]</b> <a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a><div style="position: absolute; left: 381px; top: 7131px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_1" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_1" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=1&amp;width=18&amp;height=18" wmode="transparent"></div></div></div><ol start="1" class="dp-c"><li class="alt"><span><span>&lt;?php&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">class</span><span>&nbsp;memcacheHashMap{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_node</span><span>&nbsp;=&nbsp;</span><span class="keyword">array</span><span>();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_nodeData</span><span>&nbsp;=&nbsp;</span><span class="keyword">array</span><span>();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_keyNode</span><span>&nbsp;=&nbsp;0;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_memcache</span><span>&nbsp;=&nbsp;null;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;每个物理服务器生成虚拟节点的个数</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_virtualNodeNum</span><span>&nbsp;=&nbsp;200;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;__construct(){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;配置文件</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$config</span><span>&nbsp;=&nbsp;</span><span class="keyword">array</span><span>(&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11211"</span><span>,&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11212"</span><span>,&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11213"</span><span>,&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11214"</span><span>,&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11215"</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(!</span><span class="vars">$config</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;Exception(</span><span class="string">"cache&nbsp;config&nbsp;null"</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;设置虚拟节点</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">foreach</span><span>(</span><span class="vars">$config</span><span>&nbsp;</span><span class="keyword">as</span><span>&nbsp;</span><span class="vars">$key</span><span>=&gt;</span><span class="vars">$value</span><span>){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>&nbsp;(</span><span class="vars">$i</span><span>&nbsp;=&nbsp;0;&nbsp;</span><span class="vars">$i</span><span>&nbsp;&lt;&nbsp;</span><span class="vars">$this</span><span>-&gt;_virtualNodeNum;&nbsp;</span><span class="vars">$i</span><span>++){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_node[sprintf(</span><span class="string">"%u"</span><span>,&nbsp;crc32(</span><span class="vars">$value</span><span>.</span><span class="string">"#"</span><span>.</span><span class="vars">$i</span><span>))]&nbsp;=&nbsp;</span><span class="vars">$value</span><span>.</span><span class="string">"#"</span><span>.</span><span class="vars">$i</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;排序</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksort(<span class="vars">$this</span><span>-&gt;_node);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print_r($this-&gt;_node);</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;单例模式</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">static</span><span>&nbsp;</span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;getInstance(){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">static</span><span>&nbsp;</span><span class="vars">$memcacheObj</span><span>&nbsp;=&nbsp;null;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(!</span><span class="func">is_object</span><span>(</span><span class="vars">$memcacheObj</span><span>))&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$memcacheObj</span><span>&nbsp;=&nbsp;</span><span class="keyword">new</span><span>&nbsp;self();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$memcacheObj</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;_connectMemcache(</span><span class="vars">$key</span><span>){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_nodeData&nbsp;=&nbsp;</span><span class="func">array_keys</span><span>(</span><span class="vars">$this</span><span>-&gt;_node);&nbsp;&nbsp;</span></span></li><li class=""><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;"all&nbsp;node:\n";</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print_r($this-&gt;_nodeData);</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_keyNode&nbsp;=&nbsp;sprintf(</span><span class="string">"%u"</span><span>,&nbsp;crc32(</span><span class="vars">$key</span><span>));&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;_keyNode&nbsp;=&nbsp;1803717635;</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var_dump($this-&gt;_keyNode);</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;获取key值对应的最近的节点</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$nodeKey</span><span>&nbsp;=&nbsp;</span><span class="vars">$this</span><span>-&gt;_findServerNode(0,&nbsp;</span><span class="func">count</span><span>(</span><span class="vars">$this</span><span>-&gt;_nodeData)-1);&nbsp;&nbsp;</span></span></li><li class=""><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var_dump($nodeKey);</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;"$this-&gt;_keyNode&nbsp;:search&nbsp;node:$nodeKey&nbsp;&nbsp;IP:{$this-&gt;_node[$nodeKey]}\n";</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//获取对应的真实ip</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list(<span class="vars">$config</span><span>,&nbsp;</span><span class="vars">$num</span><span>)&nbsp;=&nbsp;</span><span class="func">explode</span><span>(</span><span class="string">"#"</span><span>,&nbsp;</span><span class="vars">$this</span><span>-&gt;_node[</span><span class="vars">$nodeKey</span><span>]);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="func">empty</span><span>(</span><span class="vars">$config</span><span>)){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;Exception(</span><span class="string">"serach&nbsp;ip&nbsp;config&nbsp;error"</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(!isset(</span><span class="vars">$this</span><span>-&gt;_memcache[</span><span class="vars">$config</span><span>])){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_memcache[</span><span class="vars">$config</span><span>]&nbsp;=&nbsp;</span><span class="keyword">new</span><span>&nbsp;Memcache;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list(<span class="vars">$host</span><span>,&nbsp;</span><span class="vars">$port</span><span>)&nbsp;=&nbsp;</span><span class="func">explode</span><span>(</span><span class="string">":"</span><span>,&nbsp;</span><span class="vars">$config</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_memcache[</span><span class="vars">$config</span><span>]-&gt;connect(</span><span class="vars">$host</span><span>,&nbsp;</span><span class="vars">$port</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_memcache[</span><span class="vars">$config</span><span>];&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;采用二分法从虚拟memcache节点中查找最近的节点</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;int&nbsp;$low&nbsp;开始位置</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;int&nbsp;$high&nbsp;结束位置</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;_findServerNode(</span><span class="vars">$low</span><span>,&nbsp;</span><span class="vars">$high</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;开始下标小于结束下标</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="vars">$low</span><span>&nbsp;&lt;&nbsp;</span><span class="vars">$high</span><span>){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$avg</span><span>&nbsp;=&nbsp;</span><span class="func">intval</span><span>((</span><span class="vars">$low</span><span>+</span><span class="vars">$high</span><span>)/2);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$avg</span><span>]&nbsp;==&nbsp;</span><span class="vars">$this</span><span>-&gt;_keyNode){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$avg</span><span>];&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">elseif</span><span>&nbsp;(</span><span class="vars">$this</span><span>-&gt;_keyNode&nbsp;&lt;&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$avg</span><span>]){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_findServerNode(</span><span class="vars">$low</span><span>,&nbsp;</span><span class="vars">$avg</span><span>-1);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">else</span><span>{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_findServerNode(</span><span class="vars">$avg</span><span>+1,&nbsp;</span><span class="vars">$high</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">else</span><span>&nbsp;</span><span class="keyword">if</span><span>((</span><span class="vars">$low</span><span>&nbsp;==&nbsp;</span><span class="vars">$high</span><span>)){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;大于平均值</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="vars">$low</span><span>&nbsp;==0&nbsp;||&nbsp;</span><span class="vars">$low</span><span>&nbsp;==&nbsp;</span><span class="func">count</span><span>(</span><span class="vars">$this</span><span>-&gt;_nodeData)-1){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>];&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var_dump($low);</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>]&nbsp;&lt;&nbsp;</span><span class="vars">$this</span><span>-&gt;_keyNode){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="func">abs</span><span>(</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>]&nbsp;-&nbsp;</span><span class="vars">$this</span><span>-&gt;_keyNode)&nbsp;&lt;&nbsp;</span><span class="func">abs</span><span>(</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>+1]-</span><span class="vars">$this</span><span>-&gt;_keyNode)){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>];&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">else</span><span>{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>+1];&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">else</span><span>&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="func">abs</span><span>(</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>]&nbsp;-&nbsp;</span><span class="vars">$this</span><span>-&gt;_keyNode)&nbsp;&lt;&nbsp;</span><span class="func">abs</span><span>(</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>-1]-</span><span class="vars">$this</span><span>-&gt;_keyNode)){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>];&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">else</span><span>{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>-1];&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">else</span><span>{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(&nbsp;(</span><span class="vars">$low</span><span>&nbsp;==&nbsp;0)&amp;&amp;(</span><span class="vars">$high</span><span>&nbsp;&lt;&nbsp;0)&nbsp;){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>];&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="func">abs</span><span>(</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>]&nbsp;-&nbsp;</span><span class="vars">$this</span><span>-&gt;_keyNode)&nbsp;&lt;&nbsp;</span><span class="func">abs</span><span>(</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$high</span><span>]-</span><span class="vars">$this</span><span>-&gt;_keyNode)){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$low</span><span>];&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span class="keyword">else</span><span>{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_nodeData[</span><span class="vars">$high</span><span>];&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;set(</span><span class="vars">$key</span><span>,&nbsp;</span><span class="vars">$value</span><span>,&nbsp;</span><span class="vars">$expire</span><span>=0){&nbsp;&nbsp;</span></span></li><li class=""><span><span class="comment">//&nbsp;&nbsp;var_dump($key);</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_connectMemcache(</span><span class="vars">$key</span><span>)-&gt;set(</span><span class="vars">$key</span><span>,&nbsp;json_encode(</span><span class="vars">$value</span><span>),&nbsp;0,&nbsp;</span><span class="vars">$expire</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;add(</span><span class="vars">$key</span><span>,&nbsp;</span><span class="vars">$vakue</span><span>,&nbsp;</span><span class="vars">$expire</span><span>=0){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_connectMemcache(</span><span class="vars">$key</span><span>)-&gt;add(</span><span class="vars">$key</span><span>,&nbsp;json_encode(</span><span class="vars">$value</span><span>),&nbsp;0,&nbsp;</span><span class="vars">$expire</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;get(</span><span class="vars">$key</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_connectMemcache(</span><span class="vars">$key</span><span>)-&gt;get(</span><span class="vars">$key</span><span>,&nbsp;true);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;</span><span class="func">delete</span><span>(</span><span class="vars">$key</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>-&gt;_connectMemcache(</span><span class="vars">$key</span><span>)-&gt;</span><span class="func">delete</span><span>(</span><span class="vars">$key</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="vars">$runData</span><span>[</span><span class="string">'BEGIN_TIME'</span><span>]&nbsp;=&nbsp;microtime(true);&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="comment">//测试一万次set加get</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">for</span><span>(</span><span class="vars">$i</span><span>=0;</span><span class="vars">$i</span><span>&lt;10000;</span><span class="vars">$i</span><span>++)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$key</span><span>&nbsp;=&nbsp;md5(mt_rand());&nbsp;&nbsp;</span></span></li><li class=""><span><span class="comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var_dump($key);</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$b</span><span>&nbsp;=&nbsp;memcacheHashMap::getInstance()-&gt;set(</span><span class="vars">$key</span><span>,&nbsp;time(),&nbsp;10);&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li><li class="alt"><span><span class="func">echo</span><span>&nbsp;</span><span class="string">"一致性hash:"</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>var_dump(number_format(microtime(true)&nbsp;-&nbsp;<span class="vars">$runData</span><span>[</span><span class="string">'BEGIN_TIME'</span><span>],6));&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="vars">$runData</span><span>[</span><span class="string">'BEGIN_TIME'</span><span>]&nbsp;=&nbsp;microtime(true);&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="vars">$m</span><span>=&nbsp;</span><span class="keyword">new</span><span>&nbsp;Memcache;&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="vars">$m</span><span>-&gt;connect(</span><span class="string">'127.0.0.1'</span><span>,&nbsp;11211);&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">for</span><span>(</span><span class="vars">$i</span><span>=0;</span><span class="vars">$i</span><span>&lt;10000;</span><span class="vars">$i</span><span>++)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$key</span><span>&nbsp;=&nbsp;md5(mt_rand());&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$b</span><span>&nbsp;=&nbsp;</span><span class="vars">$m</span><span>-&gt;set(</span><span class="vars">$key</span><span>,&nbsp;time(),&nbsp;0,&nbsp;10);&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span><span class="func">echo</span><span>&nbsp;</span><span class="string">"单台机器:"</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>var_dump(number_format(microtime(true)&nbsp;-&nbsp;<span class="vars">$runData</span><span>[</span><span class="string">'BEGIN_TIME'</span><span>],6));&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="php" style="display: none;">&lt;?php 
+class memcacheHashMap{
+	private $_node = array();
+	
+	private $_nodeData = array();
+	
+	private $_keyNode = 0;
+	
+	private $_memcache = null;
+	
+	
+	// 每个物理服务器生成虚拟节点的个数
+	private $_virtualNodeNum = 200;
+	
+	private function __construct(){
+		// 配置文件
+		$config = array(
+			"127.0.0.1:11211",
+			"127.0.0.1:11212",
+			"127.0.0.1:11213",
+			"127.0.0.1:11214",
+			"127.0.0.1:11215"
+		);
+		
+		if (!$config){
+			throw new Exception("cache config null");
+		}
+		
+		// 设置虚拟节点
+		foreach($config as $key=&gt;$value){
+			
+			for ($i = 0; $i &lt; $this-&gt;_virtualNodeNum; $i++){
+				$this-&gt;_node[sprintf("%u", crc32($value."#".$i))] = $value."#".$i;
+ 			}
+		}
+		
+		// 排序
+		ksort($this-&gt;_node);
+		
+//		print_r($this-&gt;_node);
+	}
+	
+	// 单例模式
+	static public function getInstance(){
+		static $memcacheObj = null;
+		if (!is_object($memcacheObj)) {
+			$memcacheObj = new self();
+		}
+		return $memcacheObj;
+	}
+	
+	private function _connectMemcache($key){
+		$this-&gt;_nodeData = array_keys($this-&gt;_node);
+//		echo "all node:\n";
+//		print_r($this-&gt;_nodeData);
+		$this-&gt;_keyNode = sprintf("%u", crc32($key));
+//		$this-&gt;_keyNode = 1803717635;
+//		var_dump($this-&gt;_keyNode);
+		
+		// 获取key值对应的最近的节点
+		$nodeKey = $this-&gt;_findServerNode(0, count($this-&gt;_nodeData)-1);
+//		var_dump($nodeKey);
+//		echo "$this-&gt;_keyNode :search node:$nodeKey  IP:{$this-&gt;_node[$nodeKey]}\n";
+		
+		//获取对应的真实ip
+		list($config, $num) = explode("#", $this-&gt;_node[$nodeKey]);
+		
+		if (empty($config)){
+			throw new Exception("serach ip config error");
+		}
+		
+		if (!isset($this-&gt;_memcache[$config])){
+			$this-&gt;_memcache[$config] = new Memcache;
+			list($host, $port) = explode(":", $config);
+			$this-&gt;_memcache[$config]-&gt;connect($host, $port);
+		}
+		
+		return $this-&gt;_memcache[$config];
+		
+		
+		
+	}
+	/**
+	 * 采用二分法从虚拟memcache节点中查找最近的节点
+	 * @param int $low 开始位置
+	 * @param int $high 结束位置
+	 * 
+	 */
+	private function _findServerNode($low, $high){
+		
+		// 开始下标小于结束下标
+		if ($low &lt; $high){
+			
+			$avg = intval(($low+$high)/2);
+			
+			if ($this-&gt;_nodeData[$avg] == $this-&gt;_keyNode){
+				return $this-&gt;_nodeData[$avg];
+			}elseif ($this-&gt;_keyNode &lt; $this-&gt;_nodeData[$avg]){
+				return $this-&gt;_findServerNode($low, $avg-1);
+			}else{
+				return $this-&gt;_findServerNode($avg+1, $high);
+			}
+		}else if(($low == $high)){
+			// 大于平均值
+			if ($low ==0 || $low == count($this-&gt;_nodeData)-1){
+				return $this-&gt;_nodeData[$low];
+			}
+//			var_dump($low);
+			if ($this-&gt;_nodeData[$low] &lt; $this-&gt;_keyNode){
+				
+				if (abs($this-&gt;_nodeData[$low] - $this-&gt;_keyNode) &lt; abs($this-&gt;_nodeData[$low+1]-$this-&gt;_keyNode)){
+					return $this-&gt;_nodeData[$low];
+				}else{
+					return $this-&gt;_nodeData[$low+1];
+				}
+		
+			}else {
+				if (abs($this-&gt;_nodeData[$low] - $this-&gt;_keyNode) &lt; abs($this-&gt;_nodeData[$low-1]-$this-&gt;_keyNode)){
+					return $this-&gt;_nodeData[$low];
+				}else{
+					return $this-&gt;_nodeData[$low-1];
+				}
+			}
+		}else{
+			if ( ($low == 0)&amp;&amp;($high &lt; 0) ){
+				return $this-&gt;_nodeData[$low];
+			}
+		
+			if (abs($this-&gt;_nodeData[$low] - $this-&gt;_keyNode) &lt; abs($this-&gt;_nodeData[$high]-$this-&gt;_keyNode)){
+				return $this-&gt;_nodeData[$low];
+			}else{
+				return $this-&gt;_nodeData[$high];
+			}
+		}
+	}
+	
+	public function set($key, $value, $expire=0){
+//	var_dump($key);
+		return $this-&gt;_connectMemcache($key)-&gt;set($key, json_encode($value), 0, $expire);
+	}
+	
+	
+	public function add($key, $vakue, $expire=0){
+		return $this-&gt;_connectMemcache($key)-&gt;add($key, json_encode($value), 0, $expire);
+	}
+	
+	public function get($key){
+		return $this-&gt;_connectMemcache($key)-&gt;get($key, true);
+	}
+	
+	public function delete($key){
+		return $this-&gt;_connectMemcache($key)-&gt;delete($key);
+	}
+	
+		
+	
+}
+
+
+$runData['BEGIN_TIME'] = microtime(true);
+//测试一万次set加get
+for($i=0;$i&lt;10000;$i++) {
+        $key = md5(mt_rand());
+//        var_dump($key);
+        $b = memcacheHashMap::getInstance()-&gt;set($key, time(), 10);
+}
+echo "一致性hash:";
+var_dump(number_format(microtime(true) - $runData['BEGIN_TIME'],6));
+$runData['BEGIN_TIME'] = microtime(true); 
+$m= new Memcache;
+$m-&gt;connect('127.0.0.1', 11211); 
+for($i=0;$i&lt;10000;$i++) {
+        $key = md5(mt_rand());
+        $b = $m-&gt;set($key, time(), 0, 10);
+}
+echo "单台机器:";
+var_dump(number_format(microtime(true) - $runData['BEGIN_TIME'],6));
+</pre><br>
+<p></p>
+<p>测试结果:</p>
+<p><img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/1345026485_8287.png" alt=""><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p>根据<a href="http://blog.csdn.net/mayongzhan/article/details/4298834">http://blog.csdn.net/mayongzhan/article/details/4298834</a>进行了修改与测试<br>
+</p>
+<p>下边查找真实节点的原理是:将虚拟后的节点排序，返回第一个比key哈希后大的节点，若不存在则返回第一个</p>
+<p><br>
+</p>
+<p></p>
+<div class="dp-highlighter bg_php"><div class="bar"><div class="tools"><b>[php]</b> <a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="http://blog.csdn.net/xinguan1267/article/details/7870308#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a><div style="position: absolute; left: 381px; top: 10882px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_2" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_2" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=2&amp;width=18&amp;height=18" wmode="transparent"></div></div></div><ol start="1" class="dp-c"><li class="alt"><span><span>&lt;?php&nbsp;&nbsp;</span></span></li><li class=""><span><span class="comment">/**</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;*&nbsp;一致性hahs实现类</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;*&nbsp;</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">class</span><span>&nbsp;FlexiHash{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;var&nbsp;int</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;虚拟节点</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_replicas</span><span>&nbsp;=&nbsp;200;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;使用hash方法</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_hasher</span><span>&nbsp;=&nbsp;null;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;真实节点计数器</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_tagertCount</span><span>&nbsp;=&nbsp;0;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;位置对应节点，用户lookup中根据位置确定要访问的节点</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_positionToTarget</span><span>&nbsp;=&nbsp;</span><span class="keyword">array</span><span>();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;节点对应位置，用于删除节点</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_targetToPositions</span><span>&nbsp;=&nbsp;</span><span class="keyword">array</span><span>();&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;是否已排序</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="vars">$_positionToTargetSorted</span><span>&nbsp;=&nbsp;false;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@&nbsp;$hasher&nbsp;hash方法</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@&nbsp;$replicas&nbsp;虚拟节点的个数</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;确定要使用的hash方法和虚拟的节点数，虚拟节点越多，分布越均匀，但程序的分布式运算越慢</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;__construct(FlexiHash_Hasher&nbsp;</span><span class="vars">$hasher</span><span>=null,&nbsp;</span><span class="vars">$replicas</span><span>&nbsp;=&nbsp;null){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;hash方法</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_hasher&nbsp;=&nbsp;</span><span class="vars">$hasher</span><span>?</span><span class="vars">$hasher</span><span>:&nbsp;</span><span class="keyword">new</span><span>&nbsp;FlexiHash_Crc32Hasher();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;虚拟节点的个数</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(!</span><span class="func">empty</span><span>(</span><span class="vars">$replicas</span><span>)){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_replicas&nbsp;=&nbsp;</span><span class="vars">$replicas</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;增加节点，根据虚拟节点数，把节点分布到更多的虚拟位置上</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;addTarget(</span><span class="vars">$target</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(isset(</span><span class="vars">$this</span><span>-&gt;_targetToPositions[</span><span class="vars">$target</span><span>]))&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;FlexiHash_Exception(</span><span class="string">"Target&nbsp;$target&nbsp;already&nbsp;exists."</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_targetToPositions[</span><span class="vars">$target</span><span>]&nbsp;=&nbsp;</span><span class="keyword">array</span><span>();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>&nbsp;(</span><span class="vars">$i</span><span>&nbsp;=&nbsp;0;&nbsp;</span><span class="vars">$i</span><span>&nbsp;&lt;&nbsp;</span><span class="vars">$this</span><span>-&gt;_replicas;&nbsp;</span><span class="vars">$i</span><span>++)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;根据规定的方法hash</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$position</span><span>&nbsp;=&nbsp;</span><span class="vars">$this</span><span>-&gt;_hasher-&gt;hash(</span><span class="vars">$target</span><span>.</span><span class="vars">$i</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;虚拟节点对应的真实的节点</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_positionToTarget[</span><span class="vars">$position</span><span>]&nbsp;=&nbsp;</span><span class="vars">$target</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;真实节点包含的虚拟节点</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_targetToPositions[</span><span class="vars">$target</span><span>][]&nbsp;=&nbsp;</span><span class="vars">$position</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_positionToTargetSorted&nbsp;=&nbsp;false;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;真实节点个数</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_targetCount++;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;添加多个节点</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;addTargets(</span><span class="vars">$targets</span><span>){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">foreach</span><span>&nbsp;(</span><span class="vars">$targets</span><span>&nbsp;</span><span class="keyword">as</span><span>&nbsp;</span><span class="vars">$target</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;addTarget(</span><span class="vars">$target</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;移除某个节点</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;removeTarget(</span><span class="vars">$target</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(!isset(</span><span class="vars">$this</span><span>-&gt;_targetToPositions[</span><span class="vars">$target</span><span>])){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;FlexiHash_Exception(</span><span class="string">"target&nbsp;$target&nbsp;does&nbsp;not&nbsp;exist\n"</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">foreach</span><span>(</span><span class="vars">$this</span><span>-&gt;_targetToPositions[</span><span class="vars">$target</span><span>]&nbsp;</span><span class="keyword">as</span><span>&nbsp;</span><span class="vars">$position</span><span>){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unset(<span class="vars">$this</span><span>-&gt;_positionToTarget[</span><span class="vars">$position</span><span>]);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unset(<span class="vars">$this</span><span>-&gt;_targetToPositions[</span><span class="vars">$target</span><span>]);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_targetCount--;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$this</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;获取所有节点</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;getAllTargets(){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="func">array_keys</span><span>(</span><span class="vars">$this</span><span>-&gt;_targetToPositions);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;根据key查找hash到的真实节点</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;lookup(</span><span class="vars">$resource</span><span>){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$targets</span><span>&nbsp;=&nbsp;</span><span class="vars">$this</span><span>-&gt;lookupList(</span><span class="vars">$resource</span><span>,&nbsp;1);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="func">empty</span><span>(</span><span class="vars">$targets</span><span>)){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;FlexiHash_Exception(</span><span class="string">"no&nbsp;targets&nbsp;exist"</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$targets</span><span>[0];&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;查找资源存在的节点</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;描述:根据要求的数量，返回与$resource哈希后数值相等或比其大并且是最小的数值对应的节点，若不存在或数量不够，则从虚拟节点排序后的前一个或多个</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;lookupList(</span><span class="vars">$resource</span><span>,&nbsp;</span><span class="vars">$requestedCount</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(!</span><span class="vars">$requestedCount</span><span>)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">throw</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;FlexiHash_Exception(</span><span class="string">'Invalid&nbsp;count&nbsp;requested'</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="func">empty</span><span>(</span><span class="vars">$this</span><span>-&gt;_positionToTarget))&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">array</span><span>();&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;直接节点只有一个的时候</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="vars">$this</span><span>-&gt;_targetCount&nbsp;==&nbsp;1&nbsp;){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="func">array_unique</span><span>(</span><span class="func">array_values</span><span>(</span><span class="vars">$this</span><span>-&gt;_positionToTarget));&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;获取当前key进行hash后的值</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$resourcePosition</span><span>&nbsp;=&nbsp;</span><span class="vars">$this</span><span>-&gt;_hasher-&gt;hash(</span><span class="vars">$resource</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$results</span><span>&nbsp;=&nbsp;</span><span class="keyword">array</span><span>();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$collect</span><span>&nbsp;=&nbsp;false;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_sortPositionTargets();&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;查找与$resourcePosition&nbsp;相等或比其大并且是最小的数</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">foreach</span><span>(</span><span class="vars">$this</span><span>-&gt;_positionToTarget&nbsp;</span><span class="keyword">as</span><span>&nbsp;</span><span class="vars">$key</span><span>&nbsp;=&gt;&nbsp;</span><span class="vars">$value</span><span>){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(!</span><span class="vars">$collect</span><span>&nbsp;&amp;&amp;&nbsp;</span><span class="vars">$key</span><span>&nbsp;&gt;&nbsp;</span><span class="vars">$resourcePosition</span><span>){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$collect</span><span>&nbsp;=&nbsp;true;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="vars">$collect</span><span>&nbsp;&amp;&amp;&nbsp;!in_array(</span><span class="vars">$value</span><span>,&nbsp;</span><span class="vars">$results</span><span>)){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$results</span><span>[]&nbsp;=&nbsp;</span><span class="vars">$value</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;找到$requestedCount&nbsp;或个数与真实节点数量相同</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="func">count</span><span>(</span><span class="vars">$results</span><span>)&nbsp;==&nbsp;</span><span class="vars">$requestedCount</span><span>&nbsp;||&nbsp;</span><span class="func">count</span><span>(</span><span class="vars">$results</span><span>)&nbsp;==&nbsp;</span><span class="vars">$this</span><span>-&gt;_targetCount){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$results</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//&nbsp;如数量不够或者未查到，则从第一个开始，将$results中不存在前$requestedCount-count($results)，设置为需要的节点</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">foreach</span><span>&nbsp;(</span><span class="vars">$this</span><span>-&gt;_positionToTarget&nbsp;</span><span class="keyword">as</span><span>&nbsp;</span><span class="vars">$key</span><span>&nbsp;=&gt;&nbsp;</span><span class="vars">$value</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(!in_array(</span><span class="vars">$value</span><span>,&nbsp;</span><span class="vars">$results</span><span>)){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$results</span><span>[]&nbsp;=&nbsp;</span><span class="vars">$value</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(</span><span class="func">count</span><span>(</span><span class="vars">$results</span><span>)&nbsp;==&nbsp;</span><span class="vars">$requestedCount</span><span>&nbsp;||&nbsp;</span><span class="func">count</span><span>(</span><span class="vars">$results</span><span>)&nbsp;==&nbsp;</span><span class="vars">$this</span><span>-&gt;_targetCount){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$results</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="vars">$results</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/**</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;根据虚拟节点进行排序</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;_sortPositionTargets(){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(!</span><span class="vars">$this</span><span>-&gt;_positionToTargetSorted){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ksort(<span class="vars">$this</span><span>-&gt;_positionToTarget,&nbsp;SORT_REGULAR);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$this</span><span>-&gt;_positionToTargetSorted&nbsp;=&nbsp;true;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>}<span class="comment">//&nbsp;end&nbsp;class</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="comment">/**</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;*&nbsp;hash方式</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;*/</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">interface</span><span>&nbsp;FlexiHash_Hasher{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;hash(</span><span class="vars">$string</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">class</span><span>&nbsp;FlexiHash_Crc32Hasher&nbsp;</span><span class="keyword">implements</span><span>&nbsp;FlexiHash_Hasher{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;hash(</span><span class="vars">$string</span><span>){&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;sprintf(</span><span class="string">"%u"</span><span>,crc32(</span><span class="vars">$string</span><span>));&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">class</span><span>&nbsp;FlexiHash_Md5Hasher&nbsp;</span><span class="keyword">implements</span><span>&nbsp;FlexiHash_Hasher{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">function</span><span>&nbsp;hash(</span><span class="vars">$string</span><span>){&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="func">substr</span><span>(md5(</span><span class="vars">$string</span><span>),&nbsp;0,&nbsp;8);&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">class</span><span>&nbsp;FlexiHash_Exception&nbsp;</span><span class="keyword">extends</span><span>&nbsp;Exception{&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="vars">$runData</span><span>[</span><span class="string">'BEGIN_TIME'</span><span>]&nbsp;=&nbsp;microtime(true);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">for</span><span>(</span><span class="vars">$i</span><span>=0;</span><span class="vars">$i</span><span>&lt;10000;</span><span class="vars">$i</span><span>++)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$targetsArray</span><span>&nbsp;=&nbsp;</span><span class="keyword">array</span><span>(&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11211"</span><span>,&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11212"</span><span>,&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11213"</span><span>,&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11214"</span><span>,&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"127.0.0.1:11215"</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$flexiHashObj</span><span>&nbsp;=&nbsp;</span><span class="keyword">new</span><span>&nbsp;FlexiHash(</span><span class="keyword">new</span><span>&nbsp;FlexiHash_Crc32Hasher(),1);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$result</span><span>&nbsp;=&nbsp;</span><span class="vars">$flexiHashObj</span><span>-&gt;addTargets(</span><span class="vars">$targetsArray</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$key</span><span>&nbsp;=&nbsp;md5(mt_rand());&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$targets</span><span>&nbsp;=&nbsp;</span><span class="vars">$flexiHashObj</span><span>-&gt;lookup(</span><span class="vars">$key</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="comment">//&nbsp;&nbsp;var_dump($targets);</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="func">echo</span><span>&nbsp;</span><span class="string">"一致性hash:"</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>var_dump(number_format(microtime(true)&nbsp;-&nbsp;<span class="vars">$runData</span><span>[</span><span class="string">'BEGIN_TIME'</span><span>],6));&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="vars">$runData</span><span>[</span><span class="string">'BEGIN_TIME'</span><span>]&nbsp;=&nbsp;microtime(true);&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="vars">$m</span><span>=&nbsp;</span><span class="keyword">new</span><span>&nbsp;Memcache;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="vars">$m</span><span>-&gt;connect(</span><span class="string">'127.0.0.1'</span><span>,&nbsp;11211);&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="keyword">for</span><span>(</span><span class="vars">$i</span><span>=0;</span><span class="vars">$i</span><span>&lt;10000;</span><span class="vars">$i</span><span>++)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$key</span><span>&nbsp;=&nbsp;md5(mt_rand());&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="vars">$b</span><span>&nbsp;=&nbsp;</span><span class="vars">$m</span><span>-&gt;set(</span><span class="vars">$key</span><span>,&nbsp;time(),&nbsp;0,&nbsp;10);&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li><li class="alt"><span><span class="func">echo</span><span>&nbsp;</span><span class="string">"单台机器:"</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>var_dump(number_format(microtime(true)&nbsp;-&nbsp;<span class="vars">$runData</span><span>[</span><span class="string">'BEGIN_TIME'</span><span>],6));&nbsp;&nbsp;</span></span></li><li class="alt"><span>?&gt;&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="php" style="display: none;">&lt;?php
+/**
+ * 一致性hahs实现类
+ * 
+ */
+class FlexiHash{
+	/**
+	 * var int
+	 * 虚拟节点
+	 */
+	private $_replicas = 200;
+	
+	/**
+	 * 使用hash方法
+	 */
+	private $_hasher = null;
+	
+	/**
+	 * 真实节点计数器
+	 * 
+	 */
+	private $_tagertCount = 0;
+	
+	/**
+	 * 位置对应节点，用户lookup中根据位置确定要访问的节点
+	 */
+	private $_positionToTarget = array();
+	
+	/**
+	 * 节点对应位置，用于删除节点
+	 */
+	private $_targetToPositions = array();
+	
+	/**
+	 * 是否已排序
+	 */
+	private $_positionToTargetSorted = false;
+	
+	/**
+	 * @ $hasher hash方法
+	 * @ $replicas 虚拟节点的个数
+	 * 
+	 * 确定要使用的hash方法和虚拟的节点数，虚拟节点越多，分布越均匀，但程序的分布式运算越慢
+	 */
+	public function __construct(FlexiHash_Hasher $hasher=null, $replicas = null){
+		// hash方法
+		$this-&gt;_hasher = $hasher?$hasher: new FlexiHash_Crc32Hasher();
+		// 虚拟节点的个数
+		if (!empty($replicas)){
+			$this-&gt;_replicas = $replicas;
+		}
+	}
+	
+	/**
+	 * 增加节点，根据虚拟节点数，把节点分布到更多的虚拟位置上
+	 */
+	public function addTarget($target){
+		
+		if (isset($this-&gt;_targetToPositions[$target])) {
+			throw new FlexiHash_Exception("Target $target already exists.");
+		}
+		
+		$this-&gt;_targetToPositions[$target] = array();
+		
+		for ($i = 0; $i &lt; $this-&gt;_replicas; $i++) {
+			
+			// 根据规定的方法hash
+			$position = $this-&gt;_hasher-&gt;hash($target.$i);
+			
+			// 虚拟节点对应的真实的节点
+			$this-&gt;_positionToTarget[$position] = $target;
+			
+			// 真实节点包含的虚拟节点
+			$this-&gt;_targetToPositions[$target][] = $position;
+		}
+		
+		
+		$this-&gt;_positionToTargetSorted = false;
+		
+		// 真实节点个数
+		$this-&gt;_targetCount++;
+		
+		return $this;
+	}
+	
+	/**
+	 * 添加多个节点
+	 * 
+	 */
+	public function addTargets($targets){
+		foreach ($targets as $target){
+			$this-&gt;addTarget($target);
+		}
+		return $this;
+	}
+	
+	/**
+	 * 移除某个节点
+	 * 
+	 */
+	public function removeTarget($target){
+		if (!isset($this-&gt;_targetToPositions[$target])){
+			throw new FlexiHash_Exception("target $target does not exist\n");
+		}
+		
+		foreach($this-&gt;_targetToPositions[$target] as $position){
+			unset($this-&gt;_positionToTarget[$position]);
+		}
+		
+		unset($this-&gt;_targetToPositions[$target]);
+		
+		$this-&gt;_targetCount--;
+		
+		return $this;
+	}
+	
+	/**
+	 * 获取所有节点
+	 * 
+	 */
+	public function getAllTargets(){
+		return array_keys($this-&gt;_targetToPositions);
+	}
+	
+	
+	/**
+	 * 根据key查找hash到的真实节点
+	 * 
+	 */
+	public function lookup($resource){
+		$targets = $this-&gt;lookupList($resource, 1);
+		
+		if (empty($targets)){
+			throw new FlexiHash_Exception("no targets exist");
+		}
+		
+		return $targets[0];
+	}
+	
+	/**
+	 * 查找资源存在的节点
+	 * 
+	 * 描述:根据要求的数量，返回与$resource哈希后数值相等或比其大并且是最小的数值对应的节点，若不存在或数量不够，则从虚拟节点排序后的前一个或多个
+	 */
+	public function lookupList($resource, $requestedCount){
+		
+		if (!$requestedCount) {
+			throw new FlexiHash_Exception('Invalid count requested');
+		}
+		
+		if (empty($this-&gt;_positionToTarget)) {
+			return array();
+		}
+		
+		// 直接节点只有一个的时候
+		if ($this-&gt;_targetCount == 1 ){
+			return array_unique(array_values($this-&gt;_positionToTarget));
+		}
+		
+		// 获取当前key进行hash后的值
+		$resourcePosition = $this-&gt;_hasher-&gt;hash($resource);
+	
+		$results = array();
+		
+		$collect = false;
+		
+		$this-&gt;_sortPositionTargets();
+		
+		// 查找与$resourcePosition 相等或比其大并且是最小的数
+		foreach($this-&gt;_positionToTarget as $key =&gt; $value){
+			
+			if (!$collect &amp;&amp; $key &gt; $resourcePosition){
+				
+				$collect = true;
+			}
+			
+			if ($collect &amp;&amp; !in_array($value, $results)){
+				$results[] = $value;
+			}
+			
+			// 找到$requestedCount 或个数与真实节点数量相同
+			if (count($results) == $requestedCount || count($results) == $this-&gt;_targetCount){
+				return $results;
+			}
+		}
+		// 如数量不够或者未查到，则从第一个开始，将$results中不存在前$requestedCount-count($results)，设置为需要的节点
+		foreach ($this-&gt;_positionToTarget as $key =&gt; $value){
+			if (!in_array($value, $results)){
+				$results[] = $value;
+			}
+			
+			if (count($results) == $requestedCount || count($results) == $this-&gt;_targetCount){
+			
+				return $results;
+			}
+		}
+		
+		return $results;
+		
+	}
+	
+	/**
+	 * 根据虚拟节点进行排序
+	 */
+	private function _sortPositionTargets(){
+		if (!$this-&gt;_positionToTargetSorted){
+			ksort($this-&gt;_positionToTarget, SORT_REGULAR);
+			
+			$this-&gt;_positionToTargetSorted = true;
+		}
+	}
+	
+}// end class
+
+/**
+ * hash方式
+ */
+interface FlexiHash_Hasher{
+	public function hash($string);
+}
+
+class FlexiHash_Crc32Hasher implements FlexiHash_Hasher{
+	public function hash($string){
+		return sprintf("%u",crc32($string));
+	}
+}
+
+
+class FlexiHash_Md5Hasher implements FlexiHash_Hasher{
+	public function hash($string){
+		return substr(md5($string), 0, 8);
+	}
+}
+
+class FlexiHash_Exception extends Exception{
+}
+
+$runData['BEGIN_TIME'] = microtime(true);
+
+for($i=0;$i&lt;10000;$i++) {
+
+
+	 $targetsArray = array(
+	 	"127.0.0.1:11211",
+		"127.0.0.1:11212",
+		"127.0.0.1:11213",
+		"127.0.0.1:11214",
+		"127.0.0.1:11215"
+	 );
+	 $flexiHashObj = new FlexiHash(new FlexiHash_Crc32Hasher(),1);
+	 
+	 $result = $flexiHashObj-&gt;addTargets($targetsArray);
+	  $key = md5(mt_rand());
+	 $targets = $flexiHashObj-&gt;lookup($key);
+//	var_dump($targets);
+	 
+	 
+
+}
+	echo "一致性hash:";
+var_dump(number_format(microtime(true) - $runData['BEGIN_TIME'],6));
+
+
+
+
+$runData['BEGIN_TIME'] = microtime(true); 
+$m= new Memcache;
+$m-&gt;connect('127.0.0.1', 11211); 
+for($i=0;$i&lt;10000;$i++) {
+        $key = md5(mt_rand());
+        $b = $m-&gt;set($key, time(), 0, 10);
+}
+echo "单台机器:";
+var_dump(number_format(microtime(true) - $runData['BEGIN_TIME'],6));
+?&gt;</pre><br>
+测试结果:
+<p></p>
+<p><img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/1345184875_9990.png" alt=""><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+
+</div>
+
+
+
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" style="float: right;">
+<a class="bds_qzone" title="分享到QQ空间" href="http://blog.csdn.net/xinguan1267/article/details/7870308#"></a>
+<a class="bds_tsina" title="分享到新浪微博" href="http://blog.csdn.net/xinguan1267/article/details/7870308#"></a>
+<a class="bds_tqq" title="分享到腾讯微博" href="http://blog.csdn.net/xinguan1267/article/details/7870308#"></a>
+<a class="bds_renren" title="分享到人人网" href="http://blog.csdn.net/xinguan1267/article/details/7870308#"></a>
+<a class="bds_t163" title="分享到网易微博" href="http://blog.csdn.net/xinguan1267/article/details/7870308#"></a>
+<span class="bds_more">更多</span>
+<a class="shareCount" href="http://blog.csdn.net/xinguan1267/article/details/7870308#" title="累计分享0次">0</a>
+</div>
+<!-- Baidu Button END -->
+
+
+<!--192.168.100.35-->
+<ul class="article_next_prev">
+            <li class="prev_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;]);location.href=&#39;/xinguan1267/article/details/7870302&#39;;">上一篇</span><a href="http://blog.csdn.net/xinguan1267/article/details/7870302" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;])">Memcached性能检测</a></li>
+            <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;/xinguan1267/article/details/7877818&#39;;">下一篇</span><a href="http://blog.csdn.net/xinguan1267/article/details/7877818" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">php Memcached</a></li>
+</ul>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/bds_s_v2.js"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+</div>
+      <dl class="blog-associat-tag">
+        <dt>主题推荐</dt>
+        <dd>
+                <a href="http://www.csdn.net/tag/memcached" target="_blank" class="blog-tage-red">memcached</a> 
+                <a href="http://www.csdn.net/tag/%E7%BC%93%E5%AD%98%E7%B3%BB%E7%BB%9F" target="_blank" class="blog-tage-red">缓存系统</a> 
+                <a href="http://www.csdn.net/tag/%E5%88%86%E5%B8%83%E5%BC%8F" target="_blank" class="blog-tage-red">分布式</a> 
+                <a href="http://www.csdn.net/tag/interface" target="_blank" class="blog-tage-red">interface</a> 
+                <a href="http://www.csdn.net/tag/c%E8%AF%AD%E8%A8%80" target="_blank" class="blog-tage-red">c语言</a> 
+        </dd>
+    </dl> 
+
+
+<dl class="blog-ass-articl tracking-ad" data-mod="popu_36" id="res-relatived"> 
+     <dt><span>猜你在找</span></dt>    
+<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/mayongzhan/article/details/2547583" title="memcache集群测试" strategy="CFRecommendAlgorithm" target="_blank">memcache集群测试</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/ssjhust123/article/details/7905401" title="JAVA NIO总结（四）—网络和异步IO" strategy="CFRecommendAlgorithm" target="_blank">JAVA NIO总结（四）—网络和异步IO</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/magic_wz/article/details/8111170" title="spring integeration主要概念" strategy="CFRecommendAlgorithm" target="_blank">spring integeration主要概念</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/aigoChina/article/details/8219701" title="antlr-2.7.6.jar的作用" strategy="CFRecommendAlgorithm" target="_blank">antlr-2.7.6.jar的作用</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/wallimn/article/details/3864030" title="JAVA正则表达式根据查询SQL自动生成统计SQL" strategy="CFRecommendAlgorithm" target="_blank">JAVA正则表达式根据查询SQL自动生成统计SQL</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/liuyuhua0066/article/details/7078506" title="Struts2 Action间如何传值" strategy="CFRecommendAlgorithm" target="_blank">Struts2 Action间如何传值</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/zjd1023/article/details/7584159" title="连接数据库时出现java.lang.ClassNotFoundException: com.mysql.jdbc.Driver怎么修改" strategy="CFRecommendAlgorithm" target="_blank">连接数据库时出现java.lang.ClassNotFoundException: com.mysql.jdbc.Driver怎么修改</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/terrychinaz/article/details/8223735" title="javascript中的回调函数中变量作用域" strategy="CFRecommendAlgorithm" target="_blank">javascript中的回调函数中变量作用域</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/lidawei201/article/details/8490187" title="IBatis 怎样直接执行SQL语句" strategy="CFRecommendAlgorithm" target="_blank">IBatis 怎样直接执行SQL语句</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/joeyyeoj/article/details/7545603" title="RESTful接口设计---读《RESTful Web Services Cookbook》笔记" strategy="CFRecommendAlgorithm" target="_blank">RESTful接口设计---读《RESTful Web Services Cookbook》笔记</a></dd></dl>
+
+<script type="text/javascript">
+    var searchtitletags = 'memcached 一致性hash原理' + ',' + 'memcached,缓存系统,分布式,interface,c语言';
+    searchService({
+        index: 'blog',
+        query: searchtitletags,
+        from: 10,
+        size: 10,
+        appendTo: '#res-relatived',
+        url: 'recommend',
+        his: 2,
+        client: "blog_cf_enhance",
+        tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+    });
+
+ </script>   
+
+    <div id="ad_cen">
+        <script type="text/javascript">            BAIDU_CLB_SLOT_ID = "117306";</script>
+        <script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/o.js"></script><div id="BAIDU_DUP_wrapper_117306_0"></div><script charset="utf-8" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ecom"></script><script charset="utf-8" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/fixed7o.js"></script><script type="text/javascript"><!--
+google_ad_client = "ca-pub-1076724771190722";
+/* blog正文下方728x90 */
+google_ad_slot = "4497271841";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/show_ads.js">
+</script><ins style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe width="728" height="90" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;"></iframe></ins></ins>
+    </div>
+    <script type="text/javascript">
+        //new Ad(4, 'ad_cen');
+    </script>
+<div id="comment_title" class="panel_head">
+    查看评论<a name="comments"></a></div>
+<div id="comment_list"><br>&nbsp;&nbsp;暂无评论<br><br><div class="clear"></div></div>
+<div id="comment_bar">
+</div>
+<div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:csdn.showLogin(function (dat) {js_logined(dat.data.userName);});">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fxinguan1267%2Farticle%2Fdetails%2F7870308">[注册]</a></div></div>
+<div class="announce">
+    * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+<script type="text/javascript">
+    var fileName = '7870308';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/comment.js"></script>
+    <div id="ad_bot">
+    <iframe id="ad_frm_0" frameborder="0" scrolling="no" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ad(1).htm" style="border-width: 0px; overflow: hidden; width: 746px; height: 0px;"></iframe></div>
+    <script type="text/javascript">
+    new Ad(5, 'ad_bot');
+    </script>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+      
+
+       <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop" style="" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        if($("#comment_content").length>0)
+        {
+            $("#quick-reply").show();
+
+            $("#quick-reply").click(function(){
+                setEditorFocus();
+            });
+        }       
+     
+        var d_top = $('#d-top-a');
+        document.onscroll = function ()
+        {
+            var scrTop = (document.body.scrollTop || document.documentElement.scrollTop);
+            if (scrTop > 500)
+            {
+                d_top.show();
+            } else
+            {
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function ()
+        {
+            scrollTo(0, 0);
+            this.blur();
+            return false;
+        });
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+<div class="tag_list">
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Java" href="http://www.csdn.net/tag/Java" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Android" href="http://www.csdn.net/tag/android" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://www.csdn.net/tag/ios" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="数据库" href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title="Hadoop" href="http://www.csdn.net/tag/hadoop" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone" target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace" target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="Spark" href="http://www.csdn.net/tag/spark" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+</div>
+
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/xinguan1267" target="_blank">
+    <img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/1_xinguan1267.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/xinguan1267" class="user_name" target="_blank">xinguan1267</a></span>
+</div>
+<div class="interact">
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_guanzhu&#39;])"></a>
+<a href="javascript:void(0);" class="letter" onclick="loginto(1)" title="[发私信]"></a>
+</div>
+<div id="blog_medal">
+<div id="bms_box"><a href="http://medal.blog.csdn.net/allmedal.aspx" target="_blank"><img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/holdon_s2.gif" onmouseover="m_over_m(this,0)" onmouseout="m_out_m()" alt=""></a></div></div>
+<ul id="blog_rank">
+    <li>访问：<span>65209次</span></li>
+    <li>积分：<span>1109分</span></li>
+    <li>排名：<span>第13949名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>44篇</span></li>
+    <li>转载：<span>26篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>3条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="submit" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/547844" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">php</a><span>(18)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/765736" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Linux</a><span>(23)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/806109" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">mysql</a><span>(12)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/841951" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">nosql</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/829001" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">记忆</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/1207217" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">redis</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/1213738" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">memcache</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/1831973" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">学习</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/1923717" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">http</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xinguan1267/article/category/2264985" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">git</a><span>(1)</span>
+            </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/xinguan1267/article/month/2014/06">2014年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2014/05">2014年05月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2014/04">2014年04月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2014/03">2014年03月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2014/02">2014年02月</a><span>(2)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/xinguan1267/article/month/2013/12">2013年12月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2013/11">2013年11月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2013/06">2013年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2012/08">2012年08月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2012/06">2012年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2012/05">2012年05月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2012/03">2012年03月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2012/02">2012年02月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2011/12">2011年12月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2011/11">2011年11月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2011/09">2011年09月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2011/07">2011年07月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2011/06">2011年06月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2011/05">2011年05月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2011/04">2011年04月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2011/03">2011年03月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2011/01">2011年01月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2010/12">2010年12月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2010/09">2010年09月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2010/06">2010年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xinguan1267/article/month/2009/05">2009年05月</a><span>(2)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7844304" title="redis 命令行操作记录">redis 命令行操作记录</a><span>(8912)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/6118187" title="使用phpize建立php扩展（Cannot find config.m4）">使用phpize建立php扩展（Cannot find config.m4）</a><span>(8238)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7557888" title="如何查看服务器当前的负载信息">如何查看服务器当前的负载信息</a><span>(5454)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/6118235" title="red hat linux使用yum 出现Loaded plugins: rhnplugin, security">red hat linux使用yum 出现Loaded plugins: rhnplugin, security</a><span>(5022)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7054250" title="curl 错误信息">curl 错误信息</a><span>(3647)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7361367" title="rm: cannot remove `libtoolT&#39;: No such file or directory">rm: cannot remove `libtoolT': No such file or directory</a><span>(3528)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7043316" title="vi 快捷键">vi 快捷键</a><span>(2867)</span>
+</li>
+<li>
+<a href="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET.htm" title="memcached 一致性hash原理">memcached 一致性hash原理</a><span>(2129)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/6587640" title="Mongodb">Mongodb</a><span>(1472)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7240255" title="获取日期对应的第几周">获取日期对应的第几周</a><span>(1383)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/6118235" title="red hat linux使用yum 出现Loaded plugins: rhnplugin, security">red hat linux使用yum 出现Loaded plugins: rhnplugin, security</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7557888" title="如何查看服务器当前的负载信息">如何查看服务器当前的负载信息</a><span>(1)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/30076499" title="linux下top命令的使用">linux下top命令的使用</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7844304" title="redis 命令行操作记录">redis 命令行操作记录</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7843423" title="redis收集整理">redis收集整理</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7839352" title="&quot;File size limit exceeded&quot; 问题">"File size limit exceeded" 问题</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7693168" title="ubuntn linux apache 虚拟机配置">ubuntn linux apache 虚拟机配置</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7602607" title="动态变量和静态变量的区别，堆和栈的区别">动态变量和静态变量的区别，堆和栈的区别</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7602452" title="单例模式与静态变量在PHP中">单例模式与静态变量在PHP中</a><span>(0)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xinguan1267/article/details/7577387" title="memcacheQ">memcacheQ</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend"><iframe id="ad_frm_1" frameborder="0" scrolling="no" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ad.htm" style="border-width: 0px; overflow: hidden; width: 182px; height: 0px;"></iframe></ul>
+</div>
+<script type="text/javascript">
+ new Ad(12, 'ad_commend');
+</script><div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/xinguan1267/article/details/6118235#comments">red hat linux使用yum 出现Loaded plugins: rhnplugin, security</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/liwenqiang758" class="user_name">liwenqiang758</a>:
+不错，但是下载完后出现Public key for *.rpm is not installed
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/xinguan1267/article/details/7557888#comments">如何查看服务器当前的负载信息</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/guojianing_wtt" class="user_name">潇潇洒洒_007</a>:
+啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧啧
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/xinguan1267/article/details/7557888#comments">red hat linux使用yum 出现Loaded plugins: rhnplugin, security</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/lchcc_008" class="user_name">lchcc_008</a>:
+我也出现了这问题 参考参考 谢谢！
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/cnick.js"></script>
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/showblogmedal.ashx"></script>
+<script type="text/javascript">
+    document.write('<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js?' + Math.floor(new Date() / 120000).toString(36) + '="></' + 'script>');
+</script><script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/publib_footer.js"></script><link rel="stylesheet" type="text/css" href="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/pub_footer_2012.css"><div id="pub_footerall" class="pub_footerall"><dl><dt></dt> <dd><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a>|<a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a>|<a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a>|<a href="http://www.csdn.net/company/account.html" target="_blank">银行汇款帐号</a>|<a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a>|<a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a>|<a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a>|<a href="mailto:webmaster@csdn.net">问题报告</a>|<a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a>|<a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd><a href="http://wpa.qq.com/msgrd?v=3&uin=2355263776&site=qq&menu=yes" target="_blank" class="qq">网站客服</a> <a href="http://wpa.qq.com/msgrd?v=3&uin=2251809102&site=qq&menu=yes" target="_blank" class="qq">杂志客服</a> <a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a> <a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a> <span class="phone" title="服务热线">400-600-2320</span></dd><dd>京&nbsp;ICP&nbsp;证&nbsp;070598&nbsp;号</dd><dd>北京创新乐知信息技术有限公司 版权所有</dd><dd>江苏乐知网络技术有限公司 提供商务支持</dd><dd>Copyright © 1999-2014, CSDN.NET, All Rights Reserved&nbsp;<a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display: none; position: absolute; z-index: 9990; width: 170px;">  <iframe src="about:blank" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/notify.js"></script>
+    <script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/pv.aspx" border="0" width="0" height="0">
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/counter.js"></script><script type="text/javascript" charset="UTF-8" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/msg.popup.js"></script>
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ad-blog.js"></script><script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ad-ms886.js"></script>
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ad-ms889_2.js"></script>
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ad-ms892_3.js"></script>
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ad-ms895_4.js"></script>
+
+<script type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/count.js"></script><iframe src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/logs.htm" frameborder="0" width="0" height="0"></iframe>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+    });
+</script>
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" type="text/javascript" src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/toolbar.js"></script>
+     <!--new top-->
+
+
+<iframe src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/ibm-ca-q3-blade-news-inner-page-banner-760-90-30k.htm" style="width: 1px; height: 1px; position: absolute; visibility: hidden;"></iframe><iframe src="./memcached 一致性hash原理 - 就是你的博客 - 博客频道 - CSDN.NET_files/shuguang-download-homepage-daohangtiaoxia-button-220-90.htm" style="width: 1px; height: 1px; position: absolute; visibility: hidden;"></iframe></body></html>

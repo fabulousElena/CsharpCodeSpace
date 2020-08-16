@@ -1,0 +1,285 @@
+BODY {
+	MARGIN: 0px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word; FONT-SIZE: 12px
+}
+P {
+	LINE-HEIGHT: 120%; FONT-SIZE: 13px
+}
+SPAN {
+	LINE-HEIGHT: 1.5
+}
+TD {
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 12px
+}
+A:visited {
+	COLOR: navy; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: navy; TEXT-DECORATION: none
+}
+A:link {
+	COLOR: navy; TEXT-DECORATION: none
+}
+A:hover {
+	TEXT-DECORATION: underline
+}
+H1 {
+	MARGIN: 10px 0px 5px; FONT-SIZE: 18px
+}
+H1 A:visited {
+	COLOR: #000
+}
+H1 A:active {
+	COLOR: #000
+}
+H1 A:link {
+	COLOR: #000
+}
+H1 A:hover {
+	COLOR: #47f; TEXT-DECORATION: none
+}
+H2 {
+	MARGIN-TOP: 10px; MARGIN-BOTTOM: 3px; FONT-SIZE: 13px
+}
+H3 {
+	FONT-SIZE: 12px
+}
+H5 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+P {
+	MARGIN: 10px 0px
+}
+#authors UL {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px 5px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+DIV.News {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 5px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px; PADDING-TOP: 5px
+}
+.HeaderTitle {
+	MARGIN: 0px; FONT-SIZE: 1.5em
+}
+.HeaderTitles {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; WIDTH: 100%; PADDING-RIGHT: 10px; PADDING-TOP: 10px
+}
+.HeaderTitles A:visited {
+	COLOR: white; FONT-SIZE: 18px; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.HeaderTitles A:active {
+	COLOR: white; FONT-SIZE: 18px; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.HeaderTitles A:link {
+	COLOR: white; FONT-SIZE: 18px; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.HeaderTitles A:hover {
+	COLOR: white; FONT-SIZE: 18px; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.HeaderBar {
+	BACKGROUND-IMAGE: url(images/BlueTabBack.gif); BORDER-COLLAPSE: collapse; BACKGROUND-REPEAT: repeat-x; FONT-SIZE: 11px; FONT-WEIGHT: normal
+}
+.HeaderBar A:visited {
+	COLOR: whitesmoke; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.HeaderBar A:active {
+	COLOR: whitesmoke; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.HeaderBar A:link {
+	COLOR: whitesmoke; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.HeaderBarTab {
+	BACKGROUND-IMAGE: url(images/BlueTabFace.gif); PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; BACKGROUND-REPEAT: repeat-x; PADDING-TOP: 0px
+}
+.BlogStatsBar {
+	TEXT-ALIGN: right; BORDER-COLLAPSE: collapse; COLOR: silver; FONT-SIZE: 11px; FONT-WEIGHT: normal
+}
+P.date IMG {
+	VERTICAL-ALIGN: middle
+}
+P.date {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 4px; PADDING-RIGHT: 0px; MARGIN-BOTTOM: 0px; FONT-SIZE: 11px; FONT-WEIGHT: bold; PADDING-TOP: 2px
+}
+BLOCKQUOTE {
+	
+}
+DIV.postTitle A:visited {
+	COLOR: navy; TEXT-DECORATION: none
+}
+DIV.postTitle A:active {
+	COLOR: navy; TEXT-DECORATION: none
+}
+DIV.postTitle A:link {
+	COLOR: navy; TEXT-DECORATION: none
+}
+DIV.post {
+	BORDER-BOTTOM: gainsboro 2px solid; BORDER-LEFT: gainsboro 2px solid; BORDER-TOP: gainsboro 2px solid; BORDER-RIGHT: gainsboro 2px solid
+}
+DIV.postTitle {
+	BORDER-BOTTOM: gainsboro 1px solid; PADDING-BOTTOM: 3px; BACKGROUND-COLOR: whitesmoke; PADDING-LEFT: 3px; FONT-SIZE: 13px; FONT-WEIGHT: bolder; PADDING-TOP: 3px
+}
+DIV.postText {
+	PADDING-BOTTOM: 5px; LINE-HEIGHT: 1.5; PADDING-LEFT: 3px; PADDING-RIGHT: 10px; MARGIN-LEFT: 5px; FONT-SIZE: 13px; PADDING-TOP: 10px
+}
+DIV.postText P {
+	LINE-HEIGHT: 1.4
+}
+DIV.postFoot {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 1px; BACKGROUND-COLOR: whitesmoke; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; FONT-SIZE: 11px; BORDER-TOP: gainsboro 1px solid; PADDING-TOP: 1px
+}
+#top {
+	BACKGROUND-IMAGE: url(images/BlueTabBackground.gif); BORDER-BOTTOM: black 4px solid; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND-REPEAT: repeat; COLOR: whitesmoke; BORDER-TOP: black 4px solid; PADDING-TOP: 0px
+}
+#tagline {
+	MARGIN: 0px; COLOR: white; FONT-SIZE: 16px
+}
+#leftmenu {
+	POSITION: absolute; BACKGROUND-COLOR: whitesmoke; WIDTH: 200px; HEIGHT: auto; PADDING-TOP: 0px; LEFT: 0px
+}
+#leftmenu H3 {
+	PADDING-BOTTOM: 2px; MARGIN: 10px 0px 0px; PADDING-LEFT: 3px; FONT-SIZE: 11px; BORDER-TOP: gainsboro 1px solid; PADDING-TOP: 3px
+}
+#leftmenu UL {
+	LIST-STYLE-TYPE: none; MARGIN: 0px 0px 10px 5px; PADDING-LEFT: 5px; FONT-SIZE: 11px
+}
+#leftmenu A {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; TEXT-DECORATION: none; PADDING-TOP: 1px
+}
+#leftmenu A:active {
+	
+}
+#leftmenu A:visited {
+	
+}
+#leftmenu A:link {
+	
+}
+#leftmenu A:hover {
+	FONT-STYLE: italic
+}
+#main {
+	BORDER-BOTTOM: black 4px solid; BORDER-LEFT: #555 1px solid; PADDING-BOTTOM: 10px; BACKGROUND-COLOR: white; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; MARGIN-LEFT: 200px; PADDING-TOP: 10px
+}
+#footer {
+	TEXT-ALIGN: center; MARGIN: 0px; FONT-SIZE: 10px; PADDING-TOP: 5px
+}
+#CommentForm {
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px
+}
+INPUT {
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px
+}
+TEXTAREA {
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px
+}
+.commentform {
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px
+}
+.Button {
+	BORDER-BOTTOM: steelblue 1px solid; BORDER-LEFT: steelblue 1px solid; BACKGROUND-COLOR: gainsboro; BORDER-TOP: steelblue 1px solid; BORDER-RIGHT: steelblue 1px solid
+}
+.Cal {
+	BORDER-BOTTOM: #186aa2 1px solid; BORDER-LEFT: #186aa2 1px solid; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: whitesmoke; MARGIN-TOP: 0px; PADDING-LEFT: 0px; WIDTH: 100%; PADDING-RIGHT: 0px; FONT-FAMILY: Arial; MARGIN-BOTTOM: 10px; HEIGHT: 180px; FONT-SIZE: 12px; BORDER-TOP: #186aa2 1px solid; BORDER-RIGHT: #186aa2 1px solid; PADDING-TOP: 0px
+}
+.CalTitle {
+	BORDER-BOTTOM-COLOR: #adf; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #014e82; BORDER-TOP-COLOR: #adf; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: Arial; HEIGHT: 100%; COLOR: #000; BORDER-RIGHT-COLOR: #adf; MARGIN-LEFT: 0px; FONT-SIZE: 13px; BORDER-LEFT-COLOR: #adf; FONT-WEIGHT: normal; PADDING-TOP: 0px
+}
+.CalOtherMonthDay {
+	COLOR: #808080
+}
+.CalSelector {
+	
+}
+.CalNextPrev {
+	BACKGROUND-COLOR: #014e82
+}
+.CalDayHeader {
+	BACKGROUND-COLOR: #186aa2; COLOR: #000
+}
+.CalSelectedDay {
+	
+}
+.CalWeekendDay {
+	
+}
+.CalTodayDay {
+	COLOR: red
+}
+H1 {
+	LINE-HEIGHT: 200%; MARGIN: 10px 0px 5px; FONT-SIZE: 24px
+}
+H2 {
+	MARGIN-TOP: 10px; MARGIN-BOTTOM: 3px; FONT-SIZE: 18px
+}
+H3 {
+	FONT-SIZE: 16px
+}
+H4 {
+	FONT-SIZE: 14px
+}
+P {
+	LINE-HEIGHT: 150%; MARGIN: 10px 0px
+}
+.CalTitle {
+	BORDER-BOTTOM-COLOR: #adf; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #014e82; BORDER-TOP-COLOR: #adf; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: Arial; HEIGHT: 100%; COLOR: white; BORDER-RIGHT-COLOR: #adf; MARGIN-LEFT: 0px; FONT-SIZE: 13px; BORDER-LEFT-COLOR: #adf; FONT-WEIGHT: normal; PADDING-TOP: 0px
+}
+.CalNextPrev {
+	BACKGROUND-COLOR: #014e82; COLOR: white
+}
+.CalDayHeader {
+	BACKGROUND-COLOR: #186aa2; COLOR: white
+}
+DIV.News {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 5px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px; PADDING-TOP: 5px
+}
+.HeaderBar {
+	BACKGROUND-IMAGE: url(images/BlueTabBack.gif); BORDER-COLLAPSE: collapse; BACKGROUND-REPEAT: repeat-x; FONT-SIZE: 11px; FONT-WEIGHT: normal
+}
+.BlogStatsBar {
+	TEXT-ALIGN: right; BORDER-COLLAPSE: collapse; COLOR: silver; FONT-SIZE: 11px; FONT-WEIGHT: normal
+}
+P.date {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 4px; PADDING-RIGHT: 0px; MARGIN-BOTTOM: 0px; FONT-SIZE: 11px; FONT-WEIGHT: bold; PADDING-TOP: 2px
+}
+BLOCKQUOTE {
+	
+}
+DIV.postFoot {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 1px; BACKGROUND-COLOR: whitesmoke; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; FONT-SIZE: 11px; BORDER-TOP: gainsboro 1px solid; PADDING-TOP: 1px
+}
+#leftmenu H3 {
+	PADDING-BOTTOM: 2px; MARGIN: 10px 0px 0px; PADDING-LEFT: 3px; FONT-SIZE: 11px; BORDER-TOP: gainsboro 1px solid
+}
+#leftmenu UL {
+	LIST-STYLE-TYPE: none; MARGIN: 0px 0px 10px 5px; PADDING-LEFT: 5px; FONT-SIZE: 11px
+}
+#leftmenu A {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; FONT-SIZE: 11px; TEXT-DECORATION: none; PADDING-TOP: 1px
+}
+#footer {
+	TEXT-ALIGN: center; MARGIN: 0px; FONT-SIZE: 11px; PADDING-TOP: 5px
+}
+#CommentForm {
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px
+}
+INPUT {
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px
+}
+TEXTAREA {
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px
+}
+.commentform {
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; FONT-SIZE: 11px
+}
+#leftmenu {
+	POSITION: absolute; BACKGROUND-COLOR: whitesmoke; WIDTH: 200px; HEIGHT: auto; PADDING-TOP: 0px; LEFT: 0px
+}
+#main {
+	BORDER-BOTTOM: black 4px solid; BORDER-LEFT: #555 1px solid; PADDING-BOTTOM: 10px; BACKGROUND-COLOR: white; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; MARGIN-LEFT: 200px; PADDING-TOP: 10px
+}
+.div_my_zzk {
+	MARGIN-LEFT: 5px
+}
+.commentOpt {
+	PADDING-BOTTOM: 5px
+}
+.blog_comment_body {
+	LINE-HEIGHT: 1.8
+}
