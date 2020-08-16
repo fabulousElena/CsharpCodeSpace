@@ -6,8 +6,11 @@
     <edmx:Diagrams>
       <Diagram DiagramId="261d95e431484d69a2a100253cb4d3ab" Name="关系图1" >
         <EntityTypeShape EntityType="Model2.Customer" Width="1.5" PointX="1.125" PointY="1.5" />
-        <EntityTypeShape EntityType="Model2.OrderInfo" Width="1.5" PointX="4.75" PointY="1.75" />
-        <AssociationConnector Association="Model2.CustomerOrderInfo" />
+        <EntityTypeShape EntityType="Model2.OrderInfo" Width="1.5" PointX="4.875" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="Model2.CustomerOrderInfo" ManuallyRouted="true" >
+          <ConnectorPoint PointX="2.625" PointY="2.4056520358721416" />
+          <ConnectorPoint PointX="4.875" PointY="2.4056520358721416" />
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

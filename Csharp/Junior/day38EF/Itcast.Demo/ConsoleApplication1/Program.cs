@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public delegate int AddSum(int a,int b);
+    public delegate int AddSum(int a, int b);
     class Program
     {
         static void Main(string[] args)
         {
             Program p = new Program();
-           // AddSum addSum = new AddSum(p.Add);
-           // AddSum addSum = delegate(int a, int b) { return a + b; };
+            // AddSum addSum = new AddSum(p.Add);
+            // AddSum addSum = delegate(int a, int b) { return a + b; };
             //AddSum addSum = (int a, int b) => { return a + b; };
-            AddSum addSum = ( a,  b) => { return a + b; };
+            AddSum addSum = (a, b) => { return a + b; };
             int sum = addSum(5, 3);
             Console.WriteLine(sum);
             Console.ReadKey();
@@ -26,5 +26,5 @@ namespace ConsoleApplication1
         //    return a + b;
         //}
     }
-    
+
 }
