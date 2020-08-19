@@ -1,0 +1,71 @@
+﻿@using WebApplication1.Models
+@{
+    ViewBag.Title = "UsersInfoView";
+}
+@{
+    ztest01Entities db = new ztest01Entities();
+    int dataCount = db.usersinfo.Where(u => true).Count();
+    int eachPage = 20;
+    //计算总的页数 每页20
+    int pageCount =
+        Convert.ToInt32(Math.Ceiling((double)dataCount / eachPage));
+}
+
+
+<script type="text/javascript">
+
+</script>
+<h2>用户详情</h2>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(function () {
+        $("#pagenum").val(@ViewData["pageIndex"].ToString());
+
+
+        $("#btnRegister").click(function () {
+
+            window.location = "/home/Register";
+        });
+
+        $("#firstp").click(function () {
+            window.location = "/UsersInfo/UsersInfoView/1";
+        });
+       
+        $("#lastp").click(function () {
+            window.location = "/UsersInfo/UsersInfoView/"+@pageCount;
+        });
+
+        $("#nextp").click(function () {
+            var pageIndex = parseInt($("#pagenum").val()) + 1;
+            window.location = "/UsersInfo/UsersInfoView/" + pageIndex;
+        });
+
+        $("#beforep").click(function () {
+            var pageIndex = parseInt($("#pagenum").val()) - 1;
+            window.location = "/UsersInfo/UsersInfoView/" + pageIndex;
+        });
+    });
+</script>
+<div>
+    <input type="button" id="btnRegister" value="添加" />
+    <br />
+    <br />
+
+</div>
+<div>
+    <table border="1" cellspacing="0" style="width: 100%;text-align: center" id="tabT">
+        <tr><th>编号</th><th>账号</th><th>邮箱</th><th>手机号</th><th>时间</th><th>操作</th></tr>
+        @MvcHtmlString.Create(ViewData["usersinfo"].ToString())
+    </table>
+</div>
+
+<hr />
+<div style="text-align: center">
+    <input type="text" value=""  id="pagenum" readonly="readonly" name="pageNum" style="width: 3%" />
+    <input type="button" value="首页" name="firstPage" id="firstp" />
+    <input type="button" value="上一页" name="beforePage" id="beforep" />
+    <input type="button" value="下一页" name="nextPage" id="nextp" />
+    <input type="button" value="尾页" name="lastPage" id="lastp" />
+</div>
+
+

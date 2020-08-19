@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(function () {
+        $("#btnGet").click(function(){
+            $.post("/Demo/GetList", {}, function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#div1").append(data[i].uaccount);
+                }
+            });
+            });
+    });
+</script>
+<h2>Index</h2>
+<div>
+    <input type="button" value="ajax获取数据" id="btnGet" />
+</div>
+<div id="div1"></div>

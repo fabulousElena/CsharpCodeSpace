@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "UpdateUser";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(function() {
+        $("#btnUpdate").click(function () {
+            if ($("#userName").val() != "" && $("#userPass").val() != "" && $("#userEmail").val() != "" && $("#userPhone").val() != "") {
+                
+                var pars = $("#form1").serializeArray();
+                $.post("/UsersInfo/ExecuteUpdate", pars, function (data) {
+                    alert(data);
+                });
+            } else {
+                alert("有信息未填");
+                return;
+            }
+        });
+    });
+</script>
+<h2>更新信息</h2>
+<div style="text-align: center">
+    <form method="post" action="/usersinfo/ExecuteUpdate" id="form1">
+        @*<input type="hidden" name="uid" value=@ViewData["uid"]/>*@
+        <input type="hidden" id="userID" name="uid" value= @ViewData["uid"] />
+        账号：<input type="text" id="userName" @*name="username"*@ name="uaccount" value=@ViewData["uaccount"] /><br/>
+        密码：<input type="password" id="userPass" @*name="userpass"*@ name="upassword" value=@ViewData["upassword"] /><br/>
+        邮箱：<input type="text" id="userEmail" @*name="useremail"*@ name="uemail" value=@ViewData["uemail"] /><br/>
+        手机：<input type="text" id="userPhone" @*name="userphone"*@ name="uphone" value=@ViewData["uphone"] /><br/>
+        <input type="button" value="修改" id="btnUpdate"/>
+    </form>
+</div>

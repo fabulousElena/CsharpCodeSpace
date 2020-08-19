@@ -32,6 +32,7 @@ namespace ChatServer
                 IPEndPoint serverPort = new IPEndPoint(serverIp, Convert.ToInt32(textBox2.Text));
                 socketListener.Bind(serverPort);
                 socketListener.Listen(20);
+                //0.0.0.0表示监听所有ip的 端口号
                 richTextBox1.AppendText("服务端：" + serverIp + "端口：" + textBox2.Text + " 成功开启监听" + "\n");
                 textBox1.Text = serverIp.ToString();
                 button1.Text = "正在监听";
